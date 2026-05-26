@@ -38,7 +38,7 @@
 
   /* ===== HEADER ===== */
   .header {
-    background: linear-gradient(135deg, #12294a 0%, #1a3f6e 55%, #0f3057 100%);
+    background: linear-gradient(135deg, #c8ae85 0%, #bda275 55%, #b09060 100%);
     border-bottom: 3px solid #c9a84c;
     padding: 0 28px;
     height: 70px;
@@ -56,15 +56,15 @@
     filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
   }
   .header-titles { display: flex; flex-direction: column; }
-  .header-title { font-size: 19px; font-weight: 900; color: #fff; letter-spacing: 0.3px; line-height: 1.2; }
-  .header-sub { font-size: 12px; color: #c9a84c; font-weight: 600; margin-top: 2px; }
+  .header-title { font-size: 19px; font-weight: 900; color: #725786; letter-spacing: 0.3px; line-height: 1.2; }
+  .header-sub { font-size: 12px; color: #725786; font-weight: 600; margin-top: 2px; }
 
   .header-right { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
-  .header-date { font-size: 13px; color: #c9a84c; font-weight: 700; }
+  .header-date { font-size: 13px; color: #3d2e00; font-weight: 700; }
   .header-badge {
     background: rgba(201,168,76,0.18);
     border: 1px solid rgba(201,168,76,0.5);
-    color: #c9a84c;
+    color: #3d2e00;
     padding: 4px 14px; border-radius: 20px;
     font-size: 12px; font-weight: 700;
   }
@@ -371,16 +371,20 @@
 <!-- HEADER -->
 <div class="header">
   <div class="header-logo">
-    <img src="data:image/jpeg;base64,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" alt="شعار">
+    <img src="https://halawanni.github.io/ash/ikram.png" alt="شعار">
     <div class="header-titles">
       <div class="header-title">لوحة اداء مراكز المشاعر</div>
       <div class="header-sub">إكرام - فريق عمليات الحج</div>
     </div>
   </div>
+  <div style="position:absolute;left:50%;transform:translateX(-50%);">
+    <img src="https://halawanni.github.io/ash/ash.png" alt="شعار وسط" style="height:52px;width:auto;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.2));">
+  </div>
   <div class="header-right">
     <div class="header-date">📅 8 ذو الحجة 1447 هـ</div>
     <div class="header-badge" id="recordCount">جارٍ التحميل...</div>
   </div>
+</div>
 </div>
 
 <div class="main">
