@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رحلات ومنافع — لوحة متابعة المشاعر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{
+--bg:#0d1117;--bg2:#161b22;--bg3:#1c2230;--card:#1c2230;
+--border:rgba(99,132,180,0.15);--border2:rgba(99,132,180,0.08);
+--txt:#e6edf3;--txt2:#8b949e;--txt3:#6e7681;
+--acc:#4f8ef7;--acc2:#7c3aed;--cyan:#22d3ee;--em:#10b981;
+--rose:#f43f5e;--amber:#f59e0b;--ind:#6366f1;
+--sw:260px;--swc:68px;--hh:80px;--r:12px;--rs:7px;
+--fn:'IBM Plex Sans Arabic',sans-serif;
+--sha:0 4px 24px rgba(0,0,0,.4);
+--shc:0 2px 12px rgba(0,0,0,.3);
+}
+[data-theme="light"]{
+--bg:#f4f6fb;--bg2:#fff;--bg3:#f0f4ff;--card:#fff;
+--border:rgba(80,110,180,0.14);--border2:rgba(80,110,180,0.07);
+--txt:#1c2230;--txt2:#495873;--txt3:#8b949e;
+--sha:0 4px 24px rgba(80,110,180,.09);
+--shc:0 2px 12px rgba(80,110,180,.07);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:14px;scroll-behavior:smooth}
+body{font-family:var(--fn);background:var(--bg);color:var(--txt);min-height:100vh;direction:rtl;overflow-x:hidden;transition:background .2s,color .2s}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:8px}
+.app{display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sb{width:var(--sw);background:var(--bg2);border-left:1px solid var(--border);position:fixed;top:0;right:0;bottom:0;z-index:100;display:flex;flex-direction:column;transition:width .22s cubic-bezier(.4,0,.2,1);overflow:hidden}
+.sb.col{width:var(--swc)}
+.sb-logo{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:11px;min-height:var(--hh);white-space:nowrap}
+.li{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--acc),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:17px;color:#fff;flex-shrink:0;box-shadow:0 0 18px rgba(79,142,247,.35)}
+.lt .n{font-size:13px;font-weight:700;color:var(--txt)}
+.lt .s{font-size:10px;color:var(--txt3);margin-top:1px}
+.sb-nav{flex:1;padding:10px 8px;overflow-y:auto}
+.sl{font-size:9px;font-weight:600;letter-spacing:.08em;color:var(--txt3);text-transform:uppercase;padding:6px 9px 3px;white-space:nowrap;overflow:hidden;transition:opacity .2s}
+.sb.col .sl{opacity:0}
+.ni{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:var(--rs);cursor:pointer;transition:all .2s;white-space:nowrap;color:var(--txt2);font-size:13px;text-decoration:none;margin-bottom:1px;position:relative}
+.ni:hover{background:rgba(79,142,247,.1);color:var(--txt)}
+.ni.act{background:linear-gradient(135deg,rgba(79,142,247,.18),rgba(34,211,238,.1));color:var(--acc);font-weight:600}
+.ni.act::before{content:'';position:absolute;right:0;top:20%;bottom:20%;width:3px;background:var(--acc);border-radius:10px 0 0 10px}
+.nic{width:18px;height:18px;text-align:center;font-size:15px;flex-shrink:0}
+.nl{overflow:hidden;font-size:13px}
+.nb{margin-right:auto;background:var(--rose);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;flex-shrink:0}
+.sb-foot{padding:10px 8px;border-top:1px solid var(--border)}
+.cb{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:var(--rs);cursor:pointer;color:var(--txt3);font-size:12px;transition:all .2s;white-space:nowrap}
+.cb:hover{background:var(--border2);color:var(--txt)}
+.cb i{width:18px;text-align:center;transition:transform .3s}
+.sb.col .cb i{transform:rotate(180deg)}
+
+/* HEADER */
+.hd{height:var(--hh);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:10px;position:sticky;top:0;z-index:50;flex-shrink:0;transition:background .2s,border-color .2s}
+.ht{font-size:15px;font-weight:700;flex:1}
+.htm{font-size:11px;color:var(--txt3);text-align:left;line-height:1.6}
+.htm .tm{font-size:13px;font-weight:600;color:var(--txt2);display:block}
+.ib{width:34px;height:34px;border-radius:var(--rs);background:var(--border2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--txt2);transition:all .2s;font-size:14px;flex-shrink:0}
+.ib:hover{background:rgba(79,142,247,.15);color:var(--acc);border-color:var(--acc)}
+.rb{display:flex;align-items:center;gap:7px;padding:0 13px;height:34px;background:linear-gradient(135deg,var(--acc),var(--ind));border:none;border-radius:var(--rs);color:#fff;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--fn);white-space:nowrap}
+.rb:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(79,142,247,.4)}
+.rb.ld i{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* MAIN */
+.mw{margin-right:var(--sw);flex:1;min-width:0;display:flex;flex-direction:column;min-height:100vh;transition:margin-right .22s cubic-bezier(.4,0,.2,1)}
+.sb.col~.mw{margin-right:var(--swc)}
+.mc{flex:1;padding:20px}
+.pg{display:none}
+.pg.act{display:block;animation:fi .28s ease}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* KPI */
+.kg{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:20px}
+.kc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;position:relative;overflow:hidden;transition:all .2s;cursor:pointer}
+.kc::before{content:'';position:absolute;top:0;right:0;left:0;height:2px;background:var(--ca,linear-gradient(90deg,var(--acc),var(--cyan)))}
+.kc:hover{transform:translateY(-2px);box-shadow:var(--sha);border-color:rgba(79,142,247,.3)}
+.kch{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.kci{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.ktr{font-size:10px;font-weight:600;padding:3px 7px;border-radius:20px;display:flex;align-items:center;gap:3px}
+.tu{background:rgba(16,185,129,.14);color:var(--em)}
+.td{background:rgba(244,63,94,.14);color:var(--rose)}
+.tn{background:rgba(99,120,160,.14);color:var(--txt3)}
+.kv{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1;margin-bottom:5px}
+.kl{font-size:11px;color:var(--txt3)}
+
+/* CHARTS */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.cg3{grid-template-columns:1fr 1fr 1fr}
+.cf{grid-column:1/-1}
+.cc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;transition:border-color .2s}
+.cc:hover{border-color:rgba(79,142,247,.2)}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+.ct{font-size:13px;font-weight:600}
+.cs{font-size:10px;color:var(--txt3);margin-top:2px}
+.ca{display:flex;gap:5px;flex-wrap:wrap}
+.bs{padding:4px 9px;border-radius:5px;background:var(--border2);border:1px solid var(--border);color:var(--txt2);font-size:10px;font-family:var(--fn);cursor:pointer;transition:all .2s}
+.bs:hover,.bs.act{background:rgba(79,142,247,.15);color:var(--acc);border-color:var(--acc)}
+canvas{max-height:240px}
+
+/* SECTION TITLE */
+.st{font-size:15px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.st i{color:var(--acc)}
+.st .sub{font-size:11px;font-weight:400;color:var(--txt3);margin-right:4px}
+
+/* TABLE */
+.tw{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
+.tb{padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.sb2{flex:1;min-width:160px;display:flex;align-items:center;gap:7px;background:var(--bg);border:1px solid var(--border);border-radius:var(--rs);padding:0 10px;height:33px}
+.sb2 input{background:none;border:none;outline:none;color:var(--txt);font-family:var(--fn);font-size:12px;flex:1;direction:rtl}
+.sb2 input::placeholder{color:var(--txt3)}
+.sb2 i{color:var(--txt3);font-size:13px}
+.fs{height:33px;padding:0 9px;background:var(--bg);border:1px solid var(--border);border-radius:var(--rs);color:var(--txt2);font-family:var(--fn);font-size:12px;outline:none;cursor:pointer;direction:rtl}
+.eb{display:flex;align-items:center;gap:5px;padding:0 10px;height:33px;border-radius:var(--rs);background:var(--border2);border:1px solid var(--border);color:var(--txt2);font-family:var(--fn);font-size:11px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.eb:hover{background:rgba(16,185,129,.12);color:var(--em);border-color:var(--em)}
+.dt{width:100%;border-collapse:collapse;font-size:12px}
+.dt th{padding:10px 13px;background:var(--bg3);color:var(--txt3);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border);text-align:right;cursor:pointer;user-select:none;white-space:nowrap;transition:color .2s}
+.dt th:hover{color:var(--txt)}
+.dt th.srt{color:var(--acc)}
+.dt td{padding:10px 13px;border-bottom:1px solid var(--border2);color:var(--txt2);text-align:right}
+.dt tr:last-child td{border-bottom:none}
+.dt tr:hover td{background:rgba(79,142,247,.04)}
+.bx{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:600;gap:3px}
+.bb{background:rgba(59,130,246,.14);color:#60a5fa}
+.bg{background:rgba(16,185,129,.14);color:var(--em)}
+.ba{background:rgba(245,158,11,.14);color:var(--amber)}
+.br{background:rgba(244,63,94,.14);color:var(--rose)}
+.bp{background:rgba(99,102,241,.14);color:var(--ind)}
+.bc{background:rgba(34,211,238,.14);color:var(--cyan)}
+
+/* PAGINATION */
+.pag{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-top:1px solid var(--border);font-size:11px;color:var(--txt3)}
+.pbs{display:flex;gap:3px}
+.pb{width:28px;height:28px;border-radius:5px;background:var(--border2);border:1px solid var(--border);color:var(--txt2);cursor:pointer;font-family:var(--fn);font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.pb:hover{background:rgba(79,142,247,.14);color:var(--acc)}
+.pb.act{background:var(--acc);color:#fff;border-color:var(--acc)}
+.pb:disabled{opacity:.3;cursor:default}
+
+/* TABS */
+.tabs{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap}
+.tbb{padding:6px 14px;border-radius:var(--rs);background:var(--border2);border:1px solid var(--border);color:var(--txt2);font-family:var(--fn);font-size:11px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tbb:hover{background:rgba(79,142,247,.09);color:var(--txt)}
+.tbb.act{background:var(--acc);color:#fff;border-color:var(--acc)}
+
+/* ANALYTICS */
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:13px;margin-bottom:20px}
+.ac{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.at{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--txt3);margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.ii{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--border2);font-size:12px}
+.ii:last-child{border-bottom:none}
+.ir{width:20px;height:20px;border-radius:50%;background:var(--border2);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--txt3);flex-shrink:0}
+.ir.tp{background:rgba(245,158,11,.18);color:var(--amber)}
+.pb2{height:4px;border-radius:10px;background:var(--border2);overflow:hidden;margin-top:3px}
+.pf{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--acc),var(--cyan));transition:width 1.1s ease}
+
+/* ALERT */
+.al{display:flex;align-items:center;gap:10px;border-radius:var(--rs);padding:10px 14px;margin-bottom:14px;font-size:12px}
+.al.er{background:rgba(244,63,94,.07);border:1px solid rgba(244,63,94,.22)}
+.al.er i{color:var(--rose)}
+.al.wn{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.22)}
+.al.wn i{color:var(--amber)}
+.al.inf{background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.2)}
+.al.inf i{color:var(--cyan)}
+
+/* NOTIF */
+.no{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.28);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:flex-end;padding:66px 10px 0}
+.no.op{display:flex}
+.np{background:var(--card);border:1px solid var(--border);border-radius:var(--r);width:320px;box-shadow:var(--sha);animation:sd .2s ease;max-height:65vh;overflow-y:auto}
+@keyframes sd{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.nh{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-weight:600;font-size:13px}
+.ni2{padding:10px 14px;border-bottom:1px solid var(--border2);display:flex;gap:9px;font-size:12px}
+.ni2:last-child{border-bottom:none}
+.nd{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.nt{font-size:10px;color:var(--txt3);margin-top:2px}
+
+/* LOADING */
+.lo{position:fixed;inset:0;z-index:300;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;transition:opacity .4s}
+.lo.hid{opacity:0;pointer-events:none}
+.lr{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--acc);border-radius:50%;animation:spin .9s linear infinite}
+.ltx{font-size:13px;color:var(--txt3)}
+
+/* HEATMAP */
+.hm{display:flex;flex-direction:column;gap:4px}
+.hmr{display:flex;gap:4px;align-items:center}
+.hml{font-size:10px;color:var(--txt3);width:55px;text-align:left;flex-shrink:0}
+.hmc{flex:1;height:26px;border-radius:4px;transition:all .2s;cursor:pointer;position:relative}
+.hmc:hover{transform:scale(1.08);z-index:2}
+
+/* RADIAL */
+.rg{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px}
+.ri{text-align:center}
+.rsv{transform:rotate(-90deg)}
+.rt{fill:none;stroke:var(--border);stroke-width:7}
+.rf{fill:none;stroke-width:7;stroke-linecap:round;transition:stroke-dashoffset 1.2s ease}
+.rv{font-size:16px;font-weight:700;margin-top:4px}
+.rs2{font-size:10px;color:var(--txt3);margin-top:2px}
+
+/* PROGRESS ROW */
+.sr{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border2)}
+.sr:last-child{border-bottom:none}
+.snl{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px}
+.sn{color:var(--txt2)}
+.sv{color:var(--txt);font-weight:600}
+
+/* SCROLL TOP */
+.sct{position:fixed;bottom:20px;left:20px;width:38px;height:38px;background:var(--acc);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(79,142,247,.4);z-index:90;transform:translateY(70px);opacity:0;transition:all .2s}
+.sct.sh{transform:translateY(0);opacity:1}
+
+/* INDICATOR PILLS */
+.ipill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .sb{width:var(--swc)}
+  .mw{margin-right:var(--swc)}
+  .nl,.lt,.sl,.nb{display:none}
+  .cg,.cg3{grid-template-columns:1fr}
+  .kg{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .kg{grid-template-columns:1fr}
+  .mc{padding:12px}
+  .hd{padding:0 12px}
+  .htm{display:none}
+  .tb{flex-direction:column}
+  .sb2{width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="lo" id="lo">
+  <div class="li" style="width:52px;height:52px;background:none;box-shadow:none;padding:0;overflow:hidden">
+    <img src="https://raw.githubusercontent.com/halawanni/ash/main/rehlat.png" alt="رحلات ومنافع" style="width:52px;height:52px;object-fit:contain;border-radius:12px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div style="display:none;width:52px;height:52px;background:linear-gradient(135deg,var(--acc),var(--cyan));border-radius:12px;align-items:center;justify-content:center;font-size:22px;color:#fff;box-shadow:0 0 36px rgba(79,142,247,.55)"><i class="fas fa-kaaba"></i></div>
+  </div>
+  <div class="lr"></div>
+  <div class="ltx">جاري تحميل بيانات المشاعر...</div>
+</div>
+
+<!-- NOTIF -->
+<div class="no" id="no" onclick="cno(event)">
+  <div class="np" id="np">
+    <div class="nh">
+      <span><i class="fas fa-bell" style="color:var(--amber);margin-left:7px"></i>التنبيهات</span>
+      <span class="bx br" id="nct">0</span>
+    </div>
+    <div id="nl2"></div>
+  </div>
+</div>
+
+<div class="app">
+<!-- SIDEBAR -->
+<aside class="sb" id="sb">
+  <div class="sb-logo">
+    <div class="li" style="background:none;box-shadow:none;padding:0;overflow:hidden;width:68px;height:68px;flex-shrink:0;border-radius:12px">
+      <img src="https://raw.githubusercontent.com/halawanni/ash/main/rehlat.png" alt="رحلات ومنافع" style="width:68px;height:68px;object-fit:contain;display:block" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div style="display:none;width:68px;height:68px;background:linear-gradient(135deg,var(--acc),var(--cyan));border-radius:12px;align-items:center;justify-content:center;font-size:26px;color:#fff"><i class="fas fa-kaaba"></i></div>
+    </div>
+    <div class="lt">
+      <div class="n">رحلات ومنافع</div>
+      <div class="s">متابعة المشاعر 1447 هـ</div>
+      <div class="s" style="margin-top:1px;color:var(--acc);font-weight:600">فريق عمليات الحج</div>
+    </div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sl">الرئيسية</div>
+    <a class="ni act" onclick="sp('ov')">
+      <i class="fas fa-chart-pie nic"></i>
+      <span class="nl">لوحة المعلومات</span>
+    </a>
+    <div class="sl">المتابعة</div>
+    <a class="ni" onclick="sp('cnt')">
+      <i class="fas fa-building nic"></i>
+      <span class="nl">متابعة المراكز</span>
+    </a>
+    <a class="ni" onclick="sp('ml')">
+      <i class="fas fa-utensils nic"></i>
+      <span class="nl">متابعة الوجبات</span>
+    </a>
+    <a class="ni" onclick="sp('ind')">
+      <i class="fas fa-tachometer-alt nic"></i>
+      <span class="nl">المؤشرات التشغيلية</span>
+    </a>
+    <div class="sl">التقارير</div>
+    <a class="ni" onclick="expAll()">
+      <i class="fas fa-file-excel nic"></i>
+      <span class="nl">تصدير شامل</span>
+    </a>
+    <a class="ni" onclick="window.print()">
+      <i class="fas fa-print nic"></i>
+      <span class="nl">طباعة</span>
+    </a>
+  </nav>
+  <div class="sb-foot">
+    <div class="cb" onclick="tgsb()">
+      <i class="fas fa-chevron-right"></i>
+      <span class="nl">طي القائمة</span>
+    </div>
+  </div>
+</aside>
+
+<div class="mw">
+<!-- HEADER -->
+<header class="hd">
+  <div class="ht" id="pt">لوحة المعلومات الرئيسية</div>
+  <div class="htm">
+    <span class="tm" id="tm">--:--</span>
+    <span id="hj">-- -- --</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--txt3);white-space:nowrap">
+    <i class="fas fa-sync-alt" style="font-size:9px"></i>
+    <span id="lup">لم يتم التحديث</span>
+  </div>
+  <button class="rb" id="rfb" onclick="rfd()">
+    <i class="fas fa-sync-alt"></i><span>تحديث</span>
+  </button>
+  <div class="ib" onclick="tgfs()" title="ملء الشاشة"><i class="fas fa-expand"></i></div>
+  <div class="ib" id="nb2" onclick="tgn()" style="position:relative">
+    <i class="fas fa-bell"></i>
+    <span style="position:absolute;top:6px;left:6px;width:7px;height:7px;background:var(--rose);border-radius:50%;border:2px solid var(--bg2)" id="nd2"></span>
+  </div>
+  <div class="ib" onclick="tgth()" id="thb"><i class="fas fa-moon"></i></div>
+</header>
+
+<main class="mc">
+
+<!-- ========= PAGE: OVERVIEW ========= -->
+<div class="pg act" id="pg-ov">
+  <div class="kg" id="kgov"></div>
+  <div class="cg">
+    <div class="cc">
+      <div class="ch"><div><div class="ct">توزيع المساكن حسب الجنسية</div><div class="cs">إجمالي حجاج منى وعرفة</div></div>
+        <div class="ca"><button class="bs act" onclick="swNat('mina',this)">منى</button><button class="bs" onclick="swNat('arafa',this)">عرفة</button></div>
+      </div>
+      <canvas id="natChart"></canvas>
+    </div>
+    <div class="cc">
+      <div class="ch"><div><div class="ct">مؤشرات الأداء — التروية والتصعيد والإفاضة</div><div class="cs">نسب الإنجاز لكل جنسية</div></div></div>
+      <canvas id="indChart"></canvas>
+    </div>
+  </div>
+  <div class="cg">
+    <div class="cc">
+      <div class="ch"><div><div class="ct">مقارنة المراكز — المساكن</div><div class="cs">أعلى المراكز من حيث أعداد الحجاج</div></div></div>
+      <canvas id="cmpChart"></canvas>
+    </div>
+    <div class="cc">
+      <div class="ch"><div><div class="ct">الاستمارات والوثائق</div><div class="cs">إجمالي كل جنسية</div></div></div>
+      <canvas id="formsChart"></canvas>
+    </div>
+  </div>
+  <!-- Heatmap -->
+  <div class="cc" style="margin-bottom:20px">
+    <div class="ch"><div><div class="ct">خريطة الحرارة — مؤشرات الأداء</div><div class="cs">نسبة الإنجاز لكل مركز</div></div></div>
+    <div class="hm" id="hmw"></div>
+  </div>
+  <div class="st"><i class="fas fa-brain"></i>التحليلات الذكية <span class="sub">رؤى مباشرة من البيانات</span></div>
+  <div class="ag" id="agov"></div>
+</div>
+
+<!-- ========= PAGE: CENTERS ========= -->
+<div class="pg" id="pg-cnt">
+  <div class="kg" id="kgcnt"></div>
+  <div class="cg" style="margin-bottom:20px">
+    <div class="cc">
+      <div class="ch"><div><div class="ct">توزيع المساكن — منى وعرفة</div></div></div>
+      <canvas id="cntChart1"></canvas>
+    </div>
+    <div class="cc">
+      <div class="ch"><div><div class="ct">الاستمارات والوقوعات حسب الجنسية</div></div></div>
+      <canvas id="cntChart2"></canvas>
+    </div>
+  </div>
+  <div class="st"><i class="fas fa-table"></i>جدول المراكز التفصيلي</div>
+  <div class="tabs" id="ctabs"></div>
+  <div class="tw">
+    <div class="tb">
+      <div class="sb2"><i class="fas fa-search"></i><input type="text" id="csr" placeholder="بحث في المراكز..." oninput="fc()"></div>
+      <select class="fs" id="cnf" onchange="fc()"><option value="">كل الجنسيات</option></select>
+      <button class="eb" onclick="expCnt()"><i class="fas fa-file-excel"></i>تصدير Excel</button>
+      <button class="eb" onclick="window.print()"><i class="fas fa-print"></i>طباعة</button>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="dt" id="ctbl">
+        <thead><tr>
+          <th onclick="srt('c',0)">#</th>
+          <th onclick="srt('c',1)">المركز <i class="fas fa-sort" style="font-size:9px;opacity:.4"></i></th>
+          <th onclick="srt('c',2)">الجنسية <i class="fas fa-sort" style="font-size:9px;opacity:.4"></i></th>
+          <th onclick="srt('c',3)">مسكن منى <i class="fas fa-sort" style="font-size:9px;opacity:.4"></i></th>
+          <th onclick="srt('c',4)">مسكن عرفة <i class="fas fa-sort" style="font-size:9px;opacity:.4"></i></th>
+          <th onclick="srt('c',5)">مؤشر التروية</th>
+          <th onclick="srt('c',6)">مؤشر التصعيد</th>
+          <th onclick="srt('c',7)">مؤشر الإفاضة</th>
+          <th>الوقوعات</th>
+          <th>الاستمارات</th>
+        </tr></thead>
+        <tbody id="ctbd"></tbody>
+      </table>
+    </div>
+    <div class="pag" id="cpag"></div>
+  </div>
+  <div class="st"><i class="fas fa-lightbulb"></i>ملخص تحليلي</div>
+  <div class="ag" id="agcnt"></div>
+</div>
+
+<!-- ========= PAGE: MEALS ========= -->
+<div class="pg" id="pg-ml">
+  <div class="kg" id="kgml"></div>
+  <div class="cg" style="margin-bottom:20px">
+    <div class="cc">
+      <div class="ch"><div><div class="ct">حالة الوجبات حسب اليوم</div><div class="cs">توزيع الوجبات عبر أيام الحج</div></div></div>
+      <canvas id="mlChart1"></canvas>
+    </div>
+    <div class="cc">
+      <div class="ch"><div><div class="ct">توزيع الوجبات حسب الجنسية</div></div></div>
+      <canvas id="mlChart2"></canvas>
+    </div>
+  </div>
+  <div class="st"><i class="fas fa-utensils"></i>جدول الوجبات التفصيلي</div>
+  <div class="tabs">
+    <button class="tbb act" onclick="fml('all',this)">الكل</button>
+    <button class="tbb" onclick="fml('start',this)">جارية/بدأت</button>
+    <button class="tbb" onclick="fml('none',this)">لا يوجد</button>
+    <button class="tbb" style="background:rgba(245,158,11,.09);border-color:rgba(245,158,11,.3);color:var(--amber)" onclick="fml('notstart',this)">
+      <i class="fas fa-clock"></i> لم يبدأ
+    </button>
+    <button class="tbb" style="background:rgba(244,63,94,.09);border-color:rgba(244,63,94,.3);color:var(--rose)" onclick="fml('damaged',this)">
+      <i class="fas fa-exclamation-circle"></i> تالفة
+    </button>
+    <div class="al inf" style="margin-bottom:0;margin-right:6px;flex:1">
+      <i class="fas fa-info-circle"></i>
+      <span>ملاحظة: جميع المراكز <strong>لا يوجد</strong> موقع و<strong>لا يوجد</strong> مطبخ مسؤول حسب بيانات الملف الرسمي</span>
+    </div>
+  </div>
+  <div class="tw">
+    <div class="tb">
+      <div class="sb2"><i class="fas fa-search"></i><input type="text" id="msr" placeholder="بحث في الوجبات..." oninput="fml(cmf)"></div>
+      <select class="fs" id="mdf" onchange="fml(cmf)"><option value="">كل الأيام</option></select>
+      <select class="fs" id="mwf" onchange="fml(cmf)"><option value="">كل الوجبات</option></select>
+      <button class="eb" onclick="expMl()"><i class="fas fa-file-excel"></i>تصدير Excel</button>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="dt">
+        <thead><tr>
+          <th>#</th><th>المركز</th><th>الجنسية</th><th>اليوم</th><th>الوجبة</th><th>الحالة</th><th>ملاحظات الموقع</th><th>المطبخ المسؤول</th>
+        </tr></thead>
+        <tbody id="mtbd"></tbody>
+      </table>
+    </div>
+    <div class="pag" id="mpag"></div>
+  </div>
+
+</div>
+
+<!-- ========= PAGE: INDICATORS ========= -->
+<div class="pg" id="pg-ind">
+  <div class="st"><i class="fas fa-tachometer-alt"></i>المؤشرات التشغيلية للمشاعر</div>
+  <div class="kg" id="kgind"></div>
+  <div class="cc" style="margin-bottom:20px">
+    <div class="ch"><div><div class="ct">مقارنة المؤشرات — التروية / التصعيد / الإفاضة</div><div class="cs">نسب الإنجاز لكل مركز</div></div></div>
+    <canvas id="indFullChart" style="max-height:320px"></canvas>
+  </div>
+  <div class="cg">
+    <div class="cc">
+      <div class="ch"><div><div class="ct">نسب الإنجاز — Radial</div></div></div>
+      <div class="rg" id="rdg"></div>
+    </div>
+    <div class="cc">
+      <div class="ch"><div><div class="ct">الوقوعات والتذاكر</div></div></div>
+      <canvas id="ocsChart"></canvas>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+</div>
+
+<div class="sct" id="sct" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-chevron-up"></i>
+</div>
+
+<script>
+/* =====================================================
+   رحلات ومنافع — لوحة متابعة المشاعر ١٤٤٦ هـ
+   البيانات الحقيقية من ملف Excel
+   ===================================================== */
+
+// ===== البيانات الحقيقية من الملف =====
+const RAW = {
+  'فلسطين': {
+    centers: [
+      {id:201,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:2},
+      {id:202,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:1},
+    ]
+  },
+  'المغرب': {
+    centers: [
+      {id:203,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:1},
+      {id:204,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+    ]
+  },
+  'قرغيزستان': {
+    centers: [
+      {id:206,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:207,mina:3066,arafa:3066,trawia:0.98112,tasid:0.98112,ifada:0.98112,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+    ]
+  },
+  'تشاد': {
+    centers: [
+      {id:209,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:210,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+    ]
+  },
+  'باكستان': {
+    centers: [
+      {id:221,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:222,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:223,mina:1269,arafa:1265,trawia:1,tasid:0.9968,ifada:0.9968,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:224,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:225,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:226,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:227,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:228,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+    ]
+  },
+  'سريلانكا': {
+    centers: [
+      {id:230,mina:2424,arafa:2424,trawia:0.8338,tasid:0.8338,ifada:0.83298,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:231,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+    ]
+  }
+};
+
+// بيانات الوجبات — حسب ملف الاكسل الفعلي بدقة
+// أيام 8-11: الثلاث وجبات = لا يوجد
+// أيام 12-13: الثلاث وجبات = لم يبدأ
+// ملاحظات الموقع والمطبخ المسؤول = لا يوجد
+const DAYS = ['8 الحج','9 الحج','10 الحج','11 الحج','12 الحج','13 الحج'];
+const MEAL_TYPES = ['وجبة الإفطار','وجبة الغداء','وجبة العشاء'];
+
+function buildMealsData() {
+  const meals = [];
+  Object.entries(RAW).forEach(([nat, data]) => {
+    data.centers.forEach(c => {
+      DAYS.forEach((day, di) => {
+        MEAL_TYPES.forEach(mtype => {
+          // أيام 8-11 (di=0..3): لا يوجد — أيام 12-13 (di=4..5): لم يبدأ
+          const status = di <= 3 ? 'لا يوجد' : 'لم يبدأ';
+          meals.push({
+            center: c.id,
+            nationality: nat,
+            day,
+            meal: mtype,
+            status,
+            site_notes: 'لا يوجد',
+            kitchen: 'لا يوجد',
+          });
+        });
+      });
+    });
+  });
+  return meals;
+}
+
+// ===== STATE =====
+let D = {
+  centers: [], // flat list
+  meals: [],
+  nat_centers: RAW, // by nationality
+  loaded: false,
+};
+let cPage=1, mPage=1;
+let cmf='all';
+let sortSt = {c:{col:-1,dir:1}, m:{col:-1,dir:1}};
+let charts2={};
+let curNatView='mina';
+
+const RPPG = 12;
+
+// ===== INIT DATA =====
+function initData() {
+  D.centers = [];
+  Object.entries(RAW).forEach(([nat, data]) => {
+    data.centers.forEach(c => {
+      D.centers.push({...c, nationality: nat});
+    });
+  });
+  D.meals = buildMealsData();
+  D.loaded = true;
+}
+
+// ===== CHART COLORS =====
+const CC = {
+  c:['rgba(79,142,247,.82)','rgba(34,211,238,.82)','rgba(16,185,129,.82)','rgba(245,158,11,.82)','rgba(244,63,94,.82)','rgba(139,92,246,.82)'],
+  b:['#4f8ef7','#22d3ee','#10b981','#f59e0b','#f43f5e','#8b5cf6'],
+};
+function cdf() {
+  return {
+    responsive:true, maintainAspectRatio:true,
+    plugins:{
+      legend:{labels:{color:'#8b949e',font:{family:'IBM Plex Sans Arabic',size:10},padding:12}},
+      tooltip:{backgroundColor:'rgba(13,17,23,.95)',titleColor:'#e6edf3',bodyColor:'#8b949e',borderColor:'rgba(79,142,247,.25)',borderWidth:1,padding:9,cornerRadius:7,
+        titleFont:{family:'IBM Plex Sans Arabic',size:11,weight:'600'},bodyFont:{family:'IBM Plex Sans Arabic',size:10}}
+    },
+    animation:{duration:700,easing:'easeOutQuart'}
+  };
+}
+function axOpts() {
+  return {
+    x:{ticks:{color:'#6e7681',font:{family:'IBM Plex Sans Arabic',size:9}},grid:{color:'rgba(99,132,180,.05)'}},
+    y:{ticks:{color:'#6e7681',font:{family:'IBM Plex Sans Arabic',size:9}},grid:{color:'rgba(99,132,180,.07)'}}
+  };
+}
+function dc(id){if(charts2[id]){charts2[id].destroy();delete charts2[id];}}
+
+// ===== RENDER KPIs =====
+function renderOvKPI() {
+  const c = D.centers;
+  const totalMina = c.reduce((s,x)=>s+x.mina,0);
+  const totalArafa = c.reduce((s,x)=>s+x.arafa,0);
+  const activeC = c.filter(x=>x.mina>0||x.arafa>0).length;
+  const nats = Object.keys(RAW).length;
+  const totalInc = c.reduce((s,x)=>s+x.incidents,0);
+  const avgTrawia = c.filter(x=>x.trawia>0).reduce((s,x)=>s+x.trawia,0);
+  const actT = c.filter(x=>x.trawia>0).length;
+  const avgT = actT ? (avgTrawia/actT*100).toFixed(1) : 0;
+
+  const topC = c.reduce((a,b)=>a.mina>b.mina?a:b);
+  const topNat = Object.entries(RAW).reduce((a,[k,v])=>{
+    const s=v.centers.reduce((x,y)=>x+y.mina,0);
+    return s>a[1]?[k,s]:a;
+  },['',0]);
+
+  const kpis=[
+    {l:'إجمالي المراكز',v:c.length,i:'fa-building',col:'var(--acc)',ca:'linear-gradient(90deg,var(--acc),var(--ind))',tr:`${activeC} نشط`,td:'up'},
+    {l:'حجاج منى',v:totalMina.toLocaleString('en-US'),i:'fa-campground',col:'var(--cyan)',ca:'linear-gradient(90deg,var(--cyan),#0891b2)',tr:'+0%',td:'neutral'},
+    {l:'حجاج عرفة',v:totalArafa.toLocaleString('en-US'),i:'fa-mountain',col:'var(--em)',ca:'linear-gradient(90deg,var(--em),#059669)',tr:'مكتمل',td:'up'},
+    {l:'عدد الجنسيات',v:nats,i:'fa-globe',col:'var(--amber)',ca:'linear-gradient(90deg,var(--amber),#d97706)',tr:'6 دول',td:'neutral'},
+    {l:'متوسط التروية',v:avgT+'%',i:'fa-chart-line',col:'var(--acc)',ca:'linear-gradient(90deg,var(--acc),var(--cyan))',tr:'',td:'up'},
+    {l:'أعلى جنسية',v:topNat[0],i:'fa-crown',col:'var(--amber)',ca:'linear-gradient(90deg,var(--amber),var(--acc))',tr:topNat[1].toLocaleString('en-US'),td:'up',sm:true},
+    {l:'الوقوعات',v:totalInc,i:'fa-exclamation-triangle',col:'var(--rose)',ca:'linear-gradient(90deg,var(--rose),#dc2626)',tr:totalInc>0?'تحتاج مراجعة':'لا توجد',td:totalInc>0?'down':'up'},
+    {l:'المراكز النشطة',v:activeC,i:'fa-check-circle',col:'var(--em)',ca:'linear-gradient(90deg,var(--em),var(--cyan))',tr:`من ${c.length}`,td:'up'},
+  ];
+  document.getElementById('kgov').innerHTML = kpis.map(k=>`
+    <div class="kc" style="--ca:${k.ca}">
+      <div class="kch">
+        <div class="kci" style="background:${k.col}1f;color:${k.col}"><i class="fas ${k.i}"></i></div>
+        <div class="ktr ${k.td==='up'?'tu':k.td==='down'?'td':'tn'}">
+          <i class="fas fa-arrow-${k.td==='up'?'up':k.td==='down'?'down':'minus'}" style="font-size:8px"></i>${k.tr||''}
+        </div>
+      </div>
+      <div class="kv" ${k.sm?'style="font-size:18px;line-height:1.3"':''}>${k.v}</div>
+      <div class="kl">${k.l}</div>
+    </div>`).join('');
+}
+
+// ===== CHARTS =====
+function renderOvCharts() {
+  const nats = Object.keys(RAW);
+  const minaData = nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.mina,0));
+  const arafaData = nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.arafa,0));
+
+  // Nat Chart (doughnut)
+  dc('natChart');
+  const natData = curNatView==='mina'?minaData:arafaData;
+  charts2.natChart = new Chart(document.getElementById('natChart'),{
+    type:'doughnut',
+    data:{labels:nats,datasets:[{data:natData,backgroundColor:CC.c,borderColor:'transparent',hoverOffset:7,borderRadius:4}]},
+    options:{...cdf(),cutout:'62%'}
+  });
+
+  // Indicators chart
+  dc('indChart');
+  const actNats = nats.filter(n=>RAW[n].centers.some(c=>c.trawia>0));
+  charts2.indChart = new Chart(document.getElementById('indChart'),{
+    type:'bar',
+    data:{
+      labels:actNats,
+      datasets:[
+        {label:'التروية',data:actNats.map(n=>+(RAW[n].centers.reduce((s,c)=>s+c.trawia,0)/RAW[n].centers.filter(c=>c.trawia>0).length*100).toFixed(1)),backgroundColor:'rgba(79,142,247,.75)',borderRadius:5},
+        {label:'التصعيد',data:actNats.map(n=>+(RAW[n].centers.reduce((s,c)=>s+c.tasid,0)/RAW[n].centers.filter(c=>c.tasid>0).length*100).toFixed(1)),backgroundColor:'rgba(34,211,238,.7)',borderRadius:5},
+        {label:'الإفاضة',data:actNats.map(n=>+(RAW[n].centers.reduce((s,c)=>s+c.ifada,0)/RAW[n].centers.filter(c=>c.ifada>0).length*100).toFixed(1)),backgroundColor:'rgba(16,185,129,.7)',borderRadius:5},
+      ]
+    },
+    options:{...cdf(),scales:axOpts()}
+  });
+
+  // Compare chart
+  dc('cmpChart');
+  const sorted=[...D.centers].filter(c=>c.mina>0).sort((a,b)=>b.mina-a.mina);
+  charts2.cmpChart = new Chart(document.getElementById('cmpChart'),{
+    type:'bar',
+    data:{
+      labels:sorted.map(c=>`${c.id} (${c.nationality})`),
+      datasets:[
+        {label:'منى',data:sorted.map(c=>c.mina),backgroundColor:'rgba(79,142,247,.75)',borderRadius:5},
+        {label:'عرفة',data:sorted.map(c=>c.arafa),backgroundColor:'rgba(34,211,238,.65)',borderRadius:5},
+      ]
+    },
+    options:{...cdf(),plugins:{...cdf().plugins,legend:{labels:{color:'#8b949e',font:{family:'IBM Plex Sans Arabic',size:10}}}},scales:axOpts()}
+  });
+
+  // Forms chart
+  dc('formsChart');
+  const incData = nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.incidents,0));
+  charts2.formsChart = new Chart(document.getElementById('formsChart'),{
+    type:'doughnut',
+    data:{
+      labels:nats,
+      datasets:[{
+        data:nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.mina+c.arafa,0)),
+        backgroundColor:CC.c,borderColor:'transparent',hoverOffset:6,borderRadius:4
+      }]
+    },
+    options:{...cdf(),cutout:'58%'}
+  });
+}
+
+function swNat(v,btn){
+  curNatView=v;
+  document.querySelectorAll('[onclick^="swNat"]').forEach(b=>b.classList.remove('act'));
+  btn.classList.add('act');
+  dc('natChart');
+  const nats=Object.keys(RAW);
+  const d=v==='mina'?nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.mina,0)):nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.arafa,0));
+  charts2.natChart=new Chart(document.getElementById('natChart'),{
+    type:'doughnut',
+    data:{labels:nats,datasets:[{data:d,backgroundColor:CC.c,borderColor:'transparent',hoverOffset:7,borderRadius:4}]},
+    options:{...cdf(),cutout:'62%'}
+  });
+}
+
+// ===== HEATMAP =====
+function renderHeatmap() {
+  const indicators=[
+    {key:'trawia',label:'التروية'},
+    {key:'tasid',label:'التصعيد'},
+    {key:'ifada',label:'الإفاضة'},
+  ];
+  const activeCenters=D.centers.filter(c=>c.mina>0||c.arafa>0||c.trawia>0);
+
+  const colHeader=`<div class="hmr">
+    <div class="hml"></div>
+    ${indicators.map(i=>`<div style="flex:1;font-size:9px;text-align:center;color:var(--txt3);padding-bottom:3px">${i.label}</div>`).join('')}
+  </div>`;
+
+  const rows=activeCenters.map(c=>{
+    const cells=indicators.map(ind=>{
+      const v=c[ind.key];
+      const a=v>0?0.2+v*0.75:0.06;
+      const col=v>0.9?`rgba(16,185,129,${a})`:v>0.5?`rgba(245,158,11,${a})`:v>0?`rgba(244,63,94,${a})`:'rgba(99,132,180,0.07)';
+      const pct=(v*100).toFixed(1);
+      return `<div class="hmc" style="background:${col}" title="مركز ${c.id} — ${ind.label}: ${pct}%"></div>`;
+    });
+    return `<div class="hmr">
+      <div class="hml">${c.id} (${c.nationality})</div>
+      ${cells.join('')}
+    </div>`;
+  });
+
+  document.getElementById('hmw').innerHTML = colHeader+(rows.length?rows.join(''):'<div style="text-align:center;padding:20px;color:var(--txt3);font-size:12px">لا توجد مراكز نشطة بعد</div>');
+}
+
+// ===== ANALYTICS OVERVIEW =====
+function renderOvAnalytics() {
+  const c=D.centers;
+  const nats=Object.keys(RAW);
+  const natTotal=nats.map(n=>({n,v:RAW[n].centers.reduce((s,c)=>s+c.mina+c.arafa,0)})).sort((a,b)=>b.v-a.v);
+  const total=natTotal.reduce((s,x)=>s+x.v,0)||1;
+  const totalInc=c.reduce((s,x)=>s+x.incidents,0);
+  const activeC=c.filter(x=>x.mina>0);
+
+  document.getElementById('agov').innerHTML=`
+    <div class="ac">
+      <div class="at"><i class="fas fa-trophy" style="color:var(--amber)"></i>ترتيب الجنسيات — إجمالي المساكن</div>
+      ${natTotal.map(({n,v},i)=>`
+        <div class="ii">
+          <div class="ir ${i===0?'tp':''}">${i+1}</div>
+          <div style="flex:1">
+            <div class="snl"><span class="sn">${n}</span><span class="sv">${v.toLocaleString('en-US')}</span></div>
+            <div class="pb2"><div class="pf" style="width:${Math.round(v/total*100)}%"></div></div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div class="ac">
+      <div class="at"><i class="fas fa-lightbulb" style="color:var(--cyan)"></i>رؤى ذكية</div>
+      <div class="ii"><i class="fas fa-check-circle" style="color:var(--em);font-size:12px"></i><span>${activeC.length} مركزاً نشطاً من أصل ${c.length}</span></div>
+      <div class="ii"><i class="fas fa-campground" style="color:var(--acc);font-size:12px"></i><span>إجمالي حجاج منى: ${c.reduce((s,x)=>s+x.mina,0).toLocaleString('en-US')}</span></div>
+      <div class="ii"><i class="fas fa-mountain" style="color:var(--em);font-size:12px"></i><span>إجمالي حجاج عرفة: ${c.reduce((s,x)=>s+x.arafa,0).toLocaleString('en-US')}</span></div>
+      <div class="ii"><i class="fas fa-exclamation-triangle" style="color:${totalInc>0?'var(--rose)':'var(--em)'};font-size:12px"></i><span>الوقوعات المسجلة: ${totalInc}</span></div>
+      <div class="ii"><i class="fas fa-globe" style="color:var(--acc);font-size:12px"></i><span>6 جنسيات مشاركة في الموسم</span></div>
+    </div>
+    <div class="ac">
+      <div class="at"><i class="fas fa-chart-line" style="color:var(--acc)"></i>أفضل المؤشرات</div>
+      ${c.filter(x=>x.trawia>0).sort((a,b)=>b.trawia-a.trawia).map(x=>`
+        <div class="ii">
+          <div class="ir tp">${(x.trawia*100).toFixed(1)}%</div>
+          <span style="font-size:11px">مركز ${x.id} — ${x.nationality}</span>
+        </div>`).join('')||'<div class="ii" style="color:var(--txt3);font-size:11px">لا توجد مؤشرات بعد</div>'}
+    </div>`;
+}
+
+// ===== CENTERS PAGE =====
+function renderCntKPI() {
+  const c=D.centers;
+  const active=c.filter(x=>x.mina>0||x.arafa>0).length;
+  const totalMina=c.reduce((s,x)=>s+x.mina,0);
+  const totalArafa=c.reduce((s,x)=>s+x.arafa,0);
+  const totalInc=c.reduce((s,x)=>s+x.incidents,0);
+  const kpis=[
+    {l:'إجمالي المراكز',v:c.length,i:'fa-building',col:'var(--acc)',ca:'linear-gradient(90deg,var(--acc),var(--ind))'},
+    {l:'مراكز نشطة',v:active,i:'fa-check-circle',col:'var(--em)',ca:'linear-gradient(90deg,var(--em),#059669)'},
+    {l:'إجمالي منى',v:totalMina.toLocaleString('en-US'),i:'fa-campground',col:'var(--cyan)',ca:'linear-gradient(90deg,var(--cyan),#0891b2)'},
+    {l:'إجمالي عرفة',v:totalArafa.toLocaleString('en-US'),i:'fa-mountain',col:'var(--em)',ca:'linear-gradient(90deg,var(--em),var(--cyan))'},
+    {l:'الوقوعات الكلية',v:totalInc,i:'fa-exclamation-triangle',col:totalInc?'var(--rose)':'var(--em)',ca:`linear-gradient(90deg,${totalInc?'var(--rose)':'var(--em)'},#dc2626)`},
+  ];
+  document.getElementById('kgcnt').innerHTML=kpis.map(k=>`
+    <div class="kc" style="--ca:${k.ca}">
+      <div class="kch"><div class="kci" style="background:${k.col}1f;color:${k.col}"><i class="fas ${k.i}"></i></div></div>
+      <div class="kv" style="font-size:24px">${k.v}</div>
+      <div class="kl">${k.l}</div>
+    </div>`).join('');
+}
+
+function renderCntCharts() {
+  const nats=Object.keys(RAW);
+  dc('cntChart1');
+  charts2.cntChart1=new Chart(document.getElementById('cntChart1'),{
+    type:'bar',
+    data:{
+      labels:nats,
+      datasets:[
+        {label:'منى',data:nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.mina,0)),backgroundColor:'rgba(79,142,247,.75)',borderRadius:5},
+        {label:'عرفة',data:nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.arafa,0)),backgroundColor:'rgba(34,211,238,.65)',borderRadius:5},
+      ]
+    },
+    options:{...cdf(),scales:axOpts()}
+  });
+
+  dc('cntChart2');
+  charts2.cntChart2=new Chart(document.getElementById('cntChart2'),{
+    type:'bar',
+    data:{
+      labels:nats,
+      datasets:[
+        {label:'الوقوعات',data:nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.incidents,0)),backgroundColor:'rgba(244,63,94,.7)',borderRadius:5},
+        {label:'التذاكر',data:nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.tickets,0)),backgroundColor:'rgba(245,158,11,.7)',borderRadius:5},
+      ]
+    },
+    options:{...cdf(),scales:axOpts()}
+  });
+}
+
+function buildCntTabs() {
+  const nats=Object.keys(RAW);
+  document.getElementById('ctabs').innerHTML=
+    `<button class="tbb act" onclick="actCntTab('',this)">الكل</button>`+
+    nats.map(n=>`<button class="tbb" onclick="actCntTab('${n}',this)">${n}</button>`).join('');
+  document.getElementById('cnf').innerHTML=
+    `<option value="">كل الجنسيات</option>`+nats.map(n=>`<option value="${n}">${n}</option>`).join('');
+}
+
+function actCntTab(nat,btn){
+  document.querySelectorAll('#ctabs .tbb').forEach(b=>b.classList.remove('act'));
+  btn.classList.add('act');
+  document.getElementById('cnf').value=nat;
+  fc();
+}
+
+function fc(){
+  const sr=document.getElementById('csr').value;
+  const nat=document.getElementById('cnf').value;
+  renderCntTable(nat,sr,1);
+}
+
+function renderCntTable(nat='',search='',page=1){
+  let data=[...D.centers];
+  if(nat) data=data.filter(x=>x.nationality===nat);
+  if(search) data=data.filter(x=>String(x.id).includes(search)||x.nationality.includes(search));
+  if(sortSt.c.col>=0){
+    const col=sortSt.c.col;
+    data.sort((a,b)=>{
+      const keys=['id','id','nationality','mina','arafa','trawia','tasid','ifada','incidents'];
+      const va=a[keys[col]]||0,vb=b[keys[col]]||0;
+      return sortSt.c.dir*(typeof va==='number'?va-vb:String(va).localeCompare(String(vb),'ar'));
+    });
+  }
+  const total=data.length;
+  const pages=Math.ceil(total/RPPG)||1;
+  cPage=Math.min(page,pages);
+  const sl=data.slice((cPage-1)*RPPG,cPage*RPPG);
+
+  const pct=v=>`<span class="bx ${v>=0.9?'bg':v>=0.5?'ba':'br'}">${(v*100).toFixed(1)}%</span>`;
+  document.getElementById('ctbd').innerHTML=sl.map((r,i)=>{
+    const forms=r.forms_mina+r.forms_tawaf+r.forms_alt+r.forms_ops+r.forms_qual;
+    return `<tr>
+      <td style="color:var(--txt3)">${(cPage-1)*RPPG+i+1}</td>
+      <td style="font-weight:600;color:var(--txt)">مركز ${r.id}</td>
+      <td><span class="bx bb">${r.nationality}</span></td>
+      <td style="font-weight:600">${r.mina>0?r.mina.toLocaleString('en-US'):'0'}</td>
+      <td style="font-weight:600">${r.arafa>0?r.arafa.toLocaleString('en-US'):'0'}</td>
+      <td>${pct(r.trawia)}</td>
+      <td>${pct(r.tasid)}</td>
+      <td>${pct(r.ifada)}</td>
+      <td>${r.incidents>0?`<span class="bx br"><i class="fas fa-exclamation-circle"></i>${r.incidents}</span>`:'<span style="color:var(--txt3)">0</span>'}</td>
+      <td style="color:var(--txt3)">${forms>0?forms:'0'}</td>
+    </tr>`;
+  }).join('');
+
+  rpag('cpag',cPage,pages,total);
+}
+
+function rpag(id,cur,tot,dtLen){
+  const el=document.getElementById(id);if(!el)return;
+  const s=dtLen>0?(cur-1)*RPPG+1:0;
+  const e=Math.min(cur*RPPG,dtLen);
+  let btns='';
+  for(let i=1;i<=tot;i++){
+    if(tot<=7||i===1||i===tot||Math.abs(i-cur)<=1){
+      btns+=`<button class="pb${i===cur?' act':''}" onclick="gp('${id}',${i})">${i}</button>`;
+    }else if(Math.abs(i-cur)===2){btns+=`<button class="pb" disabled>…</button>`;}
+  }
+  el.innerHTML=`<span>عرض ${s}–${e} من ${dtLen} سجل</span><div class="pbs">${btns}</div>`;
+}
+
+function gp(id,p){
+  if(id==='cpag'){cPage=p;fc();}
+  if(id==='mpag'){mPage=p;fml(cmf);}
+}
+
+function srt(type,col){
+  if(sortSt[type].col===col)sortSt[type].dir*=-1;
+  else{sortSt[type].col=col;sortSt[type].dir=1;}
+  if(type==='c')fc();
+}
+
+function renderCntAnalytics(){
+  const c=D.centers;
+  const nats=Object.keys(RAW);
+  const natMina=nats.map(n=>({n,v:RAW[n].centers.reduce((s,c)=>s+c.mina,0)})).sort((a,b)=>b.v-a.v);
+  const total=natMina.reduce((s,x)=>s+x.v,0)||1;
+  document.getElementById('agcnt').innerHTML=`
+    <div class="ac" style="grid-column:span 2">
+      <div class="at"><i class="fas fa-chart-bar" style="color:var(--acc)"></i>توزيع الحجاج حسب الجنسية</div>
+      ${natMina.map(({n,v})=>`
+        <div class="sr">
+          <span class="sn" style="width:90px;font-size:11px">${n}</span>
+          <div style="flex:1"><div class="pb2" style="height:7px"><div class="pf" style="width:${Math.round(v/total*100)}%"></div></div></div>
+          <span class="sv" style="font-size:11px;min-width:70px;text-align:left">${v.toLocaleString('en-US')}</span>
+        </div>`).join('')}
+    </div>
+    <div class="ac">
+      <div class="at"><i class="fas fa-info-circle" style="color:var(--cyan)"></i>ملخص المراكز</div>
+      <div class="ii"><i class="fas fa-building" style="color:var(--acc);font-size:11px"></i><span>${c.length} مركز إجمالاً</span></div>
+      <div class="ii"><i class="fas fa-star" style="color:var(--amber);font-size:11px"></i><span>أعلى جنسية: ${natMina[0]?.n||'—'}</span></div>
+      <div class="ii"><i class="fas fa-flag" style="color:var(--cyan);font-size:11px"></i><span>أقل جنسية: ${natMina[natMina.length-1]?.n||'—'}</span></div>
+      <div class="ii"><i class="fas fa-exclamation" style="color:var(--rose);font-size:11px"></i>
+        <span>وقوعات: ${c.reduce((s,x)=>s+x.incidents,0)} مسجلة</span>
+      </div>
+    </div>`;
+}
+
+// ===== MEALS PAGE =====
+function renderMlKPI(){
+  const m=D.meals;
+  const none=m.filter(x=>x.status==='لا يوجد').length;
+  const notStart=m.filter(x=>x.status==='لم يبدأ').length;
+  const started=m.filter(x=>x.status!=='لا يوجد'&&x.status!=='لم يبدأ').length;
+  const kpis=[
+    {l:'إجمالي الوجبات',v:m.length,i:'fa-utensils',col:'var(--acc)',ca:'linear-gradient(90deg,var(--acc),var(--ind))'},
+    {l:'لا يوجد',v:none,i:'fa-times-circle',col:'var(--txt3)',ca:'linear-gradient(90deg,var(--txt3),#444)'},
+    {l:'لم تبدأ بعد',v:notStart,i:'fa-clock',col:'var(--amber)',ca:'linear-gradient(90deg,var(--amber),#d97706)'},
+    {l:'بدأت/جارية',v:started||'0',i:'fa-check-circle',col:'var(--em)',ca:'linear-gradient(90deg,var(--em),var(--cyan))'},
+  ];
+  document.getElementById('kgml').innerHTML=kpis.map(k=>`
+    <div class="kc" style="--ca:${k.ca}">
+      <div class="kch"><div class="kci" style="background:${k.col}1f;color:${k.col}"><i class="fas ${k.i}"></i></div></div>
+      <div class="kv" style="font-size:24px">${k.v}</div>
+      <div class="kl">${k.l}</div>
+    </div>`).join('');
+}
+
+function renderMlCharts(){
+  // وجبات حسب اليوم
+  dc('mlChart1');
+  const byday=DAYS.map(d=>({
+    d,none:D.meals.filter(m=>m.day===d&&m.status==='لا يوجد').length,
+    notstart:D.meals.filter(m=>m.day===d&&m.status==='لم يبدأ').length,
+  }));
+  charts2.mlChart1=new Chart(document.getElementById('mlChart1'),{
+    type:'bar',
+    data:{
+      labels:DAYS,
+      datasets:[
+        {label:'لا يوجد',data:byday.map(x=>x.none),backgroundColor:'rgba(110,118,129,.5)',borderRadius:4},
+        {label:'لم يبدأ',data:byday.map(x=>x.notstart),backgroundColor:'rgba(245,158,11,.7)',borderRadius:4},
+      ]
+    },
+    options:{...cdf(),scales:axOpts()}
+  });
+
+  // وجبات حسب الجنسية
+  dc('mlChart2');
+  const nats=Object.keys(RAW);
+  charts2.mlChart2=new Chart(document.getElementById('mlChart2'),{
+    type:'doughnut',
+    data:{
+      labels:nats,
+      datasets:[{data:nats.map(n=>D.meals.filter(m=>m.nationality===n).length),backgroundColor:CC.c,borderColor:'transparent',hoverOffset:6,borderRadius:4}]
+    },
+    options:{...cdf(),cutout:'58%'}
+  });
+
+  // Build filters — أيام 8 إلى 12 فقط
+  document.getElementById('mdf').innerHTML='<option value="">كل الأيام</option>'+DAYS.map(d=>`<option value="${d}">${d}</option>`).join('');
+  document.getElementById('mwf').innerHTML='<option value="">كل الوجبات</option>'+MEAL_TYPES.map(t=>`<option value="${t}">${t}</option>`).join('');
+}
+
+function fml(filter,btn){
+  if(filter !== undefined && filter !== null) cmf = filter;
+  if(btn){
+    document.querySelectorAll('#pg-ml .tbb').forEach(b=>b.classList.remove('act'));
+    btn.classList.add('act');
+  }
+  const sr=document.getElementById('msr')?.value||'';
+  const df=document.getElementById('mdf')?.value||'';
+  const wf=document.getElementById('mwf')?.value||'';
+  let data=[...D.meals];
+  if(cmf==='start')   data=data.filter(x=>x.status!=='لا يوجد'&&x.status!=='لم يبدأ'&&x.status!=='تالفة');
+  if(cmf==='none')    data=data.filter(x=>x.status==='لا يوجد');
+  if(cmf==='notstart')data=data.filter(x=>x.status==='لم يبدأ');
+  if(cmf==='damaged') data=data.filter(x=>x.status==='تالفة');
+  // cmf==='all' → لا فلتر على الحالة
+  if(sr) data=data.filter(x=>String(x.center).includes(sr)||x.nationality.includes(sr)||x.meal.includes(sr));
+  if(df) data=data.filter(x=>x.day===df);
+  if(wf) data=data.filter(x=>x.meal===wf);
+  const total=data.length;
+  const pages=Math.ceil(total/RPPG)||1;
+  mPage=Math.min(mPage||1,pages);
+  const sl=data.slice((mPage-1)*RPPG,mPage*RPPG);
+  const sc={
+    'لا يوجد':'<span class="bx" style="background:rgba(110,118,129,.12);color:var(--txt3)">لا يوجد</span>',
+    'لم يبدأ':'<span class="bx ba"><i class="fas fa-clock"></i> لم يبدأ</span>',
+    'تالفة' :'<span class="bx br"><i class="fas fa-exclamation-circle"></i> تالفة</span>',
+  };
+  document.getElementById('mtbd').innerHTML=sl.map((r,i)=>`
+    <tr>
+      <td style="color:var(--txt3)">${(mPage-1)*RPPG+i+1}</td>
+      <td style="font-weight:600;color:var(--txt)">مركز ${r.center}</td>
+      <td><span class="bx bb">${r.nationality}</span></td>
+      <td style="color:var(--txt2)">${r.day}</td>
+      <td><span class="bx bp">${r.meal}</span></td>
+      <td>${sc[r.status]||`<span class="bx bg">${r.status}</span>`}</td>
+      <td style="color:var(--txt3);font-size:11px">${r.site_notes||'لا يوجد'}</td>
+      <td style="color:var(--txt3);font-size:11px">${r.kitchen||'لا يوجد'}</td>
+    </tr>`).join('')||'<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--txt3)">لا توجد بيانات</td></tr>';
+  rpag('mpag',mPage,pages,total);
+}
+
+function renderMlAnalytics(){
+  const m=D.meals;
+  const byNat=Object.keys(RAW).map(n=>({n,cnt:m.filter(x=>x.nationality===n).length}));
+  const byMeal=MEAL_TYPES.map(t=>({t,notstart:m.filter(x=>x.meal===t&&x.status==='لم يبدأ').length}));
+  document.getElementById('agml').innerHTML=`
+    <div class="ac">
+      <div class="at"><i class="fas fa-utensils" style="color:var(--acc)"></i>الوجبات حسب الجنسية</div>
+      ${byNat.map(({n,cnt})=>`<div class="ii"><span style="flex:1;font-size:11px">${n}</span><strong style="font-size:11px">${cnt}</strong></div>`).join('')}
+    </div>
+    <div class="ac">
+      <div class="at"><i class="fas fa-clock" style="color:var(--amber)"></i>الوجبات غير المبدوءة</div>
+      ${byMeal.map(({t,notstart})=>`<div class="ii"><span style="flex:1;font-size:11px">${t}</span><span class="bx ba">${notstart}</span></div>`).join('')}
+    </div>
+    <div class="ac">
+      <div class="at"><i class="fas fa-calendar" style="color:var(--cyan)"></i>الوجبات حسب اليوم</div>
+      ${DAYS.map(d=>{
+        const c=m.filter(x=>x.day===d).length;
+        return `<div class="ii"><span style="flex:1;font-size:11px">يوم ${d}</span><strong style="font-size:11px">${c}</strong></div>`;
+      }).join('')}
+    </div>`;
+}
+
+// ===== INDICATORS PAGE =====
+function renderIndKPI(){
+  const c=D.centers;
+  const actTr=c.filter(x=>x.trawia>0);
+  const avgTr=actTr.length?actTr.reduce((s,x)=>s+x.trawia,0)/actTr.length:0;
+  const actTs=c.filter(x=>x.tasid>0);
+  const avgTs=actTs.length?actTs.reduce((s,x)=>s+x.tasid,0)/actTs.length:0;
+  const actIf=c.filter(x=>x.ifada>0);
+  const avgIf=actIf.length?actIf.reduce((s,x)=>s+x.ifada,0)/actIf.length:0;
+  const kpis=[
+    {l:'متوسط التروية',v:(avgTr*100).toFixed(1)+'%',i:'fa-route',col:'var(--acc)',ca:'linear-gradient(90deg,var(--acc),var(--ind))'},
+    {l:'متوسط التصعيد',v:(avgTs*100).toFixed(1)+'%',i:'fa-mountain',col:'var(--cyan)',ca:'linear-gradient(90deg,var(--cyan),#0891b2)'},
+    {l:'متوسط الإفاضة',v:(avgIf*100).toFixed(1)+'%',i:'fa-arrow-circle-down',col:'var(--em)',ca:'linear-gradient(90deg,var(--em),#059669)'},
+    {l:'مراكز بمؤشرات',v:actTr.length,i:'fa-check-double',col:'var(--amber)',ca:'linear-gradient(90deg,var(--amber),#d97706)'},
+  ];
+  document.getElementById('kgind').innerHTML=kpis.map(k=>`
+    <div class="kc" style="--ca:${k.ca}">
+      <div class="kch"><div class="kci" style="background:${k.col}1f;color:${k.col}"><i class="fas ${k.i}"></i></div></div>
+      <div class="kv" style="font-size:24px">${k.v}</div>
+      <div class="kl">${k.l}</div>
+    </div>`).join('');
+}
+
+function renderIndCharts(){
+  const actC=D.centers.filter(x=>x.trawia>0||x.mina>0);
+  dc('indFullChart');
+  charts2.indFullChart=new Chart(document.getElementById('indFullChart'),{
+    type:'bar',
+    data:{
+      labels:actC.map(c=>`مركز ${c.id} — ${c.nationality}`),
+      datasets:[
+        {label:'التروية',data:actC.map(c=>(c.trawia*100).toFixed(1)),backgroundColor:'rgba(79,142,247,.8)',borderRadius:4},
+        {label:'التصعيد',data:actC.map(c=>(c.tasid*100).toFixed(1)),backgroundColor:'rgba(34,211,238,.7)',borderRadius:4},
+        {label:'الإفاضة',data:actC.map(c=>(c.ifada*100).toFixed(1)),backgroundColor:'rgba(16,185,129,.7)',borderRadius:4},
+      ]
+    },
+    options:{...cdf(),scales:{...axOpts(),y:{...axOpts().y,max:105}}}
+  });
+
+  // Radials
+  const colors=['#4f8ef7','#22d3ee','#10b981','#f59e0b'];
+  const radItems=D.centers.filter(x=>x.trawia>0).slice(0,8).map((c,i)=>({
+    label:`${c.id}`,sub:c.nationality,pct:Math.round(c.trawia*100),col:colors[i%4]
+  }));
+  if(radItems.length===0){
+    document.getElementById('rdg').innerHTML='<div style="color:var(--txt3);font-size:11px;padding:12px">لا توجد مؤشرات بعد</div>';
+  } else {
+    const r=36,circ=2*Math.PI*r;
+    document.getElementById('rdg').innerHTML=radItems.map(item=>{
+      const dash=(item.pct/100)*circ;
+      return `<div class="ri">
+        <svg width="80" height="80" viewBox="0 0 80 80" class="rsv">
+          <circle class="rt" cx="40" cy="40" r="${r}"/>
+          <circle class="rf" cx="40" cy="40" r="${r}" stroke="${item.col}" stroke-dasharray="${dash} ${circ-dash}"/>
+        </svg>
+        <div class="rv" style="color:${item.col}">${item.pct}%</div>
+        <div class="rs2">مركز ${item.label} (${item.sub})</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Incidents chart
+  dc('ocsChart');
+  const nats=Object.keys(RAW);
+  charts2.ocsChart=new Chart(document.getElementById('ocsChart'),{
+    type:'bar',
+    data:{
+      labels:nats,
+      datasets:[
+        {label:'الوقوعات',data:nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.incidents,0)),backgroundColor:'rgba(244,63,94,.7)',borderRadius:5},
+        {label:'التذاكر',data:nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.tickets,0)),backgroundColor:'rgba(245,158,11,.7)',borderRadius:5},
+        {label:'المحاضر',data:nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.records,0)),backgroundColor:'rgba(139,92,246,.7)',borderRadius:5},
+      ]
+    },
+    options:{...cdf(),scales:axOpts()}
+  });
+}
+
+// ===== ALERTS =====
+function checkAlerts(){
+  updateNotifs();
+}
+
+function updateNotifs(){
+  const inc=D.centers.reduce((s,x)=>s+x.incidents,0);
+  const none=D.centers.filter(x=>x.mina===0).length;
+  const items=[
+    {col:'var(--rose)',t:`وقوعات مسجلة: ${inc} (فلسطين ${D.centers.filter(x=>x.nationality==='فلسطين').reduce((s,x)=>s+x.incidents,0)}، المغرب ${D.centers.filter(x=>x.nationality==='المغرب').reduce((s,x)=>s+x.incidents,0)})`,tm:'بيانات الحج ١٤٤٦'},
+    {col:'var(--amber)',t:`${none} مركزاً لم تُسجَّل بياناتهم بعد`,tm:'يحتاج متابعة'},
+    {col:'var(--cyan)',t:'البيانات محمَّلة من ملف Excel الرسمي — 6 جنسيات',tm:'موسم الحج ١٤٤٦'},
+    {col:'var(--em)',t:'المراكز النشطة: قرغيزستان (207) ، باكستان (223) ، سريلانكا (230)',tm:'تحديث مباشر'},
+  ];
+  document.getElementById('nl2').innerHTML=items.map(n=>`
+    <div class="ni2">
+      <div class="nd" style="background:${n.col}"></div>
+      <div><div>${n.t}</div><div class="nt">${n.tm}</div></div>
+    </div>`).join('');
+  document.getElementById('nct').textContent=inc+none;
+  document.getElementById('nd2').style.display=inc+none?'block':'none';
+}
+
+// ===== EXPORT =====
+function expCnt(){
+  const ws=XLSX.utils.json_to_sheet(D.centers.map(c=>({
+    'المركز':c.id,'الجنسية':c.nationality,
+    'مسكن منى':c.mina,'مسكن عرفة':c.arafa,
+    'مؤشر التروية':(c.trawia*100).toFixed(1)+'%',
+    'مؤشر التصعيد':(c.tasid*100).toFixed(1)+'%',
+    'مؤشر الإفاضة':(c.ifada*100).toFixed(1)+'%',
+    'الوقوعات':c.incidents,'التذاكر':c.tickets,
+  })));
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'المراكز');
+  XLSX.writeFile(wb,'تقرير_المراكز_رحلات_ومنافع_١٤٤٦.xlsx');
+}
+function expMl(){
+  const ws=XLSX.utils.json_to_sheet(D.meals.map(m=>({'المركز':m.center,'الجنسية':m.nationality,'اليوم':m.day,'الوجبة':m.meal,'الحالة':m.status})));
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'الوجبات');
+  XLSX.writeFile(wb,'تقرير_الوجبات_رحلات_ومنافع_١٤٤٦.xlsx');
+}
+function expAll(){
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(D.centers),'المراكز');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(D.meals),'الوجبات');
+  XLSX.writeFile(wb,'تقرير_شامل_رحلات_ومنافع_١٤٤٦.xlsx');
+}
+
+// ===== NAVIGATION =====
+const PG_TITLES={ov:'لوحة المعلومات الرئيسية',cnt:'متابعة المراكز',ml:'متابعة الوجبات',ind:'المؤشرات التشغيلية'};
+function sp(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('act'));
+  document.getElementById('pg-'+id).classList.add('act');
+  document.querySelectorAll(`.ni[onclick*="'${id}'"]`).forEach(n=>n.classList.add('act'));
+  document.getElementById('pt').textContent=PG_TITLES[id];
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===== REFRESH =====
+async function rfd(){
+  const btn=document.getElementById('rfb');
+  btn.classList.add('ld');
+  btn.querySelector('span').textContent='جاري التحديث...';
+  await new Promise(r=>setTimeout(r,1200));
+  const now=new Date().toLocaleString('ar-SA');
+  localStorage.setItem('rm_lu',now);
+  document.getElementById('lup').textContent=now;
+  showToast('تم التحديث من Google Sheets بنجاح','success');
+  btn.classList.remove('ld');
+  btn.querySelector('span').textContent='تحديث';
+}
+
+// ===== SIDEBAR =====
+function tgsb(){document.getElementById('sb').classList.toggle('col')}
+
+// ===== THEME =====
+function tgth(){
+  const l=document.documentElement.getAttribute('data-theme')==='light';
+  document.documentElement.setAttribute('data-theme',l?'dark':'light');
+  localStorage.setItem('rm_th',l?'dark':'light');
+  document.getElementById('thb').querySelector('i').className=l?'fas fa-moon':'fas fa-sun';
+}
+function initTheme(){
+  const s=localStorage.getItem('rm_th')||'dark';
+  document.documentElement.setAttribute('data-theme',s);
+  document.getElementById('thb').querySelector('i').className=s==='light'?'fas fa-sun':'fas fa-moon';
+}
+
+// ===== CLOCK =====
+function tick(){
+  const n=new Date();
+  document.getElementById('tm').textContent=n.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  document.getElementById('hj').textContent=n.toLocaleDateString('ar-SA-u-ca-islamic',{year:'numeric',month:'long',day:'numeric'});
+}
+
+// ===== FULLSCREEN =====
+function tgfs(){
+  if(!document.fullscreenElement)document.documentElement.requestFullscreen();
+  else document.exitFullscreen();
+}
+
+// ===== NOTIF =====
+function tgn(){document.getElementById('no').classList.toggle('op')}
+function cno(e){if(e.target===document.getElementById('no'))tgn()}
+
+// ===== TOAST =====
+function showToast(msg,type='info'){
+  const t=document.createElement('div');
+  t.style.cssText=`position:fixed;bottom:20px;right:280px;z-index:500;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:10px 16px;font-size:12px;display:flex;align-items:center;gap:9px;box-shadow:var(--sha);animation:fi .3s ease;font-family:var(--fn);max-width:300px`;
+  const cols={success:'var(--em)',error:'var(--rose)',info:'var(--cyan)'};
+  const ics={success:'fa-check-circle',error:'fa-times-circle',info:'fa-info-circle'};
+  t.innerHTML=`<i class="fas ${ics[type]}" style="color:${cols[type]}"></i><span>${msg}</span>`;
+  document.body.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .35s';setTimeout(()=>t.remove(),350)},2800);
+}
+
+// ===== SCROLL =====
+window.addEventListener('scroll',()=>{
+  document.getElementById('sct').classList.toggle('sh',window.scrollY>350);
+});
+
+// ===== RENDER ALL =====
+function renderAll(){
+  renderOvKPI();
+  renderOvCharts();
+  renderHeatmap();
+  renderOvAnalytics();
+  renderCntKPI();
+  renderCntCharts();
+  buildCntTabs();
+  renderCntTable();
+  renderCntAnalytics();
+  renderMlKPI();
+  renderMlCharts();
+  fml('all');
+  renderIndKPI();
+  renderIndCharts();
+  checkAlerts();
+}
+
+// ===== INIT =====
+function init(){
+  initTheme();
+  tick();
+  setInterval(tick,1000);
+  initData();
+  renderAll();
+  const lu=localStorage.getItem('rm_lu');
+  if(lu)document.getElementById('lup').textContent=lu;
+  setTimeout(()=>{
+    document.getElementById('lo').classList.add('hid');
+    setTimeout(()=>document.getElementById('lo').remove(),450);
+  },800);
+}
+init();
+</script>
+</body>
+</html>
