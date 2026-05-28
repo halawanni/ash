@@ -170,17 +170,6 @@ canvas{max-height:240px}
 .al.inf{background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.2)}
 .al.inf i{color:var(--cyan)}
 
-/* NOTIF */
-.no{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.28);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:flex-end;padding:66px 10px 0}
-.no.op{display:flex}
-.np{background:var(--card);border:1px solid var(--border);border-radius:var(--r);width:320px;box-shadow:var(--sha);animation:sd .2s ease;max-height:65vh;overflow-y:auto}
-@keyframes sd{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.nh{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-weight:600;font-size:13px}
-.ni2{padding:10px 14px;border-bottom:1px solid var(--border2);display:flex;gap:9px;font-size:12px}
-.ni2:last-child{border-bottom:none}
-.nd{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.nt{font-size:10px;color:var(--txt3);margin-top:2px}
-
 /* LOADING */
 .lo{position:fixed;inset:0;z-index:300;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;transition:opacity .4s}
 .lo.hid{opacity:0;pointer-events:none}
@@ -247,16 +236,6 @@ canvas{max-height:240px}
   <div class="ltx">جاري تحميل بيانات المشاعر...</div>
 </div>
 
-<!-- NOTIF -->
-<div class="no" id="no" onclick="cno(event)">
-  <div class="np" id="np">
-    <div class="nh">
-      <span><i class="fas fa-bell" style="color:var(--amber);margin-left:7px"></i>التنبيهات</span>
-      <span class="bx br" id="nct">0</span>
-    </div>
-    <div id="nl2"></div>
-  </div>
-</div>
 
 <div class="app">
 <!-- SIDEBAR -->
@@ -325,10 +304,6 @@ canvas{max-height:240px}
     <i class="fas fa-sync-alt"></i><span>تحديث</span>
   </button>
   <div class="ib" onclick="tgfs()" title="ملء الشاشة"><i class="fas fa-expand"></i></div>
-  <div class="ib" id="nb2" onclick="tgn()" style="position:relative">
-    <i class="fas fa-bell"></i>
-    <span style="position:absolute;top:6px;left:6px;width:7px;height:7px;background:var(--rose);border-radius:50%;border:2px solid var(--bg2)" id="nd2"></span>
-  </div>
   <div class="ib" onclick="tgth()" id="thb"><i class="fas fa-moon"></i></div>
 </header>
 
@@ -1028,7 +1003,10 @@ function renderMlCharts(){
 }
 
 function fml(filter,btn){
-  if(filter !== undefined && filter !== null) cmf = filter;
+  if(filter !== undefined && filter !== null) {
+    if(cmf !== filter) mPage = 1; // reset الصفحة عند تغيير الفلتر
+    cmf = filter;
+  }
   if(btn){
     document.querySelectorAll('#pg-ml .tbb').forEach(b=>b.classList.remove('act'));
     btn.classList.add('act');
@@ -1047,7 +1025,7 @@ function fml(filter,btn){
   if(wf) data=data.filter(x=>x.meal===wf);
   const total=data.length;
   const pages=Math.ceil(total/RPPG)||1;
-  mPage=Math.min(mPage||1,pages);
+  if(mPage < 1 || mPage > pages) mPage = 1;
   const sl=data.slice((mPage-1)*RPPG,mPage*RPPG);
   const sc={
     'لا يوجد':'<span class="bx" style="background:rgba(110,118,129,.12);color:var(--txt3)">لا يوجد</span>',
@@ -1169,28 +1147,6 @@ function renderIndCharts(){
 }
 
 // ===== ALERTS =====
-function checkAlerts(){
-  updateNotifs();
-}
-
-function updateNotifs(){
-  const inc=D.centers.reduce((s,x)=>s+x.incidents,0);
-  const none=D.centers.filter(x=>x.mina===0).length;
-  const items=[
-    {col:'var(--rose)',t:`وقوعات مسجلة: ${inc} (فلسطين ${D.centers.filter(x=>x.nationality==='فلسطين').reduce((s,x)=>s+x.incidents,0)}، المغرب ${D.centers.filter(x=>x.nationality==='المغرب').reduce((s,x)=>s+x.incidents,0)})`,tm:'بيانات الحج ١٤٤٦'},
-    {col:'var(--amber)',t:`${none} مركزاً لم تُسجَّل بياناتهم بعد`,tm:'يحتاج متابعة'},
-    {col:'var(--cyan)',t:'البيانات محمَّلة من ملف Excel الرسمي — 6 جنسيات',tm:'موسم الحج ١٤٤٦'},
-    {col:'var(--em)',t:'المراكز النشطة: قرغيزستان (207) ، باكستان (223) ، سريلانكا (230)',tm:'تحديث مباشر'},
-  ];
-  document.getElementById('nl2').innerHTML=items.map(n=>`
-    <div class="ni2">
-      <div class="nd" style="background:${n.col}"></div>
-      <div><div>${n.t}</div><div class="nt">${n.tm}</div></div>
-    </div>`).join('');
-  document.getElementById('nct').textContent=inc+none;
-  document.getElementById('nd2').style.display=inc+none?'block':'none';
-}
-
 // ===== EXPORT =====
 function expCnt(){
   const ws=XLSX.utils.json_to_sheet(D.centers.map(c=>({
@@ -1271,10 +1227,6 @@ function tgfs(){
   else document.exitFullscreen();
 }
 
-// ===== NOTIF =====
-function tgn(){document.getElementById('no').classList.toggle('op')}
-function cno(e){if(e.target===document.getElementById('no'))tgn()}
-
 // ===== TOAST =====
 function showToast(msg,type='info'){
   const t=document.createElement('div');
@@ -1307,7 +1259,6 @@ function renderAll(){
   fml('all');
   renderIndKPI();
   renderIndCharts();
-  checkAlerts();
 }
 
 // ===== INIT =====
