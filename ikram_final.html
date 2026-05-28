@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اكرام الضيف — متابعة المشاعر 1447هـ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root {
+  --bg:#0d1117; --bg2:#161b22; --bg3:#1c2230;
+  --card:#1c2230; --border:rgba(99,132,180,.15); --border2:rgba(99,132,180,.08);
+  --txt:#e6edf3; --txt2:#8b949e; --txt3:#6e7681;
+  --acc:#4f8ef7; --cyan:#22d3ee; --em:#10b981; --rose:#f43f5e;
+  --amber:#f59e0b; --ind:#6366f1;
+  --sw:260px; --swc:68px; --hh:80px; --r:12px; --rs:7px;
+}
+[data-theme="light"] {
+  --bg:#f4f6fb; --bg2:#fff; --bg3:#f0f4ff;
+  --card:#fff; --border:rgba(80,110,180,.14); --border2:rgba(80,110,180,.07);
+  --txt:#1c2230; --txt2:#495873; --txt3:#8b949e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;transition:background .2s,color .2s;overflow-x:hidden}
+
+/* SIDEBAR */
+#sidebar{position:fixed;right:0;top:0;height:100vh;width:var(--sw);background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;z-index:100;transition:width .3s ease;overflow:hidden}
+#sidebar.collapsed{width:var(--swc)}
+.sb-logo{display:flex;align-items:center;gap:12px;padding:16px 14px;border-bottom:1px solid var(--border2);min-height:90px}
+.sb-logo img{width:68px;height:68px;object-fit:contain;border-radius:10px;flex-shrink:0}
+.sb-logo .logo-text{overflow:hidden;transition:opacity .2s,width .2s;white-space:nowrap}
+.sb-logo .logo-text h2{font-size:13px;font-weight:700;color:var(--txt);line-height:1.3}
+.sb-logo .logo-text p{font-size:10px;color:var(--txt2);margin-top:2px}
+.sb-logo .logo-text span{font-size:10px;color:var(--acc);font-weight:600}
+#sidebar.collapsed .logo-text{opacity:0;width:0;pointer-events:none}
+.sb-nav{flex:1;overflow-y:auto;padding:10px 0}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;cursor:pointer;border-radius:8px;margin:2px 8px;transition:all .15s;color:var(--txt2);white-space:nowrap;font-size:13px}
+.nav-item:hover{background:var(--border2);color:var(--txt)}
+.nav-item.act{background:linear-gradient(135deg,rgba(79,142,247,.18),rgba(34,211,238,.08));color:var(--acc);border-right:2px solid var(--acc)}
+.nav-item i{width:20px;text-align:center;font-size:14px;flex-shrink:0}
+.nav-item span{overflow:hidden;transition:opacity .2s;white-space:nowrap}
+#sidebar.collapsed .nav-item span{opacity:0;width:0}
+.sb-bottom{padding:12px;border-top:1px solid var(--border2);display:flex;flex-direction:column;gap:6px}
+.sb-action-btn{display:flex;align-items:center;justify-content:flex-start;gap:8px;width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--txt2);cursor:pointer;font-size:12px;font-family:inherit;transition:all .15s;white-space:nowrap}
+.sb-action-btn:hover{background:var(--border2);color:var(--acc);border-color:var(--acc)}
+.sb-action-btn i{width:16px;text-align:center;flex-shrink:0}
+.sb-action-btn span{overflow:hidden;white-space:nowrap;transition:opacity .2s}
+#sidebar.collapsed .sb-action-btn span{opacity:0;width:0}
+#togBtn{display:flex;align-items:center;justify-content:center;width:100%;padding:8px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--txt2);cursor:pointer;font-size:13px;gap:8px;transition:all .15s}
+#togBtn:hover{background:var(--border2);color:var(--txt)}
+#togBtn span{overflow:hidden;white-space:nowrap;transition:opacity .2s}
+#sidebar.collapsed #togBtn span{opacity:0;width:0}
+
+/* MAIN */
+#main{margin-right:var(--sw);transition:margin-right .3s ease;min-height:100vh;display:flex;flex-direction:column}
+#sidebar.collapsed ~ #main{margin-right:var(--swc)}
+
+/* HEADER */
+#hdr{height:var(--hh);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px;position:sticky;top:0;z-index:50}
+#hdrTitle{font-size:16px;font-weight:700;flex:1}
+.hdr-info{font-size:11px;color:var(--txt2);text-align:center}
+.hdr-info strong{display:block;color:var(--txt);font-size:12px}
+.hdr-btn{background:transparent;border:1px solid var(--border);border-radius:var(--rs);color:var(--txt2);cursor:pointer;padding:7px 12px;font-size:12px;transition:all .15s;font-family:inherit;display:flex;align-items:center;gap:6px}
+.hdr-btn:hover{background:var(--border2);color:var(--acc);border-color:var(--acc)}
+#refreshBtn{background:linear-gradient(135deg,rgba(79,142,247,.15),rgba(34,211,238,.08));border-color:var(--acc);color:var(--acc)}
+#refreshBtn:hover{background:rgba(79,142,247,.25)}
+
+/* CONTENT */
+.pg{display:none;padding:24px;animation:fadein .3s ease}
+.pg.act{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.pg-title{font-size:18px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.pg-title i{color:var(--acc)}
+
+/* KPI CARDS */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:24px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;position:relative;overflow:hidden;transition:all .2s;cursor:default}
+.kpi:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--stripe)}
+.kpi-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:10px}
+.kpi-val{font-size:24px;font-weight:700;line-height:1}
+.kpi-label{font-size:11px;color:var(--txt2);margin-top:4px}
+
+/* CHARTS */
+.charts-row{display:grid;gap:16px;margin-bottom:20px}
+.charts-2{grid-template-columns:1fr 1fr}
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.chart-title{font-size:13px;font-weight:600;margin-bottom:14px;color:var(--txt);display:flex;align-items:center;justify-content:space-between}
+.chart-wrap{position:relative;max-height:240px}
+.chart-wrap.tall{max-height:320px}
+
+/* TOGGLE BTNS */
+.toggle-btns{display:flex;gap:6px}
+.tbtn{padding:4px 10px;border-radius:20px;font-size:10px;border:1px solid var(--border);background:transparent;color:var(--txt2);cursor:pointer;font-family:inherit;transition:all .15s}
+.tbtn.act{background:var(--acc);color:#fff;border-color:var(--acc)}
+
+/* TABLE */
+.tbl-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
+.tbl-toolbar{padding:14px 16px;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tbl-search{flex:1;min-width:160px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:7px 12px;color:var(--txt);font-size:12px;font-family:inherit;outline:none;transition:border .15s}
+.tbl-search:focus{border-color:var(--acc)}
+.tbl-sel{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:7px 10px;color:var(--txt);font-size:12px;font-family:inherit;outline:none;cursor:pointer}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{background:var(--bg3);padding:10px 12px;text-align:right;font-size:10px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:.5px;cursor:pointer;white-space:nowrap;border-bottom:1px solid var(--border)}
+thead th:hover{color:var(--acc)}
+tbody tr{border-bottom:1px solid var(--border2);transition:background .1s}
+tbody tr:hover{background:rgba(79,142,247,.04)}
+tbody td{padding:9px 12px;white-space:nowrap}
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:600}
+.badge-green{background:rgba(16,185,129,.15);color:var(--em)}
+.badge-yellow{background:rgba(245,158,11,.15);color:var(--amber)}
+.badge-red{background:rgba(244,63,94,.15);color:var(--rose)}
+.badge-gray{background:rgba(110,118,129,.15);color:var(--txt3)}
+.badge-blue{background:rgba(79,142,247,.15);color:var(--acc)}
+.tbl-pagination{padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border2);font-size:11px;color:var(--txt2)}
+.pg-btns{display:flex;gap:4px}
+.pg-btn{padding:4px 8px;border:1px solid var(--border);border-radius:4px;background:transparent;color:var(--txt2);cursor:pointer;font-size:11px;font-family:inherit;transition:all .15s}
+.pg-btn:hover,.pg-btn.act{background:var(--acc);color:#fff;border-color:var(--acc)}
+.empty-state{text-align:center;padding:40px;color:var(--txt3);font-size:13px}
+
+/* TABS */
+.tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:6px 14px;border-radius:20px;font-size:11px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--txt2);font-family:inherit;transition:all .15s}
+.tab.act{background:var(--acc);color:#fff;border-color:var(--acc)}
+
+/* HEATMAP */
+.heatmap-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:20px;overflow-x:auto}
+.heatmap-title{font-size:13px;font-weight:600;margin-bottom:14px}
+.heatmap-grid{display:grid;gap:1px;min-width:400px}
+.hm-hdr,.hm-row{display:grid;grid-template-columns:130px repeat(3,1fr);gap:1px}
+.hm-hdr div,.hm-cell,.hm-label{padding:6px 10px;font-size:11px;text-align:center}
+.hm-hdr div{background:var(--bg3);color:var(--txt2);font-weight:600;border-radius:4px}
+.hm-label{background:var(--bg3);color:var(--txt);text-align:right;border-radius:4px}
+.hm-cell{border-radius:4px;color:#fff;font-weight:600;font-size:11px}
+.hm-green{background:rgba(16,185,129,.7)}
+.hm-yellow{background:rgba(245,158,11,.6)}
+.hm-red{background:rgba(244,63,94,.6)}
+.hm-gray{background:var(--bg3);color:var(--txt3)}
+
+/* ANALYTICS */
+.analytics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:20px}
+.anl-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.anl-title{font-size:12px;font-weight:700;color:var(--txt2);margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px}
+.progress-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:12px}
+.progress-row .lbl{flex:0 0 90px;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-bar-wrap{flex:1;background:var(--bg3);border-radius:10px;height:6px;overflow:hidden}
+.progress-bar{height:100%;border-radius:10px;background:var(--acc)}
+.progress-val{flex:0 0 50px;text-align:left;color:var(--txt2)}
+.insight-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:12px;padding:10px;background:var(--bg3);border-radius:8px}
+.insight-item i{color:var(--acc);margin-top:1px;flex-shrink:0}
+
+/* RADIAL */
+.radial-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin-bottom:20px}
+.radial-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;text-align:center}
+.radial-card svg{width:90px;height:90px}
+.radial-lbl{font-size:11px;color:var(--txt2);margin-top:6px;line-height:1.4}
+.radial-val{font-size:18px;font-weight:700;fill:var(--txt)}
+
+/* LOADING */
+#loading{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.spin{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--acc);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loading p{color:var(--txt2);font-size:14px}
+
+/* TOAST */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:10px 20px;font-size:13px;color:var(--txt);z-index:200;transition:transform .3s ease;white-space:nowrap}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  #sidebar{width:var(--swc)}
+  #sidebar .logo-text,#sidebar .nav-item span,#sidebar #togBtn span{opacity:0;width:0}
+  #main{margin-right:var(--swc)}
+  .charts-2{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .pg{padding:12px}
+  .tbl-toolbar{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<div id="loading"><div class="spin"></div><p>جارٍ تحميل البيانات…</p></div>
+<div id="toast"></div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="sb-logo">
+    <img src="https://halawanni.github.io/ash/ikram.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="اكرام">
+    <div style="display:none;width:68px;height:68px;background:linear-gradient(135deg,var(--acc),var(--cyan));border-radius:10px;align-items:center;justify-content:center;font-size:24px;color:#fff;flex-shrink:0"><i class="fas fa-kaaba"></i></div>
+    <div class="logo-text">
+      <h2>اكرام الضيف</h2>
+      <p>متابعة المشاعر 1447 هـ</p>
+      <span>فريق عمليات الحج</span>
+    </div>
+  </div>
+  <nav class="sb-nav">
+    <div class="nav-item act" onclick="navTo(0,this,'لوحة المعلومات')"><i class="fas fa-chart-pie"></i><span>لوحة المعلومات</span></div>
+    <div class="nav-item" onclick="navTo(1,this,'متابعة المراكز')"><i class="fas fa-building"></i><span>متابعة المراكز</span></div>
+    <div class="nav-item" onclick="navTo(2,this,'متابعة الوجبات')"><i class="fas fa-utensils"></i><span>متابعة الوجبات</span></div>
+    <div class="nav-item" onclick="navTo(3,this,'المؤشرات التشغيلية')"><i class="fas fa-gauge-high"></i><span>المؤشرات التشغيلية</span></div>
+  </nav>
+  <div class="sb-bottom">
+    <button class="sb-action-btn" onclick="exportAllExcel()" title="تصدير شامل Excel"><i class="fas fa-file-excel"></i><span>تصدير شامل</span></button>
+    <button class="sb-action-btn" onclick="window.print()" title="طباعة"><i class="fas fa-print"></i><span>طباعة</span></button>
+    <button id="togBtn" onclick="toggleSidebar()"><i class="fas fa-chevron-left"></i><span>طي القائمة</span></button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="hdr">
+    <span id="hdrTitle">لوحة المعلومات</span>
+    <div class="hdr-info"><strong id="hijriDate">…</strong><span id="clockEl">…</span></div>
+    <div class="hdr-info" style="text-align:right"><span>آخر تحديث</span><strong id="lastUp">—</strong></div>
+    <button class="hdr-btn" id="refreshBtn" onclick="refreshData()"><i class="fas fa-rotate-right"></i>تحديث</button>
+    <button class="hdr-btn" onclick="toggleFS()"><i class="fas fa-expand"></i></button>
+    <button class="hdr-btn" onclick="toggleTheme()"><i id="themeIcon" class="fas fa-moon"></i></button>
+  </div>
+
+  <!-- PAGE 1: DASHBOARD -->
+  <div class="pg act" id="pg0">
+    <div class="pg-title"><i class="fas fa-chart-pie"></i>لوحة المعلومات الرئيسية</div>
+    <div class="kpi-grid" id="kpi0"></div>
+    <div class="charts-row charts-2">
+      <div class="chart-card">
+        <div class="chart-title">توزيع المساكن حسب الجنسية
+          <div class="toggle-btns"><button class="tbtn act" onclick="switchHousing('منى',this)">منى</button><button class="tbtn" onclick="switchHousing('عرفة',this)">عرفة</button></div>
+        </div>
+        <div class="chart-wrap" style="max-height:300px;display:flex;align-items:center;justify-content:center"><canvas id="ch_housing"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">مؤشرات التروية / التصعيد / الإفاضة</div>
+        <div class="chart-wrap"><canvas id="ch_indicators"></canvas></div>
+      </div>
+    </div>
+    <div class="charts-row charts-2">
+      <div class="chart-card">
+        <div class="chart-title">أعلى المراكز — منى وعرفة</div>
+        <div class="chart-wrap"><canvas id="ch_topcenters"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">توزيع الحجاج حسب الجنسية</div>
+        <div id="ch_pilgrims_map" style="height:240px;display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start;overflow:hidden"></div>
+      </div>
+    </div>
+    <div class="heatmap-wrap">
+      <div class="heatmap-title"><i class="fas fa-table" style="color:var(--acc);margin-left:8px"></i>خريطة — مؤشرات الأداء</div>
+      <div id="heatmapEl"></div>
+    </div>
+    <div class="analytics-grid" id="anl0"></div>
+  </div>
+
+  <!-- PAGE 2: CENTERS -->
+  <div class="pg" id="pg1">
+    <div class="pg-title"><i class="fas fa-building"></i>متابعة المراكز</div>
+    <div class="kpi-grid" id="kpi1"></div>
+    <div class="charts-row charts-2">
+      <div class="chart-card">
+        <div class="chart-title">منى وعرفة لكل جنسية</div>
+        <div class="chart-wrap"><canvas id="ch_stacked"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">الوقوعات والتذاكر لكل جنسية</div>
+        <div class="chart-wrap"><canvas id="ch_incidents"></canvas></div>
+      </div>
+    </div>
+    <div class="tbl-card">
+      <div class="tbl-toolbar">
+        <input class="tbl-search" id="srch1" placeholder="بحث…" oninput="cPage1=1;renderTable1()">
+        <select class="tbl-sel" id="natFilter" onchange="cPage1=1;renderTable1()"><option value="">كل الجنسيات</option></select>
+        <button class="hdr-btn" onclick="exportExcel1()"><i class="fas fa-file-excel"></i>تصدير</button>
+        <button class="hdr-btn" onclick="window.print()"><i class="fas fa-print"></i>طباعة</button>
+      </div>
+      <div class="tabs" id="tabs1" style="padding:0 16px 0"></div>
+      <div class="tbl-wrap"><table id="tbl1">
+        <thead><tr>
+          <th onclick="sortT1(0)">#</th>
+          <th onclick="sortT1(1)">المركز</th>
+          <th onclick="sortT1(2)">الجنسية</th>
+          <th onclick="sortT1(3)">منى</th>
+          <th onclick="sortT1(4)">عرفة</th>
+          <th onclick="sortT1(5)">التروية</th>
+          <th onclick="sortT1(6)">التصعيد</th>
+          <th onclick="sortT1(7)">الإفاضة</th>
+          <th onclick="sortT1(8)">الوقوعات</th>
+          <th onclick="sortT1(9)">الاستمارات</th>
+        </tr></thead>
+        <tbody id="tbody1"></tbody>
+      </table></div>
+      <div class="tbl-pagination"><span id="pgInfo1"></span><div class="pg-btns" id="pgBtns1"></div></div>
+    </div>
+    <div class="analytics-grid" id="anl1"></div>
+  </div>
+
+  <!-- PAGE 3: MEALS -->
+  <div class="pg" id="pg2">
+    <div class="pg-title"><i class="fas fa-utensils"></i>متابعة الوجبات</div>
+    <div class="kpi-grid" id="kpi2"></div>
+    <div class="charts-row charts-2">
+      <div class="chart-card">
+        <div class="chart-title">حالات الوجبات لكل يوم</div>
+        <div class="chart-wrap"><canvas id="ch_mealdays"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">توزيع الوجبات حسب الجنسية</div>
+        <div class="chart-wrap"><canvas id="ch_mealnats"></canvas></div>
+      </div>
+    </div>
+    <div class="tbl-card">
+      <div class="tbl-toolbar">
+        <input class="tbl-search" id="srch2" placeholder="بحث بالمركز / الجنسية / الوجبة…" oninput="mPage=1;renderTable2()">
+        <select class="tbl-sel" id="dayFilter" onchange="mPage=1;renderTable2()">
+          <option value="">كل الأيام</option>
+          <option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option>
+        </select>
+        <select class="tbl-sel" id="mealFilter" onchange="mPage=1;renderTable2()">
+          <option value="">كل الوجبات</option>
+          <option>إفطار</option><option>غداء</option><option>عشاء</option>
+        </select>
+        <button class="hdr-btn" onclick="exportExcel2()"><i class="fas fa-file-excel"></i>تصدير</button>
+      </div>
+      <div class="tabs" id="tabs2" style="padding:0 16px 0"></div>
+      <div class="tbl-wrap"><table id="tbl2">
+        <thead><tr>
+          <th>#</th><th>المركز</th><th>الجنسية</th><th>اليوم</th><th>الوجبة</th><th>الحالة</th><th>ملاحظات</th><th>المطبخ</th>
+        </tr></thead>
+        <tbody id="tbody2"></tbody>
+      </table></div>
+      <div class="tbl-pagination"><span id="pgInfo2"></span><div class="pg-btns" id="pgBtns2"></div></div>
+    </div>
+  </div>
+
+  <!-- PAGE 4: INDICATORS -->
+  <div class="pg" id="pg3">
+    <div class="pg-title"><i class="fas fa-gauge-high"></i>المؤشرات التشغيلية</div>
+    <div class="kpi-grid" id="kpi3"></div>
+    <div class="chart-card" style="margin-bottom:20px">
+      <div class="chart-title">مؤشرات الأداء — التروية / التصعيد / الإفاضة لكل مركز</div>
+      <div class="chart-wrap tall"><canvas id="ch_perf"></canvas></div>
+    </div>
+    <div class="heatmap-title" style="margin-bottom:12px;font-size:14px;font-weight:700"><i class="fas fa-circle-nodes" style="color:var(--acc);margin-left:8px"></i>تفاصيل المؤشرات</div>
+    <div class="radial-grid" id="radialGrid"></div>
+    <div class="chart-card" style="margin-bottom:20px">
+      <div class="chart-title">الوقوعات والتذاكر والمحاضر لكل جنسية</div>
+      <div class="chart-wrap"><canvas id="ch_ops"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// RAW FALLBACK DATA
+// ═══════════════════════════════════════
+const RAW_CENTERS = [
+  // [id, mina, arafah, tawriya, tasaood, ifada, f_mina, f_arafah, f_muz, f_tawaf, f_iltizam, f_raqaba, f_joda, minutes, tickets, incidents, nationality]
+  [100,0,548,0,0.7556,0,3,0,2,0,8,5,5,0,2,0,'مصر قرعة'],
+  [101,0,2273,0,1,0.9991,1,0,2,0,10,1,4,0,13,5,'مصر قرعة'],
+  [102,0,0,0,0,1,0,0,1,0,7,1,4,1,46,3,'مصر قرعة'],
+  [103,0,0,0,0,0,0,0,1,0,6,1,1,0,36,1,'مصر قرعة'],
+  [104,70,2851,1,1,1,4,2,2,0,4,1,1,1,45,3,'مصر قرعة'],
+  [105,0,937,0,0.9842,0.9842,0,0,1,0,1,1,1,0,30,2,'مصر قرعة'],
+  [106,0,0,0,0,0,0,0,0,0,6,3,3,0,33,6,'مصر قرعة'],
+  [107,0,2911,0,1,1,1,0,2,0,7,3,3,0,27,4,'مصر قرعة'],
+  [108,0,2869,0,1,0.9544,0,0,0,0,6,3,3,1,34,2,'مصر قرعة'],
+  [109,3262,3262,1,1,1,1,0,2,0,12,2,6,0,30,4,'موريتانيا'],
+  [110,160,3165,1,1,1,2,0,7,0,7,4,6,0,54,2,'تونس'],
+  [111,300,2871,1,1,1,3,0,1,0,7,5,5,0,38,1,'تونس'],
+  [112,0,1648,0,1,1,0,2,1,0,8,3,3,1,24,2,'تونس'],
+  [113,0,1867,0,1,1,1,2,1,0,8,5,6,0,20,1,'تونس'],
+  [114,0,0,0,0,0,0,1,7,0,8,6,6,0,8,2,'تونس'],
+  [115,2599,2599,0.99846,0.9985,0.9985,0,1,2,1,8,0,0,1,0,1,'عمان'],
+  [116,2108,2108,0.73964,0.73964,0.9235,1,2,3,0,5,0,0,0,2,3,'عمان'],
+  [117,2838,2838,0.99578,0.99578,1,0,0,3,1,2,0,0,0,0,4,'عمان'],
+  [118,2776,2776,0.99928,0.99928,0.9993,3,1,2,0,2,0,0,0,2,5,'عمان'],
+  [119,2674,2674,0.99147,0.99147,0.9915,0,0,6,1,0,0,0,0,3,1,'عمان'],
+  [120,3687,3687,1,1,1,0,0,1,3,7,1,0,0,1,0,'روسيا'],
+  [121,287,3776,1,1,0.9997,0,0,2,0,5,0,1,1,7,0,'روسيا'],
+  [122,2451,2601,0.7404,0.7858,1,2,1,0,2,10,1,1,2,1,0,'روسيا'],
+  [123,2778,2778,0.96257,0.96257,0.96257,0,1,0,1,12,4,4,0,6,0,'روسيا'],
+  [125,603,727,1,1,1,0,1,1,0,9,7,7,0,11,5,'ارتيريا'],
+  [150,0,522,0,0.49666,1,0,0,0,1,9,6,6,0,3,0,'B2C'],
+  [160,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,'بنجلاديش'],
+  [161,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,'بنجلاديش'],
+  [162,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,'بنجلاديش'],
+  [163,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,'بنجلاديش'],
+  [164,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,'بنجلاديش'],
+  [301,0,0,0,0,0,0,0,0,0,9,2,7,0,0,0,'301-306'],
+  [302,0,0,0,0,0,0,0,0,0,9,1,9,2,0,0,'301-306'],
+  [303,0,0,0,0,0,0,0,0,0,9,1,5,0,0,0,'301-306'],
+  [304,0,0,0,0,0,0,0,0,0,8,4,4,0,0,0,'301-306'],
+  [305,0,0,0,0,0,0,0,0,0,9,4,5,0,0,0,'301-306'],
+  [306,0,0,0,0,0,0,0,0,0,8,4,5,0,0,0,'301-306'],
+];
+
+const MEAL_NAMES = ['إفطار','غداء','عشاء'];
+const DAYS = [8,9,10,11,12,13];
+
+const RAW_MEALS_BY_CENTER = {
+  100:{kitchen:'أركاديا',meals:['لا يوجد','لا يوجد','بوفيه متأخر','بوفيه','بوفيه','جاف','بوفيه','بوفيه متأخر','بوفيه متأخر','بوفيه متأخر','بوفيه متأخر','بوفيه متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  101:{kitchen:'مؤسسة دليل المشاعر',meals:['لا يوجد','لا يوجد','ساخن','جاف','ساخن','جاف','لا يوجد','ساخن','ساخن','لا يوجد','ساخن','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  102:{kitchen:'',meals:['لا يوجد','لا يوجد','ساخن','جاف','ساخن','جاف','لا يوجد','ساخن','ساخن','لا يوجد','ساخن متأخر','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  103:{kitchen:'',meals:['لا يوجد','لا يوجد','ساخن','جاف','ساخن متأخر','جاف','لا يوجد','ساخن متأخر','ساخن متأخر','لا يوجد','ساخن متأخر','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  104:{kitchen:'مؤسسة الامداد والتموين السعودي',meals:['لا يوجد','لا يوجد','ساخن','جاف','ساخن متأخر','جاف','لا يوجد','ساخن متأخر','ساخن متأخر','لا يوجد','ساخن متأخر','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  105:{kitchen:'',meals:['لا يوجد','لا يوجد','ساخن','جاف','ساخن متأخر','جاف','لا يوجد','ساخن متأخر','ساخن متأخر','لا يوجد','ساخن متأخر','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  106:{kitchen:'شركة تموين الضيف لخدمات الاعاشة',meals:['لا يوجد','لا يوجد','ساخن','جاف','ساخن','جاف','لا يوجد','ساخن','ساخن متأخر','لا يوجد','ساخن متأخر','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  107:{kitchen:'',meals:['لا يوجد','لا يوجد','ساخن','جاف','ساخن','جاف','لا يوجد','ساخن','ساخن متأخر','لا يوجد','ساخن متأخر','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  108:{kitchen:'',meals:['لا يوجد','لا يوجد','ساخن','جاف','ساخن','جاف متأخر','لا يوجد','ساخن متأخر','ساخن متأخر','لا يوجد','ساخن متأخر','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  109:{kitchen:'أذواق القمة',meals:['جاف','ساخن','ساخن','جاف','ساخن','جاف','جاف','ساخن','ساخن','جاف','ساخن','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  110:{kitchen:'خطوط المشاعر',meals:['جاف','جاف','جاف','جاف','جاف','جاف','ساخن','لايوجد','ساخن','ساخن','لايوجد','ساخن','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  111:{kitchen:'',meals:['جاف','جاف','جاف','جاف','جاف','جاف','ساخن متأخر','لايوجد','ساخن متأخر','ساخن','لايوجد','ساخن','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  112:{kitchen:'',meals:['جاف','جاف','جاف','جاف','جاف','جاف','ساخن متأخر','لايوجد','ساخن متأخر','ساخن متأخر','لايوجد','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  113:{kitchen:'',meals:['جاف','جاف','جاف','جاف','جاف','جاف','ساخن','لايوجد','ساخن','ساخن','لايوجد','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  114:{kitchen:'',meals:['جاف','جاف','جاف','جاف','جاف','جاف','بوفيه','يوفيه','بوفيه','بوفيه','يوفيه متأخر','بوفيه متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  115:{kitchen:'الشركة الأولى للتغذية والتغليف',meals:['لايوجد','جاف','جاف','جاف','لايوجد','جاف','جاف','لايوجد','جاف متأخر','جاف','لايوجد','جاف متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  116:{kitchen:'',meals:['لايوجد','جاف','جاف','جاف','لايوجد','جاف','جاف','لايوجد','جاف متأخر','جاف','لايوجد','جاف متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  117:{kitchen:'',meals:['لايوجد','جاف متأخر','جاف متأخر','جاف','لايوجد','جاف','جاف','لايوجد','جاف متأخر','جاف','لايوجد','جاف متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  118:{kitchen:'',meals:['لايوجد','جاف','جاف','جاف','لايوجد','جاف','جاف','لايوجد','جاف متأخر','جاف','لايوجد','جاف متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  119:{kitchen:'',meals:['لايوجد','جاف','جاف','جاف','لايوجد','جاف','جاف','لايوجد','جاف متأخر','جاف متأخر','لايوجد','جاف متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  120:{kitchen:'ارياف الجودة الذهبية',meals:['لايوجد','لايوجد','ساخن متأخر','ساخن متأخر','ساخن متأخر','جاف متأخر','جاف متأخر','ساخن','جاف متأخر','جاف','ساخن متأخر','جاف متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  121:{kitchen:'أساس الخليج',meals:['لا يوجد','لايوجد','ساخن متأخر','جاف','ساخن','جاف','جاف','ساخن','لا يوجد','جاف','ساخن','لا يوجد','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  122:{kitchen:'ارياف الجودة الذهبية',meals:['لايوجد','لا يوجد','ساخن متأخر','جاف','ساخن','جاف','جاف','ساخن','جاف متأخر','جاف','ساخن','جاف متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  123:{kitchen:'',meals:['لا يوجد','لايوجد','ساخن متأخر','ساخن متأخر','ساخن متأخر','جاف متأخر','جاف متأخر','ساخن متأخر','جاف متأخر','جاف','ساخن','جاف متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  125:{kitchen:'مطبخ علي الجبلي',meals:['ساخن','ساخن','ساخن','ساخن','ساخن متأخر','ساخن','ساخن','ساخن','ساخن متأخر','جاف متأخر','ساخن','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  150:{kitchen:'سجى الأفق (نعمة)',meals:['بوفيه متأخر','بوفيه','بوفيه متأخر','بوفيه','بوفيه','بوفيه','بوفيه','بوفيه','بوفيه','بوفيه','بوفيه','بوفيه','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  160:{kitchen:'لا يوجد',meals:Array(18).fill('لايوجد')},
+  161:{kitchen:'',meals:Array(18).fill('لايوجد')},
+  162:{kitchen:'',meals:Array(18).fill('لايوجد')},
+  163:{kitchen:'',meals:Array(18).fill('لايوجد')},
+  164:{kitchen:'',meals:Array(18).fill('لايوجد')},
+  301:{kitchen:'مطبخ رسيل',meals:['ساخن','ساخن','ساخن','ساخن','ساخن','جاف','ساخن','ساخن','ساخن متأخر','ساخن','ساخن','ساخن','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  302:{kitchen:'الاسناد الماسي',meals:['ساخن','ساخن','ساخن','ساخن','ساخن','جاف','ساخن','ساخن','ساخن متأخر','ساخن','ساخن','ساخن','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  303:{kitchen:'',meals:['ساخن','ساخن','ساخن','ساخن','ساخن','جاف','ساخن','ساخن','ساخن متأخر','ساخن','ساخن','ساخن','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  304:{kitchen:'زاد المشاعر',meals:['ساخن','ساخن','ساخن','ساخن','ساخن','جاف','تالف','ساخن متأخر','ساخن متأخر','ساخن','ساخن متأخر','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  305:{kitchen:'',meals:['ساخن','ساخن','ساخن','ساخن','ساخن','جاف','تالف','ساخن متأخر','ساخن متأخر','ساخن','ساخن متأخر','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+  306:{kitchen:'',meals:['ساخن','ساخن','ساخن','ساخن','ساخن','جاف','تالف','ساخن متأخر','ساخن متأخر','ساخن','ساخن متأخر','ساخن متأخر','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ','لم يبدأ']},
+};
+
+// Build flat meals array
+let D = {centers:[], meals:[]};
+
+function buildData() {
+  D.centers = RAW_CENTERS.map(r => ({
+    id:r[0], mina:r[1], arafah:r[2],
+    tawriya:r[3], tasaood:r[4], ifada:r[5],
+    f_mina:r[6], f_arafah:r[7], f_muz:r[8], f_tawaf:r[9],
+    f_iltizam:r[10], f_raqaba:r[11], f_joda:r[12],
+    minutes:r[13], tickets:r[14], incidents:r[15],
+    nationality:r[16],
+    forms: (r[6]||0)+(r[7]||0)+(r[8]||0)+(r[9]||0)+(r[10]||0)+(r[11]||0)+(r[12]||0)
+  }));
+
+  // Build kitchen lookup: for centers without kitchen, inherit from same nationality group
+  const natKitchen = {};
+  D.centers.forEach(c => {
+    const m = RAW_MEALS_BY_CENTER[c.id];
+    if (m && m.kitchen) natKitchen[c.nationality] = natKitchen[c.nationality] || m.kitchen;
+  });
+
+  D.meals = [];
+  D.centers.forEach(c => {
+    const m = RAW_MEALS_BY_CENTER[c.id];
+    if (!m) return;
+    // Resolve kitchen: own kitchen → same-nat kitchen → '—'
+    const kitchen = m.kitchen || natKitchen[c.nationality] || '—';
+    DAYS.forEach((day, di) => {
+      MEAL_NAMES.forEach((mname, mi) => {
+        const idx = di*3 + mi;
+        const status = m.meals[idx] || 'لم يبدأ';
+        D.meals.push({
+          center: c.id, nationality: c.nationality,
+          day, mealName: mname, status,
+          kitchen, notes: ''
+        });
+      });
+    });
+  });
+}
+
+// ═══════════════════════════════════════
+// CHART REGISTRY
+// ═══════════════════════════════════════
+const CHARTS = {};
+function destroyChart(id) { if (CHARTS[id]) { CHARTS[id].destroy(); delete CHARTS[id]; } }
+function makeChart(id, config) { destroyChart(id); const c = document.getElementById(id); if(!c) return; CHARTS[id] = new Chart(c, config); return CHARTS[id]; }
+
+// COLORS
+const NAT_COLORS = ['#4f8ef7','#22d3ee','#10b981','#f59e0b','#f43f5e','#6366f1','#8b5cf6','#ec4899','#14b8a6'];
+function rgba(hex,a){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return `rgba(${r},${g},${b},${a})`}
+
+// ═══════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════
+function navTo(i, el, title) {
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('act'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('act'));
+  document.getElementById('pg'+i).classList.add('act');
+  el.classList.add('act');
+  document.getElementById('hdrTitle').textContent = title;
+  window.scrollTo(0,0);
+  renderPage(i);
+}
+
+function renderPage(i) {
+  if(i===0) renderDashboard();
+  else if(i===1) renderCenters();
+  else if(i===2) renderMeals();
+  else if(i===3) renderIndicators();
+}
+
+// ═══════════════════════════════════════
+// SIDEBAR & THEME
+// ═══════════════════════════════════════
+let sidebarCollapsed = false;
+function toggleSidebar() {
+  sidebarCollapsed = !sidebarCollapsed;
+  document.getElementById('sidebar').classList.toggle('collapsed', sidebarCollapsed);
+  const icon = document.querySelector('#togBtn i');
+  icon.className = sidebarCollapsed ? 'fas fa-chevron-right' : 'fas fa-chevron-left';
+}
+
+let dark = true;
+function toggleTheme() {
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  document.getElementById('themeIcon').className = dark ? 'fas fa-moon' : 'fas fa-sun';
+  localStorage.setItem('ikram_th', dark ? 'dark' : 'light');
+  // Redraw active chart
+  renderPage(getCurrentPage());
+}
+
+function getCurrentPage() {
+  const pages = document.querySelectorAll('.pg');
+  for (let i=0;i<pages.length;i++) if(pages[i].classList.contains('act')) return i;
+  return 0;
+}
+
+function toggleFS() {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+  else document.exitFullscreen();
+}
+
+// ═══════════════════════════════════════
+// CLOCK & DATE
+// ═══════════════════════════════════════
+function updateClock() {
+  const now = new Date();
+  const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {year:'numeric',month:'long',day:'numeric'}).format(now);
+  const time = now.toLocaleTimeString('ar-SA', {hour:'2-digit',minute:'2-digit'});
+  document.getElementById('hijriDate').textContent = hijri;
+  document.getElementById('clockEl').textContent = time;
+}
+
+// ═══════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ═══════════════════════════════════════
+// KPI HELPER
+// ═══════════════════════════════════════
+function kpiCard(icon, label, val, color='var(--acc)', stripe='linear-gradient(90deg,'+color+',transparent)') {
+  return `<div class="kpi" style="--stripe:${stripe}">
+    <div class="kpi-icon" style="background:${color}22;color:${color}"><i class="fas fa-${icon}"></i></div>
+    <div class="kpi-val">${typeof val==='number'?val.toLocaleString('en-US'):val}</div>
+    <div class="kpi-label">${label}</div>
+  </div>`;
+}
+
+function pct(v) { return v == null ? '0.0%' : (v*100).toFixed(1)+'%'; }
+function badge(v) {
+  if (v >= 0.9) return `<span class="badge badge-green">${pct(v)}</span>`;
+  if (v >= 0.5) return `<span class="badge badge-yellow">${pct(v)}</span>`;
+  if (v > 0) return `<span class="badge badge-red">${pct(v)}</span>`;
+  return `<span style="color:var(--txt3)">0.0%</span>`;
+}
+
+// ═══════════════════════════════════════
+// PAGE 1: DASHBOARD
+// ═══════════════════════════════════════
+let housingMode = 'منى';
+function switchHousing(mode, el) {
+  housingMode = mode;
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('act'));
+  el.classList.add('act');
+  renderHousingChart();
+}
+
+function renderDashboard() {
+  const centers = D.centers;
+  const nats = [...new Set(centers.map(c=>c.nationality))];
+  const totalMina = centers.reduce((s,c)=>s+c.mina,0);
+  const totalArafah = centers.reduce((s,c)=>s+c.arafah,0);
+  const totalIncidents = centers.reduce((s,c)=>s+c.incidents,0);
+  const activeCount = centers.filter(c=>c.mina>0||c.arafah>0).length;
+  const avgTawriya = centers.filter(c=>c.tawriya>0).reduce((s,c)=>s+c.tawriya,0) / (centers.filter(c=>c.tawriya>0).length||1);
+  
+  // Top nationality by pilgrim count
+  const byNat = {};
+  nats.forEach(n => {
+    const cs = centers.filter(c=>c.nationality===n);
+    byNat[n] = cs.reduce((s,c)=>s+c.mina+c.arafah,0);
+  });
+  const topNat = Object.entries(byNat).sort((a,b)=>b[1]-a[1])[0];
+
+  document.getElementById('kpi0').innerHTML = 
+    kpiCard('building','إجمالي المراكز',centers.length,'var(--acc)') +
+    kpiCard('tent','إجمالي حجاج منى',totalMina,'var(--em)') +
+    kpiCard('mosque','إجمالي حجاج عرفة',totalArafah,'var(--cyan)') +
+    kpiCard('flag','عدد الجنسيات',nats.length,'var(--ind)') +
+    kpiCard('gauge-high','متوسط مؤشر التروية',pct(avgTawriya),'var(--amber)') +
+    kpiCard('star','أعلى جنسية أعداداً',topNat?topNat[0]:'—','var(--rose)') +
+    kpiCard('triangle-exclamation','إجمالي الوقوعات',totalIncidents,'var(--rose)') +
+    kpiCard('circle-check','المراكز النشطة',activeCount,'var(--em)');
+
+  renderHousingChart();
+  renderIndicatorsChart();
+  renderTopCentersChart();
+  renderPilgrimsChart();
+  renderHeatmap();
+  renderAnalytics0();
+}
+
+function renderHousingChart() {
+  const centers = D.centers;
+  const nats = [...new Set(centers.map(c=>c.nationality))];
+  const vals = nats.map(n => centers.filter(c=>c.nationality===n).reduce((s,c)=>s+(housingMode==='منى'?c.mina:c.arafah),0));
+  makeChart('ch_housing', {
+    type: 'doughnut',
+    data: { labels: nats, datasets: [{ data: vals, backgroundColor: NAT_COLORS.map(c=>rgba(c,.85)), borderColor: NAT_COLORS, borderWidth: 2 }] },
+    options: { responsive:true, maintainAspectRatio:false, layout:{padding:10}, plugins:{ legend:{ position:'bottom', labels:{ font:{family:'IBM Plex Sans Arabic',size:11}, color: getComputedStyle(document.documentElement).getPropertyValue('--txt'), padding:8 } } } }
+  });
+}
+
+function renderIndicatorsChart() {
+  const centers = D.centers.filter(c=>c.tawriya>0||c.tasaood>0||c.ifada>0);
+  const nats = [...new Set(centers.map(c=>c.nationality))];
+  const avgByNat = (key) => nats.map(n => {
+    const cs = centers.filter(c=>c.nationality===n&&c[key]>0);
+    return cs.length ? cs.reduce((s,c)=>s+c[key],0)/cs.length : 0;
+  });
+  makeChart('ch_indicators', {
+    type: 'bar',
+    data: { labels: nats, datasets: [
+      { label:'التروية', data: avgByNat('tawriya').map(v=>+(v*100).toFixed(1)), backgroundColor: rgba('#4f8ef7',.7), borderColor:'#4f8ef7', borderWidth:1 },
+      { label:'التصعيد', data: avgByNat('tasaood').map(v=>+(v*100).toFixed(1)), backgroundColor: rgba('#10b981',.7), borderColor:'#10b981', borderWidth:1 },
+      { label:'الإفاضة', data: avgByNat('ifada').map(v=>+(v*100).toFixed(1)), backgroundColor: rgba('#f59e0b',.7), borderColor:'#f59e0b', borderWidth:1 },
+    ]},
+    options: { responsive:true, maintainAspectRatio:true, scales:{ y:{ min:0, max:100, ticks:{ font:{family:'IBM Plex Sans Arabic'} } }, x:{ ticks:{ font:{family:'IBM Plex Sans Arabic'} } } }, plugins:{ legend:{ labels:{ font:{family:'IBM Plex Sans Arabic'} } } } }
+  });
+}
+
+function renderTopCentersChart() {
+  const top = [...D.centers].sort((a,b)=>b.mina+b.arafah-a.mina-a.arafah).slice(0,8);
+  makeChart('ch_topcenters', {
+    type: 'bar',
+    data: { labels: top.map(c=>String(c.id)), datasets: [
+      { label:'منى', data:top.map(c=>c.mina), backgroundColor:rgba('#4f8ef7',.7), borderColor:'#4f8ef7', borderWidth:1 },
+      { label:'عرفة', data:top.map(c=>c.arafah), backgroundColor:rgba('#22d3ee',.7), borderColor:'#22d3ee', borderWidth:1 },
+    ]},
+    options: { responsive:true, maintainAspectRatio:true, scales:{ x:{stacked:false, ticks:{font:{family:'IBM Plex Sans Arabic'}}}, y:{ticks:{font:{family:'IBM Plex Sans Arabic'}}} }, plugins:{ legend:{ labels:{font:{family:'IBM Plex Sans Arabic'}} } } }
+  });
+}
+
+function renderPilgrimsChart() {
+  const nats = [...new Set(D.centers.map(c=>c.nationality))];
+  const data = nats.map((n,i) => ({
+    name: n,
+    val: D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.mina+c.arafah,0),
+    color: NAT_COLORS[i % NAT_COLORS.length]
+  })).sort((a,b)=>b.val-a.val);
+  const total = data.reduce((s,d)=>s+d.val,0) || 1;
+  const el = document.getElementById('ch_pilgrims_map');
+  if (!el) return;
+  el.innerHTML = data.map(d => {
+    const pct = (d.val/total*100).toFixed(1);
+    const flex = Math.max(d.val/total*100, 8);
+    return `<div style="flex:${flex};min-width:60px;background:${rgba(d.color,.25)};border:1px solid ${d.color};border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 4px;cursor:default;transition:all .2s" title="${d.name}: ${d.val.toLocaleString('en-US')}">
+      <div style="width:10px;height:10px;border-radius:50%;background:${d.color};margin-bottom:4px"></div>
+      <div style="font-size:10px;font-weight:700;color:${d.color}">${pct}%</div>
+      <div style="font-size:9px;color:var(--txt2);text-align:center;margin-top:2px;line-height:1.2">${d.name}</div>
+      <div style="font-size:9px;color:var(--txt3);margin-top:1px">${d.val.toLocaleString('en-US')}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderHeatmap() {
+  const active = D.centers.filter(c=>c.tawriya>0||c.tasaood>0||c.ifada>0);
+  const hmColor = v => v>=.9?'hm-green':v>=.5?'hm-yellow':v>0?'hm-red':'hm-gray';
+  let html = `<div class="hm-hdr"><div>المركز / الجنسية</div><div>التروية</div><div>التصعيد</div><div>الإفاضة</div></div>`;
+  if (!active.length) { html += '<div style="text-align:center;padding:20px;color:var(--txt3)">لا توجد بيانات</div>'; }
+  else {
+    active.forEach(c => {
+      html += `<div class="hm-row">
+        <div class="hm-label">${c.id} — ${c.nationality}</div>
+        <div class="hm-cell ${hmColor(c.tawriya)}">${pct(c.tawriya)}</div>
+        <div class="hm-cell ${hmColor(c.tasaood)}">${pct(c.tasaood)}</div>
+        <div class="hm-cell ${hmColor(c.ifada)}">${pct(c.ifada)}</div>
+      </div>`;
+    });
+  }
+  document.getElementById('heatmapEl').innerHTML = `<div class="heatmap-grid">${html}</div>`;
+}
+
+function bestServiceCards() {
+  // Score = avg indicators (tawriya+tasaood+ifada)/3 for centers with at least one indicator > 0
+  const active = D.centers.filter(c=>c.tawriya>0||c.tasaood>0||c.ifada>0);
+  const scored = active.map(c => ({
+    ...c,
+    score: ((c.tawriya||0)+(c.tasaood||0)+(c.ifada||0))/3
+  })).sort((a,b)=>b.score-a.score).slice(0,3);
+  if (!scored.length) return '<div style="color:var(--txt3);font-size:12px">لا توجد بيانات كافية</div>';
+  const medals = ['🥇','🥈','🥉'];
+  return scored.map((c,i) => `
+    <div style="display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg3);border-radius:8px;margin-bottom:8px">
+      <div style="font-size:22px">${medals[i]}</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700;color:var(--txt)">مركز ${c.id} — ${c.nationality}</div>
+        <div style="font-size:11px;color:var(--txt2);margin-top:2px">
+          التروية: ${pct(c.tawriya)} &nbsp;|&nbsp; التصعيد: ${pct(c.tasaood)} &nbsp;|&nbsp; الإفاضة: ${pct(c.ifada)}
+        </div>
+      </div>
+      <div style="font-size:16px;font-weight:700;color:var(--em)">${pct(c.score)}</div>
+    </div>`).join('');
+}
+
+function renderAnalytics0() {
+  const nats = [...new Set(D.centers.map(c=>c.nationality))];
+  const byNat = nats.map(n => ({
+    name: n,
+    total: D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.mina+c.arafah,0)
+  })).sort((a,b)=>b.total-a.total);
+  const maxTotal = byNat[0]?.total || 1;
+  const totalPilgrims = D.centers.reduce((s,c)=>s+c.mina+c.arafah,0);
+
+  const progressRows = byNat.map((n,i) => `
+    <div class="progress-row">
+      <div class="lbl" title="${n.name}">${n.name}</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" style="width:${(n.total/maxTotal*100).toFixed(1)}%;background:${NAT_COLORS[i%NAT_COLORS.length]}"></div></div>
+      <div class="progress-val">${n.total.toLocaleString('en-US')}</div>
+    </div>`).join('');
+
+  const activeCs = D.centers.filter(c=>c.tawriya>0||c.tasaood>0||c.ifada>0);
+  const avgT = activeCs.length ? activeCs.reduce((s,c)=>s+c.tawriya,0)/activeCs.length : 0;
+  const topInc = D.centers.sort((a,b)=>b.incidents-a.incidents)[0];
+
+  const insights = [
+    { icon:'users', txt:`إجمالي الحجاج: ${totalPilgrims.toLocaleString('en-US')} حاج موزعون على ${D.centers.length} مركز` },
+    { icon:'gauge-high', txt:`متوسط مؤشر التروية للمراكز النشطة: ${pct(avgT)}` },
+    { icon:'triangle-exclamation', txt:`أعلى مركز حوادث: مركز ${topInc?.id} (${topInc?.nationality}) بـ ${topInc?.incidents} وقوعات` },
+    { icon:'circle-check', txt:`المراكز النشطة (لها حجاج): ${D.centers.filter(c=>c.mina>0||c.arafah>0).length} من ${D.centers.length}` },
+  ];
+
+  document.getElementById('anl0').innerHTML = `
+    <div class="anl-card"><div class="anl-title">ترتيب الجنسيات</div>${progressRows}</div>
+    <div class="anl-card"><div class="anl-title">رؤى ذكية</div>${insights.map(i=>`<div class="insight-item"><i class="fas fa-${i.icon}"></i><span>${i.txt}</span></div>`).join('')}</div>
+    <div class="anl-card"><div class="anl-title">⭐ أفضل مراكز الخدمة</div>${bestServiceCards()}</div>
+  `;
+}
+
+// ═══════════════════════════════════════
+// PAGE 2: CENTERS
+// ═══════════════════════════════════════
+let cPage1 = 1, cSort1 = {col:-1,asc:true};
+function renderCenters() {
+  const centers = D.centers;
+  const totalMina = centers.reduce((s,c)=>s+c.mina,0);
+  const totalArafah = centers.reduce((s,c)=>s+c.arafah,0);
+  const totalInc = centers.reduce((s,c)=>s+c.incidents,0);
+  const active = centers.filter(c=>c.mina>0||c.arafah>0).length;
+
+  document.getElementById('kpi1').innerHTML = 
+    kpiCard('building','إجمالي المراكز',centers.length,'var(--acc)') +
+    kpiCard('circle-check','المراكز النشطة',active,'var(--em)') +
+    kpiCard('tent','إجمالي منى',totalMina,'var(--cyan)') +
+    kpiCard('mosque','إجمالي عرفة',totalArafah,'var(--amber)') +
+    kpiCard('triangle-exclamation','الوقوعات الكلية',totalInc,'var(--rose)');
+
+  // Fill nationality filter dropdown
+  const nats = [...new Set(centers.map(c=>c.nationality))];
+  const natSel = document.getElementById('natFilter');
+  const cur = natSel.value;
+  natSel.innerHTML = '<option value="">كل الجنسيات</option>' + nats.map(n=>`<option value="${n}"${n===cur?' selected':''}>${n}</option>`).join('');
+
+  // Tabs
+  const tabs = document.getElementById('tabs1');
+  tabs.innerHTML = `<button class="tab act" onclick="setNatTab('',this)">الكل</button>` + nats.map(n=>`<button class="tab" onclick="setNatTab('${n}',this)">${n}</button>`).join('');
+
+  // Charts
+  renderStackedChart();
+  renderIncidentsChart();
+  renderTable1();
+  renderAnalytics1();
+}
+
+function setNatTab(nat, el) {
+  document.getElementById('natFilter').value = nat;
+  document.querySelectorAll('#tabs1 .tab').forEach(t=>t.classList.remove('act'));
+  el.classList.add('act');
+  cPage1 = 1;
+  renderTable1();
+}
+
+function renderStackedChart() {
+  const nats = [...new Set(D.centers.map(c=>c.nationality))];
+  makeChart('ch_stacked', {
+    type:'bar',
+    data:{ labels:nats, datasets:[
+      {label:'منى', data:nats.map(n=>D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.mina,0)), backgroundColor:rgba('#4f8ef7',.7), borderColor:'#4f8ef7', borderWidth:1},
+      {label:'عرفة', data:nats.map(n=>D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.arafah,0)), backgroundColor:rgba('#22d3ee',.7), borderColor:'#22d3ee', borderWidth:1},
+    ]},
+    options:{responsive:true,maintainAspectRatio:true,scales:{x:{stacked:true,ticks:{font:{family:'IBM Plex Sans Arabic'}}},y:{stacked:true,ticks:{font:{family:'IBM Plex Sans Arabic'}}}},plugins:{legend:{labels:{font:{family:'IBM Plex Sans Arabic'}}}}}
+  });
+}
+
+function renderIncidentsChart() {
+  const nats = [...new Set(D.centers.map(c=>c.nationality))];
+  makeChart('ch_incidents', {
+    type:'bar',
+    data:{ labels:nats, datasets:[
+      {label:'الوقوعات', data:nats.map(n=>D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.incidents,0)), backgroundColor:rgba('#f43f5e',.7), borderColor:'#f43f5e', borderWidth:1},
+      {label:'التذاكر', data:nats.map(n=>D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.tickets,0)), backgroundColor:rgba('#f59e0b',.7), borderColor:'#f59e0b', borderWidth:1},
+    ]},
+    options:{responsive:true,maintainAspectRatio:true,scales:{x:{ticks:{font:{family:'IBM Plex Sans Arabic'}}},y:{ticks:{font:{family:'IBM Plex Sans Arabic'}}}},plugins:{legend:{labels:{font:{family:'IBM Plex Sans Arabic'}}}}}
+  });
+}
+
+function getFilteredCenters() {
+  let data = [...D.centers];
+  const srch = document.getElementById('srch1')?.value.toLowerCase() || '';
+  const nat = document.getElementById('natFilter')?.value || '';
+  if (nat) data = data.filter(c=>c.nationality===nat);
+  if (srch) data = data.filter(c=>String(c.id).includes(srch)||c.nationality.includes(srch));
+  if (cSort1.col >= 0) {
+    const keys = ['_idx','id','nationality','mina','arafah','tawriya','tasaood','ifada','incidents','forms'];
+    data.sort((a,b) => {
+      const k = keys[cSort1.col];
+      return cSort1.asc ? (a[k]>b[k]?1:-1) : (a[k]<b[k]?1:-1);
+    });
+  }
+  return data;
+}
+
+function sortT1(col) {
+  if (cSort1.col===col) cSort1.asc=!cSort1.asc; else {cSort1.col=col;cSort1.asc=true;}
+  renderTable1();
+}
+
+function renderTable1() {
+  const data = getFilteredCenters();
+  const perPage = 12;
+  const total = data.length;
+  const totalPages = Math.max(1, Math.ceil(total/perPage));
+  if (cPage1 > totalPages) cPage1 = totalPages;
+  const page = data.slice((cPage1-1)*perPage, cPage1*perPage);
+
+  const tbody = document.getElementById('tbody1');
+  if (!page.length) { tbody.innerHTML = `<tr><td colspan="10" class="empty-state">لا توجد بيانات</td></tr>`; }
+  else {
+    tbody.innerHTML = page.map((c,i) => `<tr>
+      <td style="color:var(--txt3)">${(cPage1-1)*perPage+i+1}</td>
+      <td><strong>${c.id}</strong></td>
+      <td>${c.nationality}</td>
+      <td>${c.mina.toLocaleString('en-US')}</td>
+      <td>${c.arafah.toLocaleString('en-US')}</td>
+      <td>${badge(c.tawriya)}</td>
+      <td>${badge(c.tasaood)}</td>
+      <td>${badge(c.ifada)}</td>
+      <td>${c.incidents>0?`<span class="badge badge-red">${c.incidents}</span>`:`<span style="color:var(--txt3)">0</span>`}</td>
+      <td>${c.forms.toLocaleString('en-US')}</td>
+    </tr>`).join('');
+  }
+  document.getElementById('pgInfo1').textContent = `${total} سجل — صفحة ${cPage1} من ${totalPages}`;
+  renderPagination('pgBtns1', cPage1, totalPages, p=>{cPage1=p;renderTable1();});
+}
+
+function renderPagination(id, cur, total, cb) {
+  const el = document.getElementById(id);
+  let btns = '';
+  const show = (p) => { btns += `<button class="pg-btn${p===cur?' act':''}" onclick="(${cb})(${p})">${p}</button>`; };
+  if (total <= 7) { for(let p=1;p<=total;p++) show(p); }
+  else {
+    show(1);
+    if (cur > 3) btns += '<span style="color:var(--txt3);padding:0 4px">…</span>';
+    for (let p=Math.max(2,cur-1);p<=Math.min(total-1,cur+1);p++) show(p);
+    if (cur < total-2) btns += '<span style="color:var(--txt3);padding:0 4px">…</span>';
+    show(total);
+  }
+  el.innerHTML = btns;
+}
+
+function renderAnalytics1() {
+  const nats = [...new Set(D.centers.map(c=>c.nationality))];
+  const byNat = nats.map(n=>({
+    name:n,
+    total:D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.mina+c.arafah,0)
+  })).sort((a,b)=>b.total-a.total);
+  const max = byNat[0]?.total || 1;
+  const totalInc = D.centers.reduce((s,c)=>s+c.incidents,0);
+  const rows = byNat.map((n,i)=>`<div class="progress-row">
+    <div class="lbl">${n.name}</div>
+    <div class="progress-bar-wrap"><div class="progress-bar" style="width:${(n.total/max*100).toFixed(0)}%;background:${NAT_COLORS[i%NAT_COLORS.length]}"></div></div>
+    <div class="progress-val">${n.total.toLocaleString('en-US')}</div>
+  </div>`).join('');
+  document.getElementById('anl1').innerHTML = `
+    <div class="anl-card"><div class="anl-title">توزيع الحجاج</div>${rows}</div>
+    <div class="anl-card"><div class="anl-title">ملخص</div>
+      <div class="insight-item"><i class="fas fa-arrow-up" style="color:var(--em)"></i><span>أعلى جنسية: ${byNat[0]?.name} — ${byNat[0]?.total.toLocaleString('en-US')} حاج</span></div>
+      <div class="insight-item"><i class="fas fa-arrow-down" style="color:var(--txt3)"></i><span>أقل جنسية: ${byNat[byNat.length-1]?.name} — ${byNat[byNat.length-1]?.total.toLocaleString('en-US')} حاج</span></div>
+      <div class="insight-item"><i class="fas fa-triangle-exclamation" style="color:var(--rose)"></i><span>إجمالي الوقوعات: ${totalInc}</span></div>
+    </div>`;
+}
+
+function exportExcel1() {
+  const data = getFilteredCenters();
+  const ws = XLSX.utils.json_to_sheet(data.map(c=>({
+    'المركز':c.id,'الجنسية':c.nationality,'منى':c.mina,'عرفة':c.arafah,
+    'مؤشر التروية':pct(c.tawriya),'مؤشر التصعيد':pct(c.tasaood),'مؤشر الإفاضة':pct(c.ifada),
+    'الوقوعات':c.incidents,'التذاكر':c.tickets,'إجمالي الاستمارات':c.forms
+  })));
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'المراكز');
+  XLSX.writeFile(wb, 'ikram_centers.xlsx');
+}
+
+// ═══════════════════════════════════════
+// PAGE 3: MEALS
+// ═══════════════════════════════════════
+let mPage = 1, mTabStatus = '';
+
+function renderMeals() {
+  const meals = D.meals;
+  const total = meals.length;
+  const la = meals.filter(m=>m.status==='لا يوجد'||m.status==='لايوجد').length;
+  const lm = meals.filter(m=>m.status==='لم يبدأ').length;
+  const ongoing = meals.filter(m=>!['لا يوجد','لايوجد','لم يبدأ','تالف'].includes(m.status)).length;
+  const damaged = meals.filter(m=>m.status==='تالف').length;
+
+  document.getElementById('kpi2').innerHTML =
+    kpiCard('utensils','إجمالي الوجبات',total,'var(--acc)') +
+    kpiCard('ban','لا يوجد',la,'var(--txt3)') +
+    kpiCard('clock','لم يبدأ',lm,'var(--amber)') +
+    kpiCard('circle-check','بدأت',ongoing,'var(--em)') +
+    kpiCard('triangle-exclamation','تالف',damaged,'var(--rose)');
+
+  renderMealDaysChart();
+  renderMealNatsChart();
+
+  // Tabs
+  const tabs2 = document.getElementById('tabs2');
+  const tabLabels = [{v:'',l:'الكل'},{v:'نشطة',l:'نشطة'},{v:'لا يوجد',l:'لا يوجد'},{v:'لم يبدأ',l:'لم يبدأ'},{v:'تالف',l:'تالف'},{v:'متأخر',l:'متأخر'}];
+  tabs2.innerHTML = tabLabels.map(t=>`<button class="tab${mTabStatus===t.v?' act':''}" onclick="setMealTab('${t.v}',this)">${t.l}</button>`).join('');
+
+  renderTable2();
+}
+
+function setMealTab(val, el) {
+  mTabStatus = val;
+  mPage = 1;
+  document.querySelectorAll('#tabs2 .tab').forEach(t=>t.classList.remove('act'));
+  el.classList.add('act');
+  renderTable2();
+}
+
+function renderMealDaysChart() {
+  const counts = DAYS.map(d => {
+    const dayMeals = D.meals.filter(m=>m.day===d);
+    return {
+      la: dayMeals.filter(m=>m.status==='لا يوجد'||m.status==='لايوجد').length,
+      lm: dayMeals.filter(m=>m.status==='لم يبدأ').length,
+      ongoing: dayMeals.filter(m=>!['لا يوجد','لايوجد','لم يبدأ','تالف'].includes(m.status)).length,
+    };
+  });
+  makeChart('ch_mealdays', {
+    type:'bar',
+    data:{ labels:DAYS.map(d=>'يوم '+d), datasets:[
+      {label:'جارية', data:counts.map(c=>c.ongoing), backgroundColor:rgba('#10b981',.7), borderColor:'#10b981', borderWidth:1},
+      {label:'لم يبدأ', data:counts.map(c=>c.lm), backgroundColor:rgba('#f59e0b',.7), borderColor:'#f59e0b', borderWidth:1},
+      {label:'لا يوجد', data:counts.map(c=>c.la), backgroundColor:rgba('#6e7681',.5), borderColor:'#6e7681', borderWidth:1},
+    ]},
+    options:{responsive:true,maintainAspectRatio:true,scales:{x:{stacked:true,ticks:{font:{family:'IBM Plex Sans Arabic'}}},y:{stacked:true,ticks:{font:{family:'IBM Plex Sans Arabic'}}}},plugins:{legend:{labels:{font:{family:'IBM Plex Sans Arabic'}}}}}
+  });
+}
+
+function renderMealNatsChart() {
+  const nats = [...new Set(D.meals.map(m=>m.nationality))];
+  makeChart('ch_mealnats', {
+    type:'doughnut',
+    data:{ labels:nats, datasets:[{ data:nats.map(n=>D.meals.filter(m=>m.nationality===n).length), backgroundColor:NAT_COLORS.map(c=>rgba(c,.8)), borderColor:NAT_COLORS, borderWidth:2 }]},
+    options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{font:{family:'IBM Plex Sans Arabic',size:11}}}}}
+  });
+}
+
+function getFilteredMeals() {
+  let data = [...D.meals];
+  const srch = document.getElementById('srch2')?.value.toLowerCase() || '';
+  const day = document.getElementById('dayFilter')?.value || '';
+  const meal = document.getElementById('mealFilter')?.value || '';
+  if (day) data = data.filter(m=>String(m.day)===day);
+  if (meal) data = data.filter(m=>m.mealName===meal);
+  if (srch) data = data.filter(m=>String(m.center).includes(srch)||m.nationality.includes(srch)||m.mealName.includes(srch)||m.status.includes(srch));
+  if (mTabStatus === 'نشطة') data = data.filter(m=>!['لا يوجد','لايوجد','لم يبدأ','تالف'].includes(m.status));
+  else if (mTabStatus === 'لا يوجد') data = data.filter(m=>m.status==='لا يوجد'||m.status==='لايوجد');
+  else if (mTabStatus === 'لم يبدأ') data = data.filter(m=>m.status==='لم يبدأ');
+  else if (mTabStatus === 'تالف') data = data.filter(m=>m.status==='تالف');
+  else if (mTabStatus === 'متأخر') data = data.filter(m=>m.status.includes('متأخر'));
+  return data;
+}
+
+function mealBadge(s) {
+  if (!s || s==='لا يوجد' || s==='لايوجد') return `<span class="badge badge-gray">${s||'—'}</span>`;
+  if (s==='لم يبدأ') return `<span class="badge badge-yellow"><i class="fas fa-clock" style="margin-left:4px;font-size:9px"></i>${s}</span>`;
+  if (s==='تالف') return `<span class="badge badge-red"><i class="fas fa-triangle-exclamation" style="margin-left:4px;font-size:9px"></i>${s}</span>`;
+  return `<span class="badge badge-green">${s}</span>`;
+}
+
+function renderTable2() {
+  const data = getFilteredMeals();
+  const perPage = 12;
+  const total = data.length;
+  const totalPages = Math.max(1, Math.ceil(total/perPage));
+  if (mPage > totalPages) mPage = totalPages;
+  const page = data.slice((mPage-1)*perPage, mPage*perPage);
+
+  const tbody = document.getElementById('tbody2');
+  if (!page.length) { tbody.innerHTML = `<tr><td colspan="8" class="empty-state">لا توجد بيانات</td></tr>`; }
+  else {
+    tbody.innerHTML = page.map((m,i) => `<tr>
+      <td style="color:var(--txt3)">${(mPage-1)*perPage+i+1}</td>
+      <td><strong>${m.center}</strong></td>
+      <td>${m.nationality}</td>
+      <td>يوم ${m.day}</td>
+      <td>${m.mealName}</td>
+      <td>${mealBadge(m.status)}</td>
+      <td style="color:var(--txt2);max-width:150px;overflow:hidden;text-overflow:ellipsis">${m.notes||'—'}</td>
+      <td style="color:var(--txt2)">${m.kitchen||'—'}</td>
+    </tr>`).join('');
+  }
+  document.getElementById('pgInfo2').textContent = `${total} سجل — صفحة ${mPage} من ${totalPages}`;
+  renderPagination('pgBtns2', mPage, totalPages, p=>{mPage=p;renderTable2();});
+}
+
+function exportExcel2() {
+  const data = getFilteredMeals();
+  const ws = XLSX.utils.json_to_sheet(data.map(m=>({'المركز':m.center,'الجنسية':m.nationality,'اليوم':'يوم '+m.day,'الوجبة':m.mealName,'الحالة':m.status,'ملاحظات':m.notes||'','المطبخ':m.kitchen||''})));
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'الوجبات');
+  XLSX.writeFile(wb, 'ikram_meals.xlsx');
+}
+
+// ═══════════════════════════════════════
+// PAGE 4: INDICATORS
+// ═══════════════════════════════════════
+function renderIndicators() {
+  const active = D.centers.filter(c=>c.tawriya>0||c.tasaood>0||c.ifada>0);
+  const nats = [...new Set(D.centers.map(c=>c.nationality))];
+  const avgT = active.length ? active.reduce((s,c)=>s+c.tawriya,0)/active.length : 0;
+  const avgS = active.length ? active.reduce((s,c)=>s+c.tasaood,0)/active.length : 0;
+  const avgI = active.length ? active.reduce((s,c)=>s+c.ifada,0)/active.length : 0;
+
+  document.getElementById('kpi3').innerHTML =
+    kpiCard('gauge-high','متوسط التروية',pct(avgT),'var(--acc)') +
+    kpiCard('arrow-up','متوسط التصعيد',pct(avgS),'var(--em)') +
+    kpiCard('rotate-right','متوسط الإفاضة',pct(avgI),'var(--cyan)') +
+    kpiCard('building-circle-check','مراكز بمؤشرات',active.length,'var(--amber)');
+
+  // Big chart
+  const labels = active.map(c=>`مركز ${c.id} — ${c.nationality}`);
+  makeChart('ch_perf', {
+    type:'bar',
+    data:{ labels, datasets:[
+      {label:'التروية', data:active.map(c=>+(c.tawriya*100).toFixed(1)), backgroundColor:rgba('#4f8ef7',.7), borderColor:'#4f8ef7', borderWidth:1},
+      {label:'التصعيد', data:active.map(c=>+(c.tasaood*100).toFixed(1)), backgroundColor:rgba('#10b981',.7), borderColor:'#10b981', borderWidth:1},
+      {label:'الإفاضة', data:active.map(c=>+(c.ifada*100).toFixed(1)), backgroundColor:rgba('#f59e0b',.7), borderColor:'#f59e0b', borderWidth:1},
+    ]},
+    options:{responsive:true,maintainAspectRatio:true,scales:{x:{ticks:{font:{family:'IBM Plex Sans Arabic',size:10},maxRotation:45}},y:{min:0,max:100,ticks:{font:{family:'IBM Plex Sans Arabic'}}}},plugins:{legend:{labels:{font:{family:'IBM Plex Sans Arabic'}}}}}
+  });
+
+  // Radials
+  const grid = document.getElementById('radialGrid');
+  if (!active.length) {
+    grid.innerHTML = '<div style="color:var(--txt3);text-align:center;padding:24px;grid-column:1/-1">لا توجد مؤشرات بعد</div>';
+  } else {
+    grid.innerHTML = active.map(c => {
+      const avg = ((c.tawriya+c.tasaood+c.ifada)/3*100).toFixed(1);
+      const r = 35, circumference = 2*Math.PI*r;
+      const offset = circumference - (avg/100*circumference);
+      const color = avg>=90?'var(--em)':avg>=50?'var(--amber)':'var(--rose)';
+      return `<div class="radial-card">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="${r}" fill="none" stroke="var(--border)" stroke-width="8"/>
+          <circle cx="50" cy="50" r="${r}" fill="none" stroke="${color}" stroke-width="8"
+            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"
+            stroke-linecap="round" transform="rotate(-90 50 50)"/>
+          <text x="50" y="55" text-anchor="middle" font-size="14" font-weight="700" fill="${color}">${avg}%</text>
+        </svg>
+        <div class="radial-lbl">مركز ${c.id}<br>(${c.nationality})</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Ops chart
+  makeChart('ch_ops', {
+    type:'bar',
+    data:{ labels:nats, datasets:[
+      {label:'الوقوعات', data:nats.map(n=>D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.incidents,0)), backgroundColor:rgba('#f43f5e',.7), borderColor:'#f43f5e', borderWidth:1},
+      {label:'التذاكر', data:nats.map(n=>D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.tickets,0)), backgroundColor:rgba('#f59e0b',.7), borderColor:'#f59e0b', borderWidth:1},
+      {label:'المحاضر', data:nats.map(n=>D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.minutes,0)), backgroundColor:rgba('#6366f1',.7), borderColor:'#6366f1', borderWidth:1},
+    ]},
+    options:{responsive:true,maintainAspectRatio:true,scales:{x:{ticks:{font:{family:'IBM Plex Sans Arabic'}}},y:{ticks:{font:{family:'IBM Plex Sans Arabic'}}}},plugins:{legend:{labels:{font:{family:'IBM Plex Sans Arabic'}}}}}
+  });
+}
+
+// ═══════════════════════════════════════
+// REFRESH & INIT
+// ═══════════════════════════════════════
+function exportAllExcel() {
+  const wb = XLSX.utils.book_new();
+  // Sheet 1: Centers
+  const ws1 = XLSX.utils.json_to_sheet(D.centers.map(c=>({
+    'المركز':c.id,'الجنسية':c.nationality,'منى':c.mina,'عرفة':c.arafah,
+    'مؤشر التروية':pct(c.tawriya),'مؤشر التصعيد':pct(c.tasaood),'مؤشر الإفاضة':pct(c.ifada),
+    'الوقوعات':c.incidents,'التذاكر':c.tickets,'المحاضر':c.minutes,'الاستمارات':c.forms
+  })));
+  XLSX.utils.book_append_sheet(wb, ws1, 'المراكز');
+  // Sheet 2: Meals
+  const ws2 = XLSX.utils.json_to_sheet(D.meals.map(m=>({
+    'المركز':m.center,'الجنسية':m.nationality,'اليوم':'يوم '+m.day,
+    'الوجبة':m.mealName,'الحالة':m.status,'المطبخ':m.kitchen
+  })));
+  XLSX.utils.book_append_sheet(wb, ws2, 'الوجبات');
+  XLSX.writeFile(wb, 'ikram_تقرير_شامل.xlsx');
+  showToast('✅ تم تصدير التقرير الشامل');
+}
+
+// ═══════════════════════════════════════
+// GOOGLE SHEETS LIVE FETCH
+// ═══════════════════════════════════════
+const SHEET_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR7ZTe9vQIgm7pWkghB4kL4jSPuifRHbVtoOVS4XXtjCKIyuCzdmG4YMIquYYsUd4MM9Ih7YbFFj27j/pub?output=csv';
+const SHEET_NAMES = ['مصر قرعة','مروتانيا','تونس','عمان','روسيا','ارتيريا','B2C','بنجلادش','301-306'];
+
+async function fetchSheetCSV(sheetName) {
+  const url = `${SHEET_BASE}&sheet=${encodeURIComponent(sheetName)}&cachebust=${Date.now()}`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  const text = await r.text();
+  // Parse CSV respecting quoted commas
+  return text.trim().split('\n').map(line => {
+    const cols = [], re = /("([^"]*)")|([^,]+)|((?<=,)(?=,))|(^(?=,))/g;
+    let m, lastIdx = 0;
+    // Simple split on comma (values don't have commas in this dataset)
+    return line.split(',').map(v => v.trim().replace(/^"|"$/g,''));
+  });
+}
+
+function parseSheetData(rows, nationality) {
+  const centers = [];
+  const meals = [];
+  let mode = null; // 'centers' | 'meals'
+  let mealsHeaderFound = false;
+
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const r0 = (row[0] || '').trim();
+
+    if (r0.includes('جدول متابعة المراكز')) { mode = 'centers'; continue; }
+    if (r0.includes('جدول وجبات')) { mode = 'meals'; mealsHeaderFound = false; continue; }
+
+    if (mode === 'centers') {
+      // Skip header rows (المركز, المخيمات, etc.)
+      const id = parseFloat(r0);
+      if (!isNaN(id) && id > 0) {
+        const n = v => { const x = parseFloat(row[v]); return isNaN(x) ? 0 : x; };
+        centers.push({
+          id, mina: n(1), arafah: n(2),
+          tawriya: n(3), tasaood: n(4), ifada: n(5),
+          f_mina: n(6), f_arafah: n(7), f_muz: n(8), f_tawaf: n(9),
+          f_iltizam: n(10), f_raqaba: n(11), f_joda: n(12),
+          minutes: n(13), tickets: n(14), incidents: n(15),
+          nationality,
+          forms: n(6)+n(7)+n(8)+n(9)+n(10)+n(11)+n(12)
+        });
+      }
+    }
+
+    if (mode === 'meals') {
+      // Wait for the header row that has 'المركز'
+      if (!mealsHeaderFound) {
+        if (r0 === 'المركز' || r0.includes('المركز')) { mealsHeaderFound = true; }
+        continue;
+      }
+      const id = parseFloat(r0);
+      if (!isNaN(id) && id > 0) {
+        const kitchen = (row[19] || '').trim() || (row[20] || '').trim();
+        DAYS.forEach((day, di) => {
+          MEAL_NAMES.forEach((mname, mi) => {
+            const idx = 1 + di * 3 + mi; // cols 1..18
+            const status = (row[idx] || '').trim() || 'لم يبدأ';
+            meals.push({ center: id, nationality, day, mealName: mname, status, kitchen, notes: '' });
+          });
+        });
+      }
+    }
+  }
+  return { centers, meals };
+}
+
+async function refreshData() {
+  const btn = document.getElementById('refreshBtn');
+  btn.innerHTML = '<i class="fas fa-rotate-right fa-spin"></i> جارٍ التحديث…';
+  btn.disabled = true;
+
+  let successCount = 0;
+  const newCenters = [];
+  const newMeals = [];
+
+  for (const sheet of SHEET_NAMES) {
+    try {
+      const rows = await fetchSheetCSV(sheet);
+      const { centers, meals } = parseSheetData(rows, sheet);
+      newCenters.push(...centers);
+      newMeals.push(...meals);
+      successCount++;
+    } catch (e) {
+      console.warn(`فشل جلب ورقة "${sheet}":`, e.message);
+    }
+  }
+
+  if (successCount > 0) {
+    // Resolve kitchen inheritance for centers without kitchen
+    const natKitchen = {};
+    newMeals.forEach(m => { if (m.kitchen) natKitchen[m.nationality] = natKitchen[m.nationality] || m.kitchen; });
+    newMeals.forEach(m => { if (!m.kitchen) m.kitchen = natKitchen[m.nationality] || '—'; });
+
+    D.centers = newCenters;
+    D.meals = newMeals;
+    showToast(`✅ تم التحديث — ${successCount} من ${SHEET_NAMES.length} ورقة`);
+  } else {
+    showToast('⚠️ فشل الاتصال — يتم عرض البيانات المحلية');
+  }
+
+  const now = new Date().toLocaleTimeString('ar-SA');
+  document.getElementById('lastUp').textContent = now;
+  localStorage.setItem('ikram_lu', now);
+  renderPage(getCurrentPage());
+  btn.innerHTML = '<i class="fas fa-rotate-right"></i>تحديث';
+  btn.disabled = false;
+}
+
+function init() {
+  // Load theme
+  const savedTheme = localStorage.getItem('ikram_th') || 'dark';
+  dark = savedTheme === 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.getElementById('themeIcon').className = dark ? 'fas fa-moon' : 'fas fa-sun';
+
+  // Load last update time
+  const lu = localStorage.getItem('ikram_lu');
+  if (lu) document.getElementById('lastUp').textContent = lu;
+
+  // Build data
+  buildData();
+
+  // Render dashboard
+  renderDashboard();
+
+  // Clock
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  // Responsive sidebar
+  if (window.innerWidth < 900) {
+    document.getElementById('sidebar').classList.add('collapsed');
+    sidebarCollapsed = true;
+  }
+
+  // Hide loading
+  setTimeout(() => {
+    document.getElementById('loading').style.opacity = '0';
+    setTimeout(() => document.getElementById('loading').style.display = 'none', 400);
+  }, 600);
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
