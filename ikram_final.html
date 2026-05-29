@@ -1234,19 +1234,37 @@ async function fetchSheetCSV(sheetName) {
   const r = await fetch(url);
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   const text = await r.text();
-  // Parse CSV respecting quoted commas
+  // Parse CSV — handle quoted fields that may contain commas
   return text.trim().split('\n').map(line => {
-    const cols = [], re = /("([^"]*)")|([^,]+)|((?<=,)(?=,))|(^(?=,))/g;
-    let m, lastIdx = 0;
-    // Simple split on comma (values don't have commas in this dataset)
-    return line.split(',').map(v => v.trim().replace(/^"|"$/g,''));
+    const cols = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else { cur += ch; }
+    }
+    cols.push(cur.trim());
+    return cols;
   });
+}
+
+// تحويل قيمة الخلية إلى رقم — يتعامل مع النسب المئوية والفاصلة العربية
+function cellNum(val) {
+  if (val == null) return 0;
+  let s = String(val).trim();
+  s = s.replace(/٫/g, '.').replace(/%/g, '').replace(/,/g, '').trim();
+  const x = parseFloat(s);
+  if (isNaN(x)) return 0;
+  // إذا كانت القيمة الأصلية تحتوي على % فهي نسبة مئوية → نقسم على 100
+  if (String(val).includes('%')) return x / 100;
+  return x;
 }
 
 function parseSheetData(rows, nationality) {
   const centers = [];
   const meals = [];
-  let mode = null; // 'centers' | 'meals'
+  let mode = null;
   let mealsHeaderFound = false;
 
   for (let i = 0; i < rows.length; i++) {
@@ -1257,13 +1275,14 @@ function parseSheetData(rows, nationality) {
     if (r0.includes('جدول وجبات')) { mode = 'meals'; mealsHeaderFound = false; continue; }
 
     if (mode === 'centers') {
-      // Skip header rows (المركز, المخيمات, etc.)
       const id = parseFloat(r0);
       if (!isNaN(id) && id > 0) {
-        const n = v => { const x = parseFloat(row[v]); return isNaN(x) ? 0 : x; };
+        const n  = v => cellNum(row[v]);   // أرقام عادية
+        const pv = v => cellNum(row[v]);   // نسب (تُعالَج تلقائياً في cellNum)
         centers.push({
-          id, mina: n(1), arafah: n(2),
-          tawriya: n(3), tasaood: n(4), ifada: n(5),
+          id,
+          mina: n(1), arafah: n(2),
+          tawriya: pv(3), tasaood: pv(4), ifada: pv(5),
           f_mina: n(6), f_arafah: n(7), f_muz: n(8), f_tawaf: n(9),
           f_iltizam: n(10), f_raqaba: n(11), f_joda: n(12),
           minutes: n(13), tickets: n(14), incidents: n(15),
@@ -1274,14 +1293,14 @@ function parseSheetData(rows, nationality) {
     }
 
     if (mode === 'meals') {
-      // Wait for the header row that has 'المركز'
       if (!mealsHeaderFound) {
-        if (r0 === 'المركز' || r0.includes('المركز')) { mealsHeaderFound = true; }
+        if (r0 === 'المركز' || r0.includes('المركز')) mealsHeaderFound = true;
         continue;
       }
       const id = parseFloat(r0);
       if (!isNaN(id) && id > 0) {
-        const kitchen = (row[19] || '').trim() || (row[20] || '').trim();
+        // المطبخ في العمود 19 (آخر عمود بعد 18 وجبة)
+        const kitchen = (row[19] || '').trim();
         DAYS.forEach((day, di) => {
           MEAL_NAMES.forEach((mname, mi) => {
             const idx = 1 + di * 3 + mi; // cols 1..18
