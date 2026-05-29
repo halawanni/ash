@@ -285,10 +285,10 @@ tbody td{padding:9px 12px;white-space:nowrap}
         <div class="chart-wrap"><canvas id="ch_incidents"></canvas></div>
       </div>
     </div>
-    <div class="charts-row" style="margin-bottom:20px">
+    <div style="margin-bottom:20px">
       <div class="chart-card">
         <div class="chart-title">عدد الاستمارات لكل مركز</div>
-        <div class="chart-wrap" style="max-height:260px"><canvas id="ch_forms"></canvas></div>
+        <div class="chart-wrap" style="max-height:300px"><canvas id="ch_forms"></canvas></div>
       </div>
     </div>
     <div class="tbl-card">
@@ -1074,15 +1074,17 @@ function renderFormsChart() {
       datasets: [{
         label: 'الاستمارات',
         data: centers.map(c => c.forms),
-        backgroundColor: colors.map(c => rgba(c, .75)),
+        backgroundColor: colors.map(c => rgba(c, .8)),
         borderColor: colors,
         borderWidth: 1,
-        borderRadius: 4,
+        borderRadius: 5,
+        barThickness: 'flex',
+        maxBarThickness: 40,
       }]
     },
     options: {
       responsive: true,
-      maintainAspectRatio: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
         tooltip: {
@@ -1096,8 +1098,15 @@ function renderFormsChart() {
         }
       },
       scales: {
-        x: { ticks: { font: { family: 'IBM Plex Sans Arabic', size: 11 } } },
-        y: { ticks: { font: { family: 'IBM Plex Sans Arabic' } }, beginAtZero: true }
+        x: {
+          ticks: { font: { family: 'IBM Plex Sans Arabic', size: 11 } },
+          grid: { display: false }
+        },
+        y: {
+          ticks: { font: { family: 'IBM Plex Sans Arabic' } },
+          beginAtZero: true,
+          grid: { color: 'rgba(99,132,180,.08)' }
+        }
       }
     }
   });
