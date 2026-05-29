@@ -273,7 +273,7 @@ canvas{max-height:240px}
     <div class="sl">التقارير</div>
     <a class="ni" onclick="expAll()">
       <i class="fas fa-file-excel nic"></i>
-      <span class="nl">تصدير البيانات</span>
+      <span class="nl">تصدير البيانات xlsx</span>
     </a>
     <a class="ni" onclick="window.print()">
       <i class="fas fa-print nic"></i>
@@ -312,12 +312,15 @@ canvas{max-height:240px}
 <!-- ========= PAGE: OVERVIEW ========= -->
 <div class="pg act" id="pg-ov">
   <div class="kg" id="kgov"></div>
+  <div id="top3centers"></div>
   <div class="cg">
     <div class="cc">
       <div class="ch"><div><div class="ct">توزيع المساكن حسب الجنسية</div><div class="cs">إجمالي حجاج منى وعرفة</div></div>
         <div class="ca"><button class="bs act" onclick="swNat('mina',this)">منى</button><button class="bs" onclick="swNat('arafa',this)">عرفة</button></div>
       </div>
-      <canvas id="natChart"></canvas>
+      <div style="position:relative;height:240px">
+        <canvas id="natChart" style="max-height:240px"></canvas>
+      </div>
     </div>
     <div class="cc">
       <div class="ch"><div><div class="ct">مؤشرات الأداء — التروية والتصعيد والإفاضة</div><div class="cs">نسب الإنجاز لكل جنسية</div></div></div>
@@ -330,8 +333,8 @@ canvas{max-height:240px}
       <canvas id="cmpChart"></canvas>
     </div>
     <div class="cc">
-      <div class="ch"><div><div class="ct">الاستمارات والوثائق</div><div class="cs">إجمالي كل جنسية</div></div></div>
-      <canvas id="formsChart"></canvas>
+      <div class="ch"><div><div class="ct">خريطة توزيع الحجاج</div><div class="cs">بطاقات متناسبة مع حجم كل جنسية</div></div></div>
+      <div id="mapChart" style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;min-height:200px;padding:4px"></div>
     </div>
   </div>
   <!-- Heatmap -->
@@ -352,10 +355,19 @@ canvas{max-height:240px}
       <canvas id="cntChart1"></canvas>
     </div>
     <div class="cc">
-      <div class="ch"><div><div class="ct">الاستمارات والوقوعات حسب الجنسية</div></div></div>
+      <div class="ch"><div><div class="ct">الوقوعات والتذاكر والمحاضر حسب الجنسية</div></div></div>
       <canvas id="cntChart2"></canvas>
     </div>
   </div>
+
+  <!-- رسم عدد الاستمارات لكل مركز — بعرض كامل -->
+  <div class="cc" style="margin-bottom:20px">
+    <div class="ch"><div><div class="ct">عدد الاستمارات لكل مركز</div><div class="cs">مرتبة تنازلياً — جميع المراكز بما فيها الصفر</div></div></div>
+    <div style="height:300px;position:relative">
+      <canvas id="formsPerCenterChart"></canvas>
+    </div>
+  </div>
+
   <div class="st"><i class="fas fa-table"></i>جدول المراكز التفصيلي</div>
   <div class="tabs" id="ctabs"></div>
   <div class="tw">
@@ -471,48 +483,51 @@ canvas{max-height:240px}
    البيانات الحقيقية من ملف Excel
    ===================================================== */
 
-// ===== البيانات الحقيقية من الملف =====
+// ===== البيانات الحقيقية من الملف — أعمدة محدّثة =====
+// 0:id 1:منى 2:عرفة 3:تروية 4:تصعيد 5:إفاضة
+// 6:تجهيزات_منى 7:تجهيزات_عرفة 8:مزدلفة 9:تجهيزات_المشاعر 10:تطويف 11:تقييم 12:رقابة 13:جودة
+// 14:محاضر 15:تذاكر 16:وقوعات
 const RAW = {
   'فلسطين': {
     centers: [
-      {id:201,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:2},
-      {id:202,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:1},
+      {id:201,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:3,incidents:6},
+      {id:202,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:1,incidents:3},
     ]
   },
   'المغرب': {
     centers: [
-      {id:203,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:1},
-      {id:204,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:203,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:8,incidents:1},
+      {id:204,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:0,incidents:0},
     ]
   },
   'قرغيزستان': {
     centers: [
-      {id:206,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
-      {id:207,mina:3066,arafa:3066,trawia:0.98112,tasid:0.98112,ifada:0.98112,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:206,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:1,incidents:0},
+      {id:207,mina:3066,arafa:3066,trawia:0.98112,tasid:0.98112,ifada:0.98112,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:0,incidents:1},
     ]
   },
   'تشاد': {
     centers: [
-      {id:209,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
-      {id:210,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:209,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:0,incidents:0},
+      {id:210,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:1,incidents:0},
     ]
   },
   'باكستان': {
     centers: [
-      {id:221,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
-      {id:222,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
-      {id:223,mina:1269,arafa:1265,trawia:1,tasid:0.9968,ifada:0.9968,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
-      {id:224,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
-      {id:225,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
-      {id:226,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
-      {id:227,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
-      {id:228,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:221,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:0,incidents:0},
+      {id:222,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:0,incidents:1},
+      {id:223,mina:1269,arafa:1265,trawia:1,tasid:0.9968,ifada:0.9968,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:0,incidents:0},
+      {id:224,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:0,incidents:0},
+      {id:225,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:2,incidents:0},
+      {id:226,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:0,incidents:1},
+      {id:227,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:0,incidents:1},
+      {id:228,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:0,incidents:0},
     ]
   },
   'سريلانكا': {
     centers: [
-      {id:230,mina:2424,arafa:2424,trawia:0.8338,tasid:0.8338,ifada:0.83298,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
-      {id:231,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,forms_mina:0,forms_tawaf:0,forms_alt:0,forms_ops:0,forms_qual:0,records:0,tickets:0,incidents:0},
+      {id:230,mina:2424,arafa:2424,trawia:0.8338,tasid:0.8338,ifada:0.83298,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:2,incidents:0},
+      {id:231,mina:0,arafa:0,trawia:0,tasid:0,ifada:0,f_mina:0,f_arafa:0,f_muz:0,f_mashaer:0,f_tawaf:0,f_eval:0,f_ops:0,f_qual:0,records:0,tickets:0,incidents:1},
     ]
   }
 };
@@ -563,6 +578,22 @@ let curNatView='mina';
 
 const RPPG = 12;
 
+// إجمالي الاستمارات (بدون محاضر/تذاكر/وقوعات)
+function totalForms(c) {
+  return (c.f_mina||0)+(c.f_arafa||0)+(c.f_muz||0)+(c.f_mashaer||0)+(c.f_tawaf||0)+(c.f_eval||0)+(c.f_ops||0)+(c.f_qual||0);
+}
+// إجمالي المتابعة = استمارات + محاضر + تذاكر + وقوعات
+function totalFollowup(c) {
+  return totalForms(c)+(c.records||0)+(c.tickets||0)+(c.incidents||0);
+}
+// تقييم موزون للمركز
+function centerScore(c) {
+  const opScore = ((c.trawia||0)+(c.tasid||0)+(c.ifada||0))/3;
+  const followScore = Math.min(totalFollowup(c)/10,1);
+  const mealScore = 0.5; // placeholder
+  return opScore*0.4 + followScore*0.3 + mealScore*0.3;
+}
+
 // ===== INIT DATA =====
 function initData() {
   D.centers = [];
@@ -606,25 +637,27 @@ function renderOvKPI() {
   const totalArafa = c.reduce((s,x)=>s+x.arafa,0);
   const activeC = c.filter(x=>x.mina>0||x.arafa>0).length;
   const nats = Object.keys(RAW).length;
-  const totalInc = c.reduce((s,x)=>s+x.incidents,0);
+  const allFollowup = c.reduce((s,x)=>s+totalFollowup(x),0);
   const avgTrawia = c.filter(x=>x.trawia>0).reduce((s,x)=>s+x.trawia,0);
   const actT = c.filter(x=>x.trawia>0).length;
   const avgT = actT ? (avgTrawia/actT*100).toFixed(1) : 0;
-
-  const topC = c.reduce((a,b)=>a.mina>b.mina?a:b);
   const topNat = Object.entries(RAW).reduce((a,[k,v])=>{
     const s=v.centers.reduce((x,y)=>x+y.mina,0);
     return s>a[1]?[k,s]:a;
   },['',0]);
 
+  // أفضل 3 مراكز بتقييم موزون
+  const medals = ['🥇','🥈','🥉'];
+  const top3 = [...c].sort((a,b)=>centerScore(b)-centerScore(a)).slice(0,3);
+
   const kpis=[
     {l:'إجمالي المراكز',v:c.length,i:'fa-building',col:'var(--acc)',ca:'linear-gradient(90deg,var(--acc),var(--ind))',tr:`${activeC} نشط`,td:'up'},
-    {l:'حجاج منى',v:totalMina.toLocaleString('en-US'),i:'fa-campground',col:'var(--cyan)',ca:'linear-gradient(90deg,var(--cyan),#0891b2)',tr:'+0%',td:'neutral'},
-    {l:'حجاج عرفة',v:totalArafa.toLocaleString('en-US'),i:'fa-mountain',col:'var(--em)',ca:'linear-gradient(90deg,var(--em),#059669)',tr:'مكتمل',td:'up'},
+    {l:'حجاج منى',v:totalMina.toLocaleString('en-US'),i:'fa-campground',col:'var(--cyan)',ca:'linear-gradient(90deg,var(--cyan),#0891b2)',tr:'',td:'neutral'},
+    {l:'حجاج عرفة',v:totalArafa.toLocaleString('en-US'),i:'fa-mountain',col:'var(--em)',ca:'linear-gradient(90deg,var(--em),#059669)',tr:'',td:'up'},
     {l:'عدد الجنسيات',v:nats,i:'fa-globe',col:'var(--amber)',ca:'linear-gradient(90deg,var(--amber),#d97706)',tr:'6 دول',td:'neutral'},
     {l:'متوسط التروية',v:avgT+'%',i:'fa-chart-line',col:'var(--acc)',ca:'linear-gradient(90deg,var(--acc),var(--cyan))',tr:'',td:'up'},
     {l:'أعلى جنسية',v:topNat[0],i:'fa-crown',col:'var(--amber)',ca:'linear-gradient(90deg,var(--amber),var(--acc))',tr:topNat[1].toLocaleString('en-US'),td:'up',sm:true},
-    {l:'الوقوعات',v:totalInc,i:'fa-exclamation-triangle',col:'var(--rose)',ca:'linear-gradient(90deg,var(--rose),#dc2626)',tr:totalInc>0?'تحتاج مراجعة':'لا توجد',td:totalInc>0?'down':'up'},
+    {l:'إجمالي المتابعة',v:allFollowup.toLocaleString('en-US'),i:'fa-clipboard-list',col:'var(--ind)',ca:'linear-gradient(90deg,var(--ind),var(--acc))',tr:'استمارات+محاضر+تذاكر+وقوعات',td:'neutral'},
     {l:'المراكز النشطة',v:activeC,i:'fa-check-circle',col:'var(--em)',ca:'linear-gradient(90deg,var(--em),var(--cyan))',tr:`من ${c.length}`,td:'up'},
   ];
   document.getElementById('kgov').innerHTML = kpis.map(k=>`
@@ -638,6 +671,25 @@ function renderOvKPI() {
       <div class="kv" ${k.sm?'style="font-size:18px;line-height:1.3"':''}>${k.v}</div>
       <div class="kl">${k.l}</div>
     </div>`).join('');
+
+  // بطاقة أفضل 3 مراكز — من اليمين إلى اليسار
+  document.getElementById('top3centers').innerHTML = `
+    <div class="cc" style="margin-bottom:20px">
+      <div class="ch"><div><div class="ct">🏆 أفضل 3 مراكز</div><div class="cs">تقييم موزون: مؤشرات (40%) + متابعة (30%) + وجبات (30%)</div></div></div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;direction:rtl">
+        ${top3.map((cx,i)=>`
+          <div style="flex:1;min-width:140px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center">
+            <div style="font-size:28px;margin-bottom:8px">${medals[i]}</div>
+            <div style="font-size:18px;font-weight:700;color:var(--txt)">مركز ${cx.id}</div>
+            <div style="font-size:11px;color:var(--txt3);margin:4px 0">${cx.nationality}</div>
+            <div style="font-size:13px;font-weight:600;color:var(--acc)">${(centerScore(cx)*100).toFixed(1)}%</div>
+            <div style="display:flex;justify-content:center;gap:8px;margin-top:8px;font-size:10px;color:var(--txt3)">
+              <span>منى: ${cx.mina.toLocaleString('en-US')}</span>
+              <span>وقوعات: ${cx.incidents}</span>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
 }
 
 // ===== CHARTS =====
@@ -646,13 +698,13 @@ function renderOvCharts() {
   const minaData = nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.mina,0));
   const arafaData = nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.arafa,0));
 
-  // Nat Chart (doughnut)
+  // Nat Chart (doughnut) — يملأ الصندوق بالكامل
   dc('natChart');
   const natData = curNatView==='mina'?minaData:arafaData;
   charts2.natChart = new Chart(document.getElementById('natChart'),{
     type:'doughnut',
     data:{labels:nats,datasets:[{data:natData,backgroundColor:CC.c,borderColor:'transparent',hoverOffset:7,borderRadius:4}]},
-    options:{...cdf(),cutout:'62%'}
+    options:{...cdf(),maintainAspectRatio:false,cutout:'62%'}
   });
 
   // Indicators chart
@@ -686,20 +738,21 @@ function renderOvCharts() {
     options:{...cdf(),plugins:{...cdf().plugins,legend:{labels:{color:'#8b949e',font:{family:'IBM Plex Sans Arabic',size:10}}}},scales:axOpts()}
   });
 
-  // Forms chart
-  dc('formsChart');
-  const incData = nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.incidents,0));
-  charts2.formsChart = new Chart(document.getElementById('formsChart'),{
-    type:'doughnut',
-    data:{
-      labels:nats,
-      datasets:[{
-        data:nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.mina+c.arafa,0)),
-        backgroundColor:CC.c,borderColor:'transparent',hoverOffset:6,borderRadius:4
-      }]
-    },
-    options:{...cdf(),cutout:'58%'}
-  });
+  // Map Chart — بطاقات متناسبة مع حجم الجنسية
+  const mapEl=document.getElementById('mapChart');
+  if(mapEl){
+    const natTotals=nats.map(n=>({n,v:RAW[n].centers.reduce((s,c)=>s+c.mina+c.arafa,0)}));
+    const maxV=Math.max(...natTotals.map(x=>x.v))||1;
+    mapEl.innerHTML=natTotals.map(({n,v},i)=>{
+      const pct=Math.max(Math.round(v/maxV*100),8);
+      return `<div style="background:${CC.c[i%CC.c.length].replace('.82','0.15')};border:2px solid ${CC.b[i%CC.b.length]};border-radius:10px;padding:10px 14px;flex:0 0 calc(${pct}% - 8px);min-width:80px;transition:all .2s;cursor:default"
+        onmouseenter="this.style.transform='scale(1.04)'" onmouseleave="this.style.transform='scale(1)'">
+        <div style="font-size:11px;font-weight:700;color:${CC.b[i%CC.b.length]}">${n}</div>
+        <div style="font-size:18px;font-weight:700;color:var(--txt);margin-top:4px">${v.toLocaleString('en-US')}</div>
+        <div style="font-size:10px;color:var(--txt3);margin-top:2px">${Math.round(v/maxV*100)}% من الأعلى</div>
+      </div>`;
+    }).join('');
+  }
 }
 
 function swNat(v,btn){
@@ -712,7 +765,7 @@ function swNat(v,btn){
   charts2.natChart=new Chart(document.getElementById('natChart'),{
     type:'doughnut',
     data:{labels:nats,datasets:[{data:d,backgroundColor:CC.c,borderColor:'transparent',hoverOffset:7,borderRadius:4}]},
-    options:{...cdf(),cutout:'62%'}
+    options:{...cdf(),maintainAspectRatio:false,cutout:'62%'}
   });
 }
 
@@ -775,14 +828,6 @@ function renderOvAnalytics() {
       <div class="ii"><i class="fas fa-mountain" style="color:var(--em);font-size:12px"></i><span>إجمالي حجاج عرفة: ${c.reduce((s,x)=>s+x.arafa,0).toLocaleString('en-US')}</span></div>
       <div class="ii"><i class="fas fa-exclamation-triangle" style="color:${totalInc>0?'var(--rose)':'var(--em)'};font-size:12px"></i><span>الوقوعات المسجلة: ${totalInc}</span></div>
       <div class="ii"><i class="fas fa-globe" style="color:var(--acc);font-size:12px"></i><span>6 جنسيات مشاركة في الموسم</span></div>
-    </div>
-    <div class="ac">
-      <div class="at"><i class="fas fa-chart-line" style="color:var(--acc)"></i>أفضل المؤشرات</div>
-      ${c.filter(x=>x.trawia>0).sort((a,b)=>b.trawia-a.trawia).map(x=>`
-        <div class="ii">
-          <div class="ir tp">${(x.trawia*100).toFixed(1)}%</div>
-          <span style="font-size:11px">مركز ${x.id} — ${x.nationality}</span>
-        </div>`).join('')||'<div class="ii" style="color:var(--txt3);font-size:11px">لا توجد مؤشرات بعد</div>'}
     </div>`;
 }
 
@@ -793,17 +838,19 @@ function renderCntKPI() {
   const totalMina=c.reduce((s,x)=>s+x.mina,0);
   const totalArafa=c.reduce((s,x)=>s+x.arafa,0);
   const totalInc=c.reduce((s,x)=>s+x.incidents,0);
+  const allForms=c.reduce((s,x)=>s+totalForms(x),0);
   const kpis=[
     {l:'إجمالي المراكز',v:c.length,i:'fa-building',col:'var(--acc)',ca:'linear-gradient(90deg,var(--acc),var(--ind))'},
     {l:'مراكز نشطة',v:active,i:'fa-check-circle',col:'var(--em)',ca:'linear-gradient(90deg,var(--em),#059669)'},
     {l:'إجمالي منى',v:totalMina.toLocaleString('en-US'),i:'fa-campground',col:'var(--cyan)',ca:'linear-gradient(90deg,var(--cyan),#0891b2)'},
     {l:'إجمالي عرفة',v:totalArafa.toLocaleString('en-US'),i:'fa-mountain',col:'var(--em)',ca:'linear-gradient(90deg,var(--em),var(--cyan))'},
+    {l:'إجمالي الاستمارات',v:allForms.toLocaleString('en-US'),i:'fa-file-alt',col:'var(--ind)',ca:'linear-gradient(90deg,var(--ind),var(--acc))'},
     {l:'الوقوعات الكلية',v:totalInc,i:'fa-exclamation-triangle',col:totalInc?'var(--rose)':'var(--em)',ca:`linear-gradient(90deg,${totalInc?'var(--rose)':'var(--em)'},#dc2626)`},
   ];
   document.getElementById('kgcnt').innerHTML=kpis.map(k=>`
     <div class="kc" style="--ca:${k.ca}">
       <div class="kch"><div class="kci" style="background:${k.col}1f;color:${k.col}"><i class="fas ${k.i}"></i></div></div>
-      <div class="kv" style="font-size:24px">${k.v}</div>
+      <div class="kv" style="font-size:22px">${k.v}</div>
       <div class="kl">${k.l}</div>
     </div>`).join('');
 }
@@ -831,10 +878,37 @@ function renderCntCharts() {
       datasets:[
         {label:'الوقوعات',data:nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.incidents,0)),backgroundColor:'rgba(244,63,94,.7)',borderRadius:5},
         {label:'التذاكر',data:nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.tickets,0)),backgroundColor:'rgba(245,158,11,.7)',borderRadius:5},
+        {label:'المحاضر',data:nats.map(n=>RAW[n].centers.reduce((s,c)=>s+c.records,0)),backgroundColor:'rgba(139,92,246,.7)',borderRadius:5},
       ]
     },
     options:{...cdf(),scales:axOpts()}
   });
+
+  // رسم عدد الاستمارات لكل مركز — مرتب تنازلياً — بعرض كامل
+  const sortedByForms=[...D.centers].sort((a,b)=>totalForms(b)-totalForms(a));
+  dc('formsPerCenterChart');
+  const fpc=document.getElementById('formsPerCenterChart');
+  if(fpc){
+    charts2.formsPerCenterChart=new Chart(fpc,{
+      type:'bar',
+      data:{
+        labels:sortedByForms.map(c=>`${c.id}`),
+        datasets:[{
+          label:'عدد الاستمارات',
+          data:sortedByForms.map(c=>totalForms(c)),
+          backgroundColor:sortedByForms.map((_,i)=>CC.c[i%CC.c.length]),
+          borderRadius:5,
+          barThickness:28,
+        }]
+      },
+      options:{
+        ...cdf(),
+        maintainAspectRatio:false,
+        plugins:{...cdf().plugins,legend:{display:false}},
+        scales:axOpts()
+      }
+    });
+  }
 }
 
 function buildCntTabs() {
@@ -878,10 +952,10 @@ function renderCntTable(nat='',search='',page=1){
 
   const pct=v=>`<span class="bx ${v>=0.9?'bg':v>=0.5?'ba':'br'}">${(v*100).toFixed(1)}%</span>`;
   document.getElementById('ctbd').innerHTML=sl.map((r,i)=>{
-    const forms=r.forms_mina+r.forms_tawaf+r.forms_alt+r.forms_ops+r.forms_qual;
+    const fTotal=totalForms(r);
     return `<tr>
       <td style="color:var(--txt3)">${(cPage-1)*RPPG+i+1}</td>
-      <td style="font-weight:600;color:var(--txt)">مركز ${r.id}</td>
+      <td style="font-weight:600;color:var(--txt)">${r.id}</td>
       <td><span class="bx bb">${r.nationality}</span></td>
       <td style="font-weight:600">${r.mina>0?r.mina.toLocaleString('en-US'):'0'}</td>
       <td style="font-weight:600">${r.arafa>0?r.arafa.toLocaleString('en-US'):'0'}</td>
@@ -889,7 +963,7 @@ function renderCntTable(nat='',search='',page=1){
       <td>${pct(r.tasid)}</td>
       <td>${pct(r.ifada)}</td>
       <td>${r.incidents>0?`<span class="bx br"><i class="fas fa-exclamation-circle"></i>${r.incidents}</span>`:'<span style="color:var(--txt3)">0</span>'}</td>
-      <td style="color:var(--txt3)">${forms>0?forms:'0'}</td>
+      <td style="color:var(--txt2)">${fTotal>0?fTotal.toLocaleString('en-US'):'0'}</td>
     </tr>`;
   }).join('');
 
@@ -1097,7 +1171,7 @@ function renderIndCharts(){
   charts2.indFullChart=new Chart(document.getElementById('indFullChart'),{
     type:'bar',
     data:{
-      labels:actC.map(c=>`مركز ${c.id} — ${c.nationality}`),
+      labels:actC.map(c=>`${c.id} — ${c.nationality}`),
       datasets:[
         {label:'التروية',data:actC.map(c=>(c.trawia*100).toFixed(1)),backgroundColor:'rgba(79,142,247,.8)',borderRadius:4},
         {label:'التصعيد',data:actC.map(c=>(c.tasid*100).toFixed(1)),backgroundColor:'rgba(34,211,238,.7)',borderRadius:4},
@@ -1265,19 +1339,22 @@ function parseCenters(rows, sheetName) {
     // 11:محاضر 12:تذاكر 13:وقوعات
     centers.push({
       id,
-      mina:        getNum(row[1]),
-      arafa:       getNum(row[2]),
-      trawia:      getPct(row[3]),
-      tasid:       getPct(row[4]),
-      ifada:       getPct(row[5]),
-      forms_mina:  getNum(row[6]),
-      forms_tawaf: getNum(row[7]),
-      forms_alt:   getNum(row[8]),
-      forms_ops:   getNum(row[9]),
-      forms_qual:  getNum(row[10]),
-      records:     getNum(row[11]),
-      tickets:     getNum(row[12]),
-      incidents:   getNum(row[13]),
+      mina:       getNum(row[1]),
+      arafa:      getNum(row[2]),
+      trawia:     getPct(row[3]),
+      tasid:      getPct(row[4]),
+      ifada:      getPct(row[5]),
+      f_mina:     getNum(row[6]),
+      f_arafa:    getNum(row[7]),
+      f_muz:      getNum(row[8]),
+      f_mashaer:  getNum(row[9]),
+      f_tawaf:    getNum(row[10]),
+      f_eval:     getNum(row[11]),
+      f_ops:      getNum(row[12]),
+      f_qual:     getNum(row[13]),
+      records:    getNum(row[14]),
+      tickets:    getNum(row[15]),
+      incidents:  getNum(row[16]),
     });
   }
   return centers;
