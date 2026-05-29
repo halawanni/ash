@@ -186,6 +186,19 @@ tbody td{padding:9px 12px;white-space:nowrap}
 </head>
 <body>
 
+<div id="kitchen-popover" style="display:none;position:fixed;width:290px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;z-index:9999;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.15)">
+  <div id="kp-title" style="font-size:11px;font-weight:700;margin-bottom:8px;padding-bottom:7px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:5px"></div>
+  <div style="display:flex;align-items:flex-start;gap:8px">
+    <div id="kp-icon-wrap" style="width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <i id="kp-icon" class="fas" style="font-size:13px"></i>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--txt);margin-bottom:3px">تعريف المعيار</div>
+      <div id="kp-desc" style="font-size:10px;color:var(--txt2);line-height:1.6"></div>
+    </div>
+  </div>
+</div>
+
 <div id="loading"><div class="spin"></div><p>جارٍ تحميل البيانات…</p></div>
 <div id="toast"></div>
 
@@ -304,6 +317,7 @@ tbody td{padding:9px 12px;white-space:nowrap}
   <div class="pg" id="pg2">
     <div class="pg-title"><i class="fas fa-utensils"></i>متابعة الوجبات</div>
     <div class="kpi-grid" id="kpi2"></div>
+    <div id="topKitchensInline" style="margin-bottom:20px"></div>
     <div class="charts-row charts-2">
       <div class="chart-card">
         <div class="chart-title">حالات الوجبات لكل يوم</div>
@@ -818,6 +832,124 @@ function renderTopCentersCard() {
   </div>`;
 }
 
+function calcTopKitchens() {
+  // جمع بيانات كل مطبخ من الوجبات
+  const kitchenMap = {};
+  D.meals.forEach(m => {
+    const k = m.kitchen && m.kitchen !== '—' ? m.kitchen : null;
+    if (!k) return;
+    if (!kitchenMap[k]) kitchenMap[k] = { name:k, centers:new Set(), meals:[] };
+    kitchenMap[k].centers.add(m.center);
+    kitchenMap[k].meals.push(m);
+  });
+
+  return Object.values(kitchenMap).map(kd => {
+    const total = kd.meals.length || 1;
+    const ready   = kd.meals.filter(m => !['لا يوجد','لايوجد','لم يبدأ'].includes(m.status)).length;
+    const delayed = kd.meals.filter(m => m.status.includes('متأخر')).length;
+    const onTime  = kd.meals.filter(m => !['لا يوجد','لايوجد','لم يبدأ'].includes(m.status) && !m.status.includes('متأخر')).length;
+    const damaged = kd.meals.filter(m => m.status === 'تالف').length;
+
+    const readyScore  = ready / total;
+    const onTimeScore = onTime / total;
+    const noSpoilScore = damaged === 0 ? 1 : Math.max(0, 1 - damaged/total);
+    const total_score = readyScore*0.4 + onTimeScore*0.4 + noSpoilScore*0.2;
+
+    return {
+      name: kd.name,
+      centers: [...kd.centers],
+      readyScore, onTimeScore, noSpoilScore, total_score,
+      damaged, delayed, total
+    };
+  }).filter(k => k.total >= 6)
+    .sort((a,b) => b.total_score - a.total_score)
+    .slice(0,3);
+}
+
+function renderTopKitchensCard() {
+  const top = calcTopKitchens();
+  if (!top.length) return '';
+
+  const medals      = ['🥇','🥈','🥉'];
+  const medalNames  = ['الأول','الثاني','الثالث'];
+  const accentColors = ['#EF9F27','#B4B2A9','#F0997B'];
+  const badgeBg     = ['#FAEEDA','#F1EFE8','#FAECE7'];
+  const badgeTxt    = ['#633806','#2C2C2A','#4A1B0C'];
+  const circleBorder= ['#EF9F27','#B4B2A9','#F0997B'];
+
+  const axes = [
+    { key:'readyScore',   label:'وجبات جاهزة', icon:'fa-check-circle', color:'#3B6D11', bg:'#EAF3DE',
+      desc:'نسبة الوجبات التي لا تحتوي على: لا يوجد، تالف، أو متأخر — من إجمالي وجبات المطبخ خلال أيام الحج' },
+    { key:'onTimeScore',  label:'الانتظام',      icon:'fa-clock',        color:'#185FA5', bg:'#E6F1FB',
+      desc:'نسبة الوجبات المُسلَّمة في وقتها — أي الوجبات التي لا تحتوي على كلمة متأخر في حالتها' },
+    { key:'noSpoilScore', label:'غياب التالف',   icon:'fa-shield-alt',   color:'#0F6E56', bg:'#E1F5EE',
+      desc:'المطبخ الذي لا يملك أي وجبة مصنفة تالف يحصل على 100% — كل وجبة تالفة تُخصم من الدرجة' },
+  ];
+
+  const cards = top.map((k,i) => `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column">
+      <div style="padding:16px 16px 14px;border-bottom:1px solid var(--border);position:relative">
+        <div style="position:absolute;top:0;right:0;left:0;height:3px;background:${accentColors[i]}"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:${badgeBg[i]};color:${badgeTxt[i]}">${medals[i]} ${medalNames[i]}</div>
+          <div style="width:48px;height:48px;border-radius:50%;background:${badgeBg[i]};color:${badgeTxt[i]};border:1.5px solid ${circleBorder[i]};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">${(k.total_score*100).toFixed(0)}%</div>
+        </div>
+        <div style="font-size:13px;font-weight:700;color:var(--txt);margin-bottom:6px;line-height:1.4">${k.name}</div>
+        <div style="font-size:11px;color:var(--txt2);display:flex;align-items:center;gap:4px">
+          <i class="fas fa-building" style="font-size:10px"></i>
+          ${k.centers.length > 1 ? `يخدم ${k.centers.length} مراكز` : `مركز ${k.centers[0]}`}
+        </div>
+      </div>
+      <div style="padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:10px">
+        ${axes.map(ax => `
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+            <span style="font-size:11px;color:${ax.color};display:flex;align-items:center;gap:5px">
+              <i class="fas ${ax.icon}"></i>${ax.label}
+            </span>
+            <div style="display:flex;align-items:center;gap:6px">
+              <span style="font-size:11px;font-weight:700;color:${ax.color}">${(k[ax.key]*100).toFixed(0)}%</span>
+              <div class="kitchen-info-btn"
+                data-title="${ax.label}"
+                data-desc="${ax.desc}"
+                data-color="${ax.color}"
+                data-bg="${ax.bg}"
+                data-icon="${ax.icon}"
+                style="width:16px;height:16px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+                <i class="fas fa-info" style="font-size:8px;color:var(--txt2)"></i>
+              </div>
+            </div>
+          </div>
+          <div style="background:var(--bg3);border-radius:6px;height:5px;overflow:hidden">
+            <div style="width:${(k[ax.key]*100).toFixed(0)}%;height:100%;background:${ax.color};border-radius:6px"></div>
+          </div>
+        </div>`).join('')}
+      </div>
+      <div style="padding:10px 16px;border-top:1px solid var(--border);background:var(--bg3);display:flex;gap:6px;flex-wrap:wrap;border-radius:0 0 var(--r) var(--r)">
+        ${k.damaged === 0
+          ? `<span style="font-size:10px;padding:3px 9px;border-radius:12px;background:rgba(16,185,129,.12);color:var(--em);display:flex;align-items:center;gap:4px"><i class="fas fa-circle-check" style="font-size:9px"></i>لا تالف</span>`
+          : `<span style="font-size:10px;padding:3px 9px;border-radius:12px;background:rgba(244,63,94,.12);color:var(--rose);display:flex;align-items:center;gap:4px"><i class="fas fa-ban" style="font-size:9px"></i>${k.damaged} تالف</span>`}
+        ${k.delayed > 0
+          ? `<span style="font-size:10px;padding:3px 9px;border-radius:12px;background:rgba(245,158,11,.12);color:var(--amber);display:flex;align-items:center;gap:4px"><i class="fas fa-clock" style="font-size:9px"></i>بعض التأخير</span>`
+          : `<span style="font-size:10px;padding:3px 9px;border-radius:12px;background:rgba(16,185,129,.12);color:var(--em);display:flex;align-items:center;gap:4px"><i class="fas fa-check" style="font-size:9px"></i>منتظم</span>`}
+      </div>
+    </div>`).join('');
+
+  return `
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;grid-column:1/-1;margin-top:4px">
+    <div style="background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(34,211,238,.05));padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+      <div style="width:40px;height:40px;background:linear-gradient(135deg,var(--em),var(--cyan));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🍽️</div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--txt)">أفضل 3 مطابخ</div>
+        <div style="font-size:11px;color:var(--txt2);margin-top:2px">جودة الوجبات · الانتظام · غياب التالف</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;padding:16px">
+      ${cards}
+    </div>
+  </div>`;
+}
+
 function renderAnalytics0() {
   const nats = [...new Set(D.centers.map(c=>c.nationality))];
   const byNat = nats.map(n => ({
@@ -844,7 +976,10 @@ function renderAnalytics0() {
   document.getElementById('anl0').innerHTML = `
     <div class="anl-card"><div class="anl-title">ترتيب الجنسيات</div>${progressRows}</div>
     <div class="anl-card"><div class="anl-title">رؤى ذكية</div>${insights.map(i=>`<div class="insight-item"><i class="fas fa-${i.icon}"></i><span>${i.txt}</span></div>`).join('')}</div>
+    ${renderTopKitchensCard()}
   `;
+  // تفعيل الـ popover بعد رسم الـ DOM
+  initKitchenPopovers();
 }
 
 
@@ -1032,6 +1167,10 @@ function renderMeals() {
     kpiCard('clock','لم يبدأ',lm,'var(--amber)') +
     kpiCard('circle-check','بدأت',ongoing,'var(--em)') +
     kpiCard('triangle-exclamation','تالف',damaged,'var(--rose)');
+
+  // بطاقة أفضل 3 مطابخ — تحت الـ KPI مباشرة
+  document.getElementById('topKitchensInline').innerHTML = renderTopKitchensCard();
+  initKitchenPopovers();
 
   renderMealDaysChart();
   renderMealNatsChart();
@@ -1354,6 +1493,52 @@ async function refreshData() {
   renderPage(getCurrentPage());
   btn.innerHTML = '<i class="fas fa-rotate-right"></i>تحديث';
   btn.disabled = false;
+}
+
+function initKitchenPopovers() {
+  const pop    = document.getElementById('kitchen-popover');
+  const pTitle = document.getElementById('kp-title');
+  const pIcon  = document.getElementById('kp-icon');
+  const pWrap  = document.getElementById('kp-icon-wrap');
+  const pDesc  = document.getElementById('kp-desc');
+
+  document.querySelectorAll('.kitchen-info-btn').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+      const d = btn.dataset;
+
+      // املأ المحتوى أولاً
+      pTitle.innerHTML = `<i class="fas ${d.icon}" style="color:${d.color};margin-left:5px"></i>${d.title}`;
+      pIcon.className  = `fas ${d.icon}`;
+      pIcon.style.color = d.color;
+      pWrap.style.background = d.bg;
+      pDesc.textContent = d.desc;
+
+      // اعرض مؤقتاً خارج الشاشة لقياس الارتفاع
+      pop.style.display = 'block';
+      pop.style.top  = '-9999px';
+      pop.style.left = '-9999px';
+
+      const popH = pop.offsetHeight;
+      const popW = pop.offsetWidth;
+      const r    = btn.getBoundingClientRect();
+      const vw   = window.innerWidth;
+      const vh   = window.innerHeight;
+
+      // حساب الموضع الأفقي (يمين الزر، لا يخرج من الشاشة)
+      let left = r.right - popW;
+      if (left < 8) left = 8;
+      if (left + popW > vw - 8) left = vw - popW - 8;
+
+      // حساب الموضع العمودي — فوق إذا لا يوجد مكان بالأسفل
+      let top = r.bottom + 8;
+      if (top + popH > vh - 8) top = r.top - popH - 8;
+      if (top < 8) top = 8;
+
+      pop.style.top  = top + 'px';
+      pop.style.left = left + 'px';
+    });
+    btn.addEventListener('mouseleave', () => { pop.style.display = 'none'; });
+  });
 }
 
 function init() {
