@@ -1189,30 +1189,24 @@ const SHEET_ID = '1ikAZMPmJbf1RfFx9fUdXnUBqsIa_YwTku0O2DGMiLOE';
 const SHEET_NAMES = ['فلسطين','المغرب','قرغيزستان','تشاد','باكستان','سريلانكا'];
 const PUB_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSE7BJdaTVCS0fBzzvZZeyuhCctfEcQIFP8r_BP9RwOm_4nVLsdDeim1OUIt3jhYaptsEnzmddsPw93/pub';
 
-// الـ gid لكل ورقة — يتم اكتشافه تلقائياً عبر gviz
+// gid لكل ورقة
+const SHEET_GIDS = {
+  'فلسطين':    '1601010924',
+  'المغرب':    '1942188593',
+  'قرغيزستان': '1349988150',
+  'تشاد':      '2080287684',
+  'باكستان':   '126651277',
+  'سريلانكا':  '1597822040',
+};
+
+// جلب ورقة واحدة عبر CSV
 async function fetchSheet(sheetName) {
-  // نجرب gviz أولاً
-  try {
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}&headers=0`;
-    const res = await fetch(url, { cache: 'no-store' });
-    const text = await res.text();
-    // gviz يرجع نص يبدأ بـ /*O_o*/ أو google.visualization.Query.setResponse
-    const start = text.indexOf('{');
-    const end   = text.lastIndexOf('}');
-    if (start === -1 || end === -1) throw new Error('gviz parse error');
-    const json = JSON.parse(text.substring(start, end + 1));
-    if (!json.table || !json.table.rows) throw new Error('no table');
-    return json.table.rows.map(row =>
-      (row.c || []).map(cell => (cell && cell.v !== null && cell.v !== undefined) ? cell.v : null)
-    );
-  } catch(e) {
-    console.warn('gviz فشل، نحاول CSV:', e.message);
-    // Fallback: جلب CSV عبر رابط النشر مع اسم الورقة
-    const url2 = `${PUB_BASE}?gid=0&single=true&output=csv&sheet=${encodeURIComponent(sheetName)}`;
-    const res2 = await fetch(url2, { cache: 'no-store' });
-    const csv  = await res2.text();
-    return parseCSV(csv);
-  }
+  const gid = SHEET_GIDS[sheetName];
+  const url = `${PUB_BASE}?gid=${gid}&single=true&output=csv`;
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`فشل جلب: ${sheetName}`);
+  const csv = await res.text();
+  return parseCSV(csv);
 }
 
 // تحليل CSV إلى مصفوفة صفوف
@@ -1229,9 +1223,10 @@ function parseCSV(csv) {
     cells.push(cur.trim());
     return cells.map(v => {
       if (v === '' || v === null) return null;
-      const n = parseFloat(v.replace('%',''));
-      if (!isNaN(n) && v !== '') return v.includes('%') ? n/100 : n;
-      return v;
+      // تحويل النسب المئوية مثل 98.11% إلى 0.9811
+      if (v.includes('%')) return parseFloat(v) / 100;
+      const n = parseFloat(v);
+      return !isNaN(n) ? n : v;
     });
   });
 }
