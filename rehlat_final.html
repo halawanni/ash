@@ -1187,16 +1187,53 @@ function sp(id){
 // ===== GOOGLE SHEETS CONFIG =====
 const SHEET_ID = '1ikAZMPmJbf1RfFx9fUdXnUBqsIa_YwTku0O2DGMiLOE';
 const SHEET_NAMES = ['فلسطين','المغرب','قرغيزستان','تشاد','باكستان','سريلانكا'];
+const PUB_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSE7BJdaTVCS0fBzzvZZeyuhCctfEcQIFP8r_BP9RwOm_4nVLsdDeim1OUIt3jhYaptsEnzmddsPw93/pub';
 
-// جلب ورقة واحدة من Google Sheets عبر gviz API
+// الـ gid لكل ورقة — يتم اكتشافه تلقائياً عبر gviz
 async function fetchSheet(sheetName) {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`فشل جلب ورقة: ${sheetName}`);
-  const text = await res.text();
-  // إزالة wrapper من الاستجابة
-  const json = JSON.parse(text.substring(47).slice(0, -2));
-  return json.table.rows.map(row => row.c.map(cell => cell ? (cell.v !== null && cell.v !== undefined ? cell.v : null) : null));
+  // نجرب gviz أولاً
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}&headers=0`;
+    const res = await fetch(url, { cache: 'no-store' });
+    const text = await res.text();
+    // gviz يرجع نص يبدأ بـ /*O_o*/ أو google.visualization.Query.setResponse
+    const start = text.indexOf('{');
+    const end   = text.lastIndexOf('}');
+    if (start === -1 || end === -1) throw new Error('gviz parse error');
+    const json = JSON.parse(text.substring(start, end + 1));
+    if (!json.table || !json.table.rows) throw new Error('no table');
+    return json.table.rows.map(row =>
+      (row.c || []).map(cell => (cell && cell.v !== null && cell.v !== undefined) ? cell.v : null)
+    );
+  } catch(e) {
+    console.warn('gviz فشل، نحاول CSV:', e.message);
+    // Fallback: جلب CSV عبر رابط النشر مع اسم الورقة
+    const url2 = `${PUB_BASE}?gid=0&single=true&output=csv&sheet=${encodeURIComponent(sheetName)}`;
+    const res2 = await fetch(url2, { cache: 'no-store' });
+    const csv  = await res2.text();
+    return parseCSV(csv);
+  }
+}
+
+// تحليل CSV إلى مصفوفة صفوف
+function parseCSV(csv) {
+  return csv.trim().split('\n').map(line => {
+    const cells = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { cells.push(cur.trim()); cur = ''; }
+      else { cur += ch; }
+    }
+    cells.push(cur.trim());
+    return cells.map(v => {
+      if (v === '' || v === null) return null;
+      const n = parseFloat(v.replace('%',''));
+      if (!isNaN(n) && v !== '') return v.includes('%') ? n/100 : n;
+      return v;
+    });
+  });
 }
 
 // تحليل بيانات المراكز من الصفوف
