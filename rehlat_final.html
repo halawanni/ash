@@ -336,7 +336,7 @@ canvas{max-height:240px}
   </div>
   <!-- Heatmap -->
   <div class="cc" style="margin-bottom:20px">
-    <div class="ch"><div><div class="ct">خريطة الحرارة — مؤشرات الأداء</div><div class="cs">نسبة الإنجاز لكل مركز</div></div></div>
+    <div class="ch"><div><div class="ct">خريطة — مؤشرات الأداء</div><div class="cs">نسبة الإنجاز لكل مركز</div></div></div>
     <div class="hm" id="hmw"></div>
   </div>
   <div class="st"><i class="fas fa-brain"></i>التحليلات الذكية <span class="sub">رؤى مباشرة من البيانات</span></div>
@@ -1184,16 +1184,118 @@ function sp(id){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ===== REFRESH =====
+// ===== GOOGLE SHEETS CONFIG =====
+const SHEET_ID = '1ikAZMPmJbf1RfFx9fUdXnUBqsIa_YwTku0O2DGMiLOE';
+const SHEET_NAMES = ['فلسطين','المغرب','قرغيزستان','تشاد','باكستان','سريلانكا'];
+
+// جلب ورقة واحدة من Google Sheets عبر gviz API
+async function fetchSheet(sheetName) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`فشل جلب ورقة: ${sheetName}`);
+  const text = await res.text();
+  // إزالة wrapper من الاستجابة
+  const json = JSON.parse(text.substring(47).slice(0, -2));
+  return json.table.rows.map(row => row.c.map(cell => cell ? (cell.v !== null && cell.v !== undefined ? cell.v : null) : null));
+}
+
+// تحليل بيانات المراكز من الصفوف
+function parseCenters(rows, sheetName) {
+  const centers = [];
+  let inCenters = false;
+  for (const row of rows) {
+    if (!row || !row[0]) continue;
+    if (String(row[0]).includes('جدول متابعة المراكز')) { inCenters = true; continue; }
+    if (String(row[0]).includes('جدول وجبات')) { inCenters = false; continue; }
+    if (!inCenters) continue;
+    if (String(row[0]) === 'المركز' || String(row[0]).includes('المخيمات')) continue;
+    const id = typeof row[0] === 'number' ? row[0] : parseInt(row[0]);
+    if (!id || isNaN(id)) continue;
+    centers.push({
+      id,
+      mina:      Number(row[1]) || 0,
+      arafa:     Number(row[2]) || 0,
+      trawia:    Number(row[3]) || 0,
+      tasid:     Number(row[4]) || 0,
+      ifada:     Number(row[5]) || 0,
+      forms_mina:Number(row[6]) || 0,
+      forms_tawaf:Number(row[7])|| 0,
+      forms_alt: Number(row[8]) || 0,
+      forms_ops: Number(row[9]) || 0,
+      forms_qual:Number(row[10])|| 0,
+      records:   Number(row[11])|| 0,
+      tickets:   Number(row[12])|| 0,
+      incidents: Number(row[13])|| 0,
+    });
+  }
+  return centers;
+}
+
+// تحليل بيانات الوجبات من الصفوف
+function parseMeals(rows, sheetName) {
+  const meals = [];
+  const days = ['8 الحج','9 الحج','10 الحج','11 الحج','12 الحج','13 الحج'];
+  const mealTypes = ['وجبة الإفطار','وجبة الغداء','وجبة العشاء'];
+  let inMeals = false;
+  let headerFound = false;
+  for (const row of rows) {
+    if (!row || !row[0] && !row[1]) continue;
+    if (row[0] && String(row[0]).includes('جدول وجبات')) { inMeals = true; continue; }
+    if (!inMeals) continue;
+    if (String(row[0]) === 'المركز') { headerFound = true; continue; }
+    if (!headerFound) continue;
+    const id = typeof row[0] === 'number' ? row[0] : parseInt(row[0]);
+    if (!id || isNaN(id)) continue;
+    // الأعمدة: 1-3: يوم8، 4-6: يوم9، 7-9: يوم10، 10-12: يوم11، 13-15: يوم12، 16-18: يوم13
+    days.forEach((day, di) => {
+      mealTypes.forEach((mtype, mi) => {
+        const colIdx = 1 + di * 3 + mi;
+        const val = row[colIdx] !== null && row[colIdx] !== undefined ? String(row[colIdx]) : 'لا يوجد';
+        const siteNotes = row[19] ? String(row[19]) : 'لا يوجد';
+        const kitchen   = row[20] ? String(row[20]) : 'لا يوجد';
+        meals.push({ center: id, nationality: sheetName, day, meal: mtype, status: val, site_notes: siteNotes, kitchen });
+      });
+    });
+  }
+  return meals;
+}
+
+// ===== REFRESH — جلب حقيقي من Google Sheets =====
 async function rfd(){
   const btn=document.getElementById('rfb');
   btn.classList.add('ld');
   btn.querySelector('span').textContent='جاري التحديث...';
-  await new Promise(r=>setTimeout(r,1200));
-  const now=new Date().toLocaleString('ar-SA');
-  localStorage.setItem('rm_lu',now);
-  document.getElementById('lup').textContent=now;
-  showToast('تم التحديث من Google Sheets بنجاح','success');
+  try {
+    const newCenters = [];
+    const newMeals   = [];
+    for (const sheet of SHEET_NAMES) {
+      const rows = await fetchSheet(sheet);
+      const centers = parseCenters(rows, sheet);
+      const meals   = parseMeals(rows, sheet);
+      centers.forEach(c => newCenters.push({...c, nationality: sheet}));
+      newMeals.push(...meals);
+    }
+    if (newCenters.length > 0) {
+      D.centers = newCenters;
+      D.meals   = newMeals;
+      // تحديث RAW أيضاً للرسوم البيانية
+      SHEET_NAMES.forEach(sh => {
+        RAW[sh] = { centers: newCenters.filter(c => c.nationality === sh) };
+      });
+      renderAll();
+      const now = new Date().toLocaleString('ar-SA');
+      localStorage.setItem('rm_lu', now);
+      localStorage.setItem('rm_cache_centers', JSON.stringify(newCenters));
+      localStorage.setItem('rm_cache_meals',   JSON.stringify(newMeals));
+      document.getElementById('lup').textContent = now;
+      showToast('تم جلب البيانات من Google Sheets بنجاح ✓', 'success');
+    } else {
+      throw new Error('لم يتم استقبال بيانات');
+    }
+  } catch(e) {
+    console.error(e);
+    showToast('تعذّر الاتصال بـ Google Sheets — يُستخدم الكاش المحلي', 'error');
+  }
   btn.classList.remove('ld');
   btn.querySelector('span').textContent='تحديث';
 }
@@ -1266,10 +1368,31 @@ function init(){
   initTheme();
   tick();
   setInterval(tick,1000);
-  initData();
+
+  // حاول تحميل الكاش من آخر جلب حقيقي
+  const cachedCenters = localStorage.getItem('rm_cache_centers');
+  const cachedMeals   = localStorage.getItem('rm_cache_meals');
+
+  if (cachedCenters && cachedMeals) {
+    try {
+      D.centers = JSON.parse(cachedCenters);
+      D.meals   = JSON.parse(cachedMeals);
+      // تحديث RAW من الكاش
+      SHEET_NAMES.forEach(sh => {
+        RAW[sh] = { centers: D.centers.filter(c => c.nationality === sh) };
+      });
+      D.loaded = true;
+    } catch(e) {
+      initData(); // fallback للبيانات المدمجة
+    }
+  } else {
+    initData(); // بيانات مدمجة من الملف
+  }
+
   renderAll();
-  const lu=localStorage.getItem('rm_lu');
-  if(lu)document.getElementById('lup').textContent=lu;
+  const lu = localStorage.getItem('rm_lu');
+  if(lu) document.getElementById('lup').textContent = lu;
+
   setTimeout(()=>{
     document.getElementById('lo').classList.add('hid');
     setTimeout(()=>document.getElementById('lo').remove(),450);
