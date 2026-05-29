@@ -881,9 +881,9 @@ function renderTopKitchensCard() {
     { key:'readyScore',   label:'وجبات جاهزة', icon:'fa-check-circle', color:'#3B6D11', bg:'#EAF3DE',
       desc:'نسبة الوجبات التي لا تحتوي على: لا يوجد، تالف، أو متأخر — من إجمالي وجبات المطبخ خلال أيام الحج' },
     { key:'onTimeScore',  label:'الانتظام',      icon:'fa-clock',        color:'#185FA5', bg:'#E6F1FB',
-      desc:'نسبة الوجبات المُسلَّمة في وقتها — أي الوجبات التي لا تحتوي على كلمة متأخر في حالتها' },
+      desc:'نسبة الوجبات المُسلَّمة في وقتها — أي الوجبات التي لا تحتوي على كلمة "متأخر" في حالتها' },
     { key:'noSpoilScore', label:'غياب التالف',   icon:'fa-shield-alt',   color:'#0F6E56', bg:'#E1F5EE',
-      desc:'المطبخ الذي لا يملك أي وجبة مصنفة تالف يحصل على 100% — كل وجبة تالفة تُخصم من الدرجة' },
+      desc:'المطبخ الذي لا يملك أي وجبة مصنفة "تالف" يحصل على 100% — كل وجبة تالفة تُخصم من الدرجة' },
   ];
 
   const cards = top.map((k,i) => `
@@ -1366,7 +1366,7 @@ function exportAllExcel() {
 // GOOGLE SHEETS LIVE FETCH
 // ═══════════════════════════════════════
 const SHEET_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR7ZTe9vQIgm7pWkghB4kL4jSPuifRHbVtoOVS4XXtjCKIyuCzdmG4YMIquYYsUd4MM9Ih7YbFFj27j/pub?output=csv';
-const SHEET_NAMES = ['مصر قرعة','مروتانيا','تونس','عمان','روسيا','ارتيريا','B2C','بنجلادش','301-306'];
+const SHEET_NAMES = ['مصر قرعة','موريتانيا','تونس','عمان','روسيا','ارتيريا','B2C','بنجلادش','301-306'];
 
 async function fetchSheetCSV(sheetName) {
   const url = `${SHEET_BASE}&sheet=${encodeURIComponent(sheetName)}&cachebust=${Date.now()}`;
