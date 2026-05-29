@@ -220,7 +220,7 @@ tbody td{padding:9px 12px;white-space:nowrap}
     <div class="nav-item" onclick="navTo(3,this,'المؤشرات التشغيلية')"><i class="fas fa-gauge-high"></i><span>المؤشرات التشغيلية</span></div>
   </nav>
   <div class="sb-bottom">
-    <button class="sb-action-btn" onclick="exportAllExcel()" title="تصدير البيانات Excel"><i class="fas fa-file-excel"></i><span>تصدير البيانات</span></button>
+    <button class="sb-action-btn" onclick="exportAllExcel()" title="تصدير شامل Excel"><i class="fas fa-file-excel"></i><span>تصدير شامل</span></button>
     <button class="sb-action-btn" onclick="window.print()" title="طباعة"><i class="fas fa-print"></i><span>طباعة</span></button>
     <button id="togBtn" onclick="toggleSidebar()"><i class="fas fa-chevron-left"></i><span>طي القائمة</span></button>
   </div>
@@ -281,8 +281,14 @@ tbody td{padding:9px 12px;white-space:nowrap}
         <div class="chart-wrap"><canvas id="ch_stacked"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-title">الوقوعات والتذاكر لكل جنسية</div>
+        <div class="chart-title">الوقوعات والتذاكر والمحاضر لكل جنسية</div>
         <div class="chart-wrap"><canvas id="ch_incidents"></canvas></div>
+      </div>
+    </div>
+    <div class="charts-row" style="margin-bottom:20px">
+      <div class="chart-card">
+        <div class="chart-title">عدد الاستمارات لكل مركز</div>
+        <div class="chart-wrap" style="max-height:260px"><canvas id="ch_forms"></canvas></div>
       </div>
     </div>
     <div class="tbl-card">
@@ -374,44 +380,44 @@ tbody td{padding:9px 12px;white-space:nowrap}
 // RAW FALLBACK DATA
 // ═══════════════════════════════════════
 const RAW_CENTERS = [
-  // [id, mina, arafah, tawriya, tasaood, ifada, f_mina, f_arafah, f_muz, f_tawaf, f_iltizam, f_raqaba, f_joda, minutes, tickets, incidents, nationality]
-  [100,0,548,0,0.7556,0,3,0,2,0,8,5,5,0,2,0,'مصر قرعة'],
-  [101,0,2273,0,1,0.9991,1,0,2,0,10,1,4,0,13,5,'مصر قرعة'],
-  [102,0,0,0,0,1,0,0,1,0,7,1,4,1,46,3,'مصر قرعة'],
-  [103,0,0,0,0,0,0,0,1,0,6,1,1,0,36,1,'مصر قرعة'],
-  [104,70,2851,1,1,1,4,2,2,0,4,1,1,1,45,3,'مصر قرعة'],
-  [105,0,937,0,0.9842,0.9842,0,0,1,0,1,1,1,0,30,2,'مصر قرعة'],
-  [106,0,0,0,0,0,0,0,0,0,6,3,3,0,33,6,'مصر قرعة'],
-  [107,0,2911,0,1,1,1,0,2,0,7,3,3,0,27,4,'مصر قرعة'],
-  [108,0,2869,0,1,0.9544,0,0,0,0,6,3,3,1,34,2,'مصر قرعة'],
-  [109,3262,3262,1,1,1,1,0,2,0,12,2,6,0,30,4,'موريتانيا'],
-  [110,160,3165,1,1,1,2,0,7,0,7,4,6,0,54,2,'تونس'],
-  [111,300,2871,1,1,1,3,0,1,0,7,5,5,0,38,1,'تونس'],
-  [112,0,1648,0,1,1,0,2,1,0,8,3,3,1,24,2,'تونس'],
-  [113,0,1867,0,1,1,1,2,1,0,8,5,6,0,20,1,'تونس'],
-  [114,0,0,0,0,0,0,1,7,0,8,6,6,0,8,2,'تونس'],
-  [115,2599,2599,0.99846,0.9985,0.9985,0,1,2,1,8,0,0,1,0,1,'عمان'],
-  [116,2108,2108,0.73964,0.73964,0.9235,1,2,3,0,5,0,0,0,2,3,'عمان'],
-  [117,2838,2838,0.99578,0.99578,1,0,0,3,1,2,0,0,0,0,4,'عمان'],
-  [118,2776,2776,0.99928,0.99928,0.9993,3,1,2,0,2,0,0,0,2,5,'عمان'],
-  [119,2674,2674,0.99147,0.99147,0.9915,0,0,6,1,0,0,0,0,3,1,'عمان'],
-  [120,3687,3687,1,1,1,0,0,1,3,7,1,0,0,1,0,'روسيا'],
-  [121,287,3776,1,1,0.9997,0,0,2,0,5,0,1,1,7,0,'روسيا'],
-  [122,2451,2601,0.7404,0.7858,1,2,1,0,2,10,1,1,2,1,0,'روسيا'],
-  [123,2778,2778,0.96257,0.96257,0.96257,0,1,0,1,12,4,4,0,6,0,'روسيا'],
-  [125,603,727,1,1,1,0,1,1,0,9,7,7,0,11,5,'ارتيريا'],
-  [150,0,522,0,0.49666,1,0,0,0,1,9,6,6,0,3,0,'B2C'],
-  [160,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,'بنجلاديش'],
-  [161,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,'بنجلاديش'],
-  [162,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,'بنجلاديش'],
-  [163,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,'بنجلاديش'],
-  [164,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,'بنجلاديش'],
-  [301,0,0,0,0,0,0,0,0,0,9,2,7,0,0,0,'301-306'],
-  [302,0,0,0,0,0,0,0,0,0,9,1,9,2,0,0,'301-306'],
-  [303,0,0,0,0,0,0,0,0,0,9,1,5,0,0,0,'301-306'],
-  [304,0,0,0,0,0,0,0,0,0,8,4,4,0,0,0,'301-306'],
-  [305,0,0,0,0,0,0,0,0,0,9,4,5,0,0,0,'301-306'],
-  [306,0,0,0,0,0,0,0,0,0,8,4,5,0,0,0,'301-306'],
+  // [id, mina, arafah, tawriya, tasaood, ifada, f_mina, f_arafah, f_mashaer, f_muz, f_tawaf, f_iltizam, f_raqaba, f_joda, minutes, tickets, incidents, nationality]
+  [100,0,548,0,0.7556,0,3,0,0,2,0,8,5,5,0,2,0,'مصر قرعة'],
+  [101,0,2273,0,1,0.9991,1,0,0,2,0,10,1,4,0,13,5,'مصر قرعة'],
+  [102,0,0,0,0,1,0,0,0,1,0,7,1,4,1,46,3,'مصر قرعة'],
+  [103,0,0,0,0,0,0,0,0,1,0,6,1,1,0,36,1,'مصر قرعة'],
+  [104,70,2851,1,1,1,4,2,0,2,0,4,1,1,1,45,3,'مصر قرعة'],
+  [105,0,937,0,0.9842,0.9842,0,0,0,1,0,1,1,1,0,30,2,'مصر قرعة'],
+  [106,0,0,0,0,0,0,0,0,0,0,6,3,3,0,33,6,'مصر قرعة'],
+  [107,0,2911,0,1,1,1,0,0,2,0,7,3,3,0,27,4,'مصر قرعة'],
+  [108,0,2869,0,1,0.9544,0,0,0,0,0,6,3,3,1,34,2,'مصر قرعة'],
+  [109,3262,3262,1,1,1,1,0,0,2,0,12,2,6,0,30,4,'موريتانيا'],
+  [110,160,3165,1,1,1,2,0,0,7,0,7,4,6,0,54,2,'تونس'],
+  [111,300,2871,1,1,1,3,0,0,1,0,7,5,5,0,38,1,'تونس'],
+  [112,0,1648,0,1,1,0,2,0,1,0,8,3,3,1,24,2,'تونس'],
+  [113,0,1867,0,1,1,1,2,0,1,0,8,5,6,0,20,1,'تونس'],
+  [114,0,0,0,0,0,0,1,0,7,0,8,6,6,0,8,2,'تونس'],
+  [115,2599,2599,0.99846,0.9985,0.9985,0,1,0,2,1,8,0,0,1,0,1,'عمان'],
+  [116,2108,2108,0.73964,0.73964,0.9235,1,2,0,3,0,5,0,0,0,2,3,'عمان'],
+  [117,2838,2838,0.99578,0.99578,1,0,0,0,3,1,2,0,0,0,0,4,'عمان'],
+  [118,2776,2776,0.99928,0.99928,0.9993,3,1,0,2,0,2,0,0,0,2,5,'عمان'],
+  [119,2674,2674,0.99147,0.99147,0.9915,0,0,0,6,1,0,0,0,0,3,1,'عمان'],
+  [120,3687,3687,1,1,1,0,0,0,1,3,7,1,0,0,1,0,'روسيا'],
+  [121,287,3776,1,1,0.9997,0,0,0,2,0,5,0,1,1,7,0,'روسيا'],
+  [122,2451,2601,0.7404,0.7858,1,2,1,0,0,2,10,1,1,2,1,0,'روسيا'],
+  [123,2778,2778,0.96257,0.96257,0.96257,0,1,0,0,1,12,4,4,0,6,0,'روسيا'],
+  [125,603,727,1,1,1,0,1,0,1,0,9,7,7,0,11,5,'ارتيريا'],
+  [150,0,522,0,0.49666,1,0,0,0,0,1,9,6,6,0,3,0,'B2C'],
+  [160,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,0,'بنجلاديش'],
+  [161,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,'بنجلاديش'],
+  [162,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,'بنجلاديش'],
+  [163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,'بنجلاديش'],
+  [164,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,'بنجلاديش'],
+  [301,0,0,0,0,0,0,0,0,0,0,9,2,7,0,0,0,'301-306'],
+  [302,0,0,0,0,0,0,0,0,0,0,9,1,9,2,0,0,'301-306'],
+  [303,0,0,0,0,0,0,0,0,0,0,9,1,5,0,0,0,'301-306'],
+  [304,0,0,0,0,0,0,0,0,0,0,8,4,4,0,0,0,'301-306'],
+  [305,0,0,0,0,0,0,0,0,0,0,9,4,5,0,0,0,'301-306'],
+  [306,0,0,0,0,0,0,0,0,0,0,8,4,5,0,0,0,'301-306'],
 ];
 
 const MEAL_NAMES = ['إفطار','غداء','عشاء'];
@@ -464,11 +470,11 @@ function buildData() {
   D.centers = RAW_CENTERS.map(r => ({
     id:r[0], mina:r[1], arafah:r[2],
     tawriya:r[3], tasaood:r[4], ifada:r[5],
-    f_mina:r[6], f_arafah:r[7], f_muz:r[8], f_tawaf:r[9],
-    f_iltizam:r[10], f_raqaba:r[11], f_joda:r[12],
-    minutes:r[13], tickets:r[14], incidents:r[15],
-    nationality:r[16],
-    forms: (r[6]||0)+(r[7]||0)+(r[8]||0)+(r[9]||0)+(r[10]||0)+(r[11]||0)+(r[12]||0)
+    f_mina:r[6], f_arafah:r[7], f_mashaer:r[8], f_muz:r[9], f_tawaf:r[10],
+    f_iltizam:r[11], f_raqaba:r[12], f_joda:r[13],
+    minutes:r[14], tickets:r[15], incidents:r[16],
+    nationality:r[17],
+    forms: (r[6]||0)+(r[7]||0)+(r[8]||0)+(r[9]||0)+(r[10]||0)+(r[11]||0)+(r[12]||0)+(r[13]||0)
   }));
 
   // Build kitchen lookup: for centers without kitchen, inherit from same nationality group
@@ -629,6 +635,8 @@ function renderDashboard() {
   });
   const topNat = Object.entries(byNat).sort((a,b)=>b[1]-a[1])[0];
 
+  const totalTracking = centers.reduce((s,c)=>s+c.forms+c.minutes+c.tickets+c.incidents,0);
+
   document.getElementById('kpi0').innerHTML = 
     kpiCard('building','إجمالي المراكز',centers.length,'var(--acc)') +
     kpiCard('tent','إجمالي حجاج منى',totalMina,'var(--em)') +
@@ -636,7 +644,7 @@ function renderDashboard() {
     kpiCard('flag','عدد الجنسيات',nats.length,'var(--ind)') +
     kpiCard('gauge-high','متوسط مؤشر التروية',pct(avgTawriya),'var(--amber)') +
     kpiCard('star','أعلى جنسية أعداداً',topNat?topNat[0]:'—','var(--rose)') +
-    kpiCard('triangle-exclamation','إجمالي الوقوعات',totalIncidents,'var(--rose)') +
+    kpiCard('clipboard-list','إجمالي المتابعة',totalTracking,'var(--acc)') +
     kpiCard('circle-check','المراكز النشطة',activeCount,'var(--em)');
 
   // بطاقة أفضل 3 مراكز — تحت الـ KPI مباشرة
@@ -994,11 +1002,14 @@ function renderCenters() {
   const totalInc = centers.reduce((s,c)=>s+c.incidents,0);
   const active = centers.filter(c=>c.mina>0||c.arafah>0).length;
 
+  const totalForms = centers.reduce((s,c)=>s+c.forms,0);
+
   document.getElementById('kpi1').innerHTML = 
     kpiCard('building','إجمالي المراكز',centers.length,'var(--acc)') +
     kpiCard('circle-check','المراكز النشطة',active,'var(--em)') +
     kpiCard('tent','إجمالي منى',totalMina,'var(--cyan)') +
     kpiCard('mosque','إجمالي عرفة',totalArafah,'var(--amber)') +
+    kpiCard('file-lines','إجمالي الاستمارات',totalForms,'var(--ind)') +
     kpiCard('triangle-exclamation','الوقوعات الكلية',totalInc,'var(--rose)');
 
   // Fill nationality filter dropdown
@@ -1014,6 +1025,7 @@ function renderCenters() {
   // Charts
   renderStackedChart();
   renderIncidentsChart();
+  renderFormsChart();
   renderTable1();
   renderAnalytics1();
 }
@@ -1044,9 +1056,50 @@ function renderIncidentsChart() {
     type:'bar',
     data:{ labels:nats, datasets:[
       {label:'الوقوعات', data:nats.map(n=>D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.incidents,0)), backgroundColor:rgba('#f43f5e',.7), borderColor:'#f43f5e', borderWidth:1},
-      {label:'التذاكر', data:nats.map(n=>D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.tickets,0)), backgroundColor:rgba('#f59e0b',.7), borderColor:'#f59e0b', borderWidth:1},
+      {label:'التذاكر',  data:nats.map(n=>D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.tickets,0)),   backgroundColor:rgba('#f59e0b',.7), borderColor:'#f59e0b', borderWidth:1},
+      {label:'المحاضر',  data:nats.map(n=>D.centers.filter(c=>c.nationality===n).reduce((s,c)=>s+c.minutes,0)),   backgroundColor:rgba('#6366f1',.7), borderColor:'#6366f1', borderWidth:1},
     ]},
     options:{responsive:true,maintainAspectRatio:true,scales:{x:{ticks:{font:{family:'IBM Plex Sans Arabic'}}},y:{ticks:{font:{family:'IBM Plex Sans Arabic'}}}},plugins:{legend:{labels:{font:{family:'IBM Plex Sans Arabic'}}}}}
+  });
+}
+
+function renderFormsChart() {
+  const centers = [...D.centers].sort((a,b) => b.forms - a.forms);
+  const labels  = centers.map(c => `${c.id}`);
+  const colors  = centers.map((_,i) => NAT_COLORS[i % NAT_COLORS.length]);
+  makeChart('ch_forms', {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'الاستمارات',
+        data: centers.map(c => c.forms),
+        backgroundColor: colors.map(c => rgba(c, .75)),
+        borderColor: colors,
+        borderWidth: 1,
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: items => {
+              const c = centers[items[0].dataIndex];
+              return `مركز ${c.id} — ${c.nationality}`;
+            },
+            label: items => ` الاستمارات: ${items.raw}`
+          }
+        }
+      },
+      scales: {
+        x: { ticks: { font: { family: 'IBM Plex Sans Arabic', size: 11 } } },
+        y: { ticks: { font: { family: 'IBM Plex Sans Arabic' } }, beginAtZero: true }
+      }
+    }
   });
 }
 
@@ -1358,8 +1411,8 @@ function exportAllExcel() {
     'الوجبة':m.mealName,'الحالة':m.status,'المطبخ':m.kitchen
   })));
   XLSX.utils.book_append_sheet(wb, ws2, 'الوجبات');
-  XLSX.writeFile(wb, 'ikram_تقرير_البيانات.xlsx');
-  showToast('✅ تم تصدير تقرير البيانات');
+  XLSX.writeFile(wb, 'ikram_تقرير_شامل.xlsx');
+  showToast('✅ تم تصدير التقرير الشامل');
 }
 
 // ═══════════════════════════════════════
@@ -1422,11 +1475,11 @@ function parseSheetData(rows, nationality) {
           id,
           mina: n(1), arafah: n(2),
           tawriya: pv(3), tasaood: pv(4), ifada: pv(5),
-          f_mina: n(6), f_arafah: n(7), f_muz: n(8), f_tawaf: n(9),
-          f_iltizam: n(10), f_raqaba: n(11), f_joda: n(12),
-          minutes: n(13), tickets: n(14), incidents: n(15),
+          f_mina: n(6), f_arafah: n(7), f_mashaer: n(8), f_muz: n(9), f_tawaf: n(10),
+          f_iltizam: n(11), f_raqaba: n(12), f_joda: n(13),
+          minutes: n(14), tickets: n(15), incidents: n(16),
           nationality,
-          forms: n(6)+n(7)+n(8)+n(9)+n(10)+n(11)+n(12)
+          forms: n(6)+n(7)+n(8)+n(9)+n(10)+n(11)+n(12)+n(13)
         });
       }
     }
