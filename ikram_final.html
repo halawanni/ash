@@ -1286,7 +1286,7 @@ function renderMealDaysChart() {
   makeChart('ch_mealdays', {
     type:'bar',
     data:{ labels:DAYS.map(d=>'يوم '+d), datasets:[
-      {label:'جارية', data:counts.map(c=>c.ongoing), backgroundColor:rgba('#10b981',.7), borderColor:'#10b981', borderWidth:1},
+      {label:'وزعت', data:counts.map(c=>c.ongoing), backgroundColor:rgba('#10b981',.7), borderColor:'#10b981', borderWidth:1},
       {label:'لا يوجد', data:counts.map(c=>c.la), backgroundColor:rgba('#6e7681',.5), borderColor:'#6e7681', borderWidth:1},
     ]},
     options:{responsive:true,maintainAspectRatio:true,scales:{x:{stacked:true,ticks:{font:{family:'IBM Plex Sans Arabic'}}},y:{stacked:true,ticks:{font:{family:'IBM Plex Sans Arabic'}}}},plugins:{legend:{labels:{font:{family:'IBM Plex Sans Arabic'}}}}}
