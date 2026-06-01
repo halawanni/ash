@@ -927,10 +927,10 @@ function actCntTab(nat,btn){
   fc();
 }
 
-function fc(){
+function fc(page=1){
   const sr=document.getElementById('csr').value;
   const nat=document.getElementById('cnf').value;
-  renderCntTable(nat,sr,1);
+  renderCntTable(nat,sr,page);
 }
 
 function renderCntTable(nat='',search='',page=1){
@@ -984,7 +984,7 @@ function rpag(id,cur,tot,dtLen){
 }
 
 function gp(id,p){
-  if(id==='cpag'){cPage=p;fc();}
+   if(id==='cpag'){cPage=p;fc(p);}
   if(id==='mpag'){mPage=p;fml(cmf);}
 }
 
