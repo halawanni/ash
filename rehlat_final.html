@@ -1027,7 +1027,7 @@ function renderMlKPI(){
   const notStart=m.filter(x=>x.status==='لم يبدأ').length;
   const started=m.filter(x=>x.status!=='لا يوجد'&&x.status!=='لم يبدأ').length;
   const kpis=[
-    {l:'إجمالي الوجبات',v:m.length,i:'fa-utensils',col:'var(--acc)',ca:'linear-gradient(90deg,var(--acc),var(--ind))'},
+    {l:'إجمالي الوجبات',v:0,i:'fa-utensils',col:'var(--acc)',ca:'linear-gradient(90deg,var(--acc),var(--ind))'},
     {l:'لا يوجد',v:none,i:'fa-times-circle',col:'var(--txt3)',ca:'linear-gradient(90deg,var(--txt3),#444)'},
     {l:'لم تبدأ بعد',v:notStart,i:'fa-clock',col:'var(--amber)',ca:'linear-gradient(90deg,var(--amber),#d97706)'},
     {l:'بدأت/جارية',v:started||'0',i:'fa-check-circle',col:'var(--em)',ca:'linear-gradient(90deg,var(--em),var(--cyan))'},
