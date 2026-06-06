@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دليل كتابة البرومت الاحترافي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #f5c842;
+    --gold-light: #fde97a;
+    --teal: #00c9b1;
+    --purple: #7c3aed;
+    --coral: #ff6b4a;
+    --blue: #3b82f6;
+    --bg: #05050d;
+    --card: #0f0f1a;
+    --border: rgba(245,200,66,0.15);
+    --text: #e8e8f0;
+    --muted: #7b7b9a;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── VISITOR BANNER ── */
+  .visitor-bar {
+    background: linear-gradient(90deg, rgba(245,200,66,0.08), rgba(0,201,177,0.06), rgba(245,200,66,0.08));
+    border-bottom: 1px solid var(--border);
+    padding: 10px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .visitor-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .visitor-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  .stat-dot.live { background: #4ade80; box-shadow: 0 0 6px #4ade80; }
+  .stat-dot.total { background: var(--gold); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+
+  .stat-label { font-size: 11px; color: var(--muted); }
+  .stat-value { font-size: 14px; font-weight: 700; color: var(--text); }
+  .stat-value.gold { color: var(--gold); }
+  .stat-value.green { color: #4ade80; }
+
+  .visitor-right { font-size: 11px; color: var(--muted); }
+
+  /* ── PAGE ── */
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding: 48px 32px 40px;
+    background: linear-gradient(135deg, #0f0f1a 0%, #13101e 60%, #0a0e1a 100%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 400px; height: 200px;
+    background: radial-gradient(ellipse, rgba(245,200,66,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .header-tag {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    color: #0a0a0f;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .header h1 {
+    font-family: 'Tajawal', sans-serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, #fff 0%, var(--gold-light) 50%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header p { font-size: 15px; color: var(--muted); max-width: 500px; margin: 0 auto; line-height: 1.7; }
+
+  /* ── VISITOR CARD inside page ── */
+  .visitors-card {
+    background: var(--card);
+    border: 1px solid rgba(74,222,128,0.2);
+    border-radius: 20px;
+    padding: 24px 32px;
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    text-align: center;
+  }
+
+  @media(max-width: 500px) { .visitors-card { grid-template-columns: 1fr; } }
+
+  .v-stat {
+    padding: 16px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .v-icon { font-size: 26px; margin-bottom: 8px; }
+  .v-num {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .v-num.green { color: #4ade80; }
+  .v-num.gold  { color: var(--gold); }
+  .v-num.teal  { color: var(--teal); }
+  .v-label { font-size: 12px; color: var(--muted); }
+
+  .loading-shimmer {
+    display: inline-block;
+    width: 60px; height: 30px;
+    background: linear-gradient(90deg, #1a1a2e 25%, #2a2a3e 50%, #1a1a2e 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.2s infinite;
+    border-radius: 6px;
+    vertical-align: middle;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* ── EQUATION ── */
+  .equation {
+    background: linear-gradient(90deg, rgba(0,201,177,0.08), rgba(124,58,237,0.1), rgba(0,201,177,0.08));
+    border: 1px solid rgba(0,201,177,0.2);
+    border-radius: 16px;
+    padding: 20px 32px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .eq-parts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .eq-part {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 7px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .eq-part.gold { border-color: rgba(245,200,66,0.3); color: var(--gold); }
+  .eq-part.teal { border-color: rgba(0,201,177,0.3); color: var(--teal); }
+  .eq-symbol { color: var(--muted); font-size: 18px; }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 3px; color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-title::after { content:''; flex:1; height:1px; background: linear-gradient(90deg, var(--border), transparent); }
+
+  /* ── COMPONENTS ── */
+  .components-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  @media(max-width: 640px) {
+    .components-grid { grid-template-columns: repeat(2,1fr); }
+    .components-grid .comp-card:last-child { grid-column: span 2; }
+  }
+
+  .comp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 14px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .comp-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:16px 16px 0 0; }
+  .comp-card:nth-child(1)::before { background: var(--gold); }
+  .comp-card:nth-child(2)::before { background: var(--teal); }
+  .comp-card:nth-child(3)::before { background: var(--purple); }
+  .comp-card:nth-child(4)::before { background: var(--coral); }
+  .comp-card:nth-child(5)::before { background: var(--blue); }
+
+  .comp-icon { font-size: 26px; margin-bottom: 8px; }
+  .comp-name { font-weight: 700; font-size: 14px; color: #fff; margin-bottom: 5px; }
+  .comp-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  /* ── STEPS ── */
+  .step-card {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 18px;
+    align-items: start;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px 22px;
+    margin-bottom: 12px;
+  }
+
+  .step-num {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 800; flex-shrink: 0;
+    font-family: 'Tajawal', sans-serif;
+  }
+  .step-card:nth-child(1) .step-num { background: rgba(245,200,66,0.12); color: var(--gold); border: 1px solid rgba(245,200,66,0.25); }
+  .step-card:nth-child(2) .step-num { background: rgba(0,201,177,0.1); color: var(--teal); border: 1px solid rgba(0,201,177,0.25); }
+  .step-card:nth-child(3) .step-num { background: rgba(124,58,237,0.1); color: #a78bfa; border: 1px solid rgba(124,58,237,0.25); }
+  .step-card:nth-child(4) .step-num { background: rgba(255,107,74,0.1); color: var(--coral); border: 1px solid rgba(255,107,74,0.25); }
+  .step-card:nth-child(5) .step-num { background: rgba(59,130,246,0.1); color: var(--blue); border: 1px solid rgba(59,130,246,0.25); }
+  .step-card:nth-child(6) .step-num { background: rgba(244,114,182,0.1); color: #f472b6; border: 1px solid rgba(244,114,182,0.25); }
+  .step-card:nth-child(7) .step-num { background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.25); }
+
+  .step-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+  .step-desc { font-size: 13px; color: #9090b0; line-height: 1.65; margin-bottom: 8px; }
+  .step-example {
+    background: rgba(255,255,255,0.03);
+    border-right: 3px solid;
+    border-radius: 0 8px 8px 0;
+    padding: 9px 13px;
+    font-size: 12px; color: #b8b8d0; line-height: 1.55;
+  }
+  .step-card:nth-child(1) .step-example { border-color: var(--gold); }
+  .step-card:nth-child(2) .step-example { border-color: var(--teal); }
+  .step-card:nth-child(3) .step-example { border-color: #a78bfa; }
+  .step-card:nth-child(4) .step-example { border-color: var(--coral); }
+  .step-card:nth-child(5) .step-example { border-color: var(--blue); }
+  .step-card:nth-child(6) .step-example { border-color: #f472b6; }
+  .step-card:nth-child(7) .step-example { border-color: #34d399; }
+
+  .badge { display:inline-block; font-size:10px; font-weight:700; padding:2px 9px; border-radius:5px; margin-left:4px; letter-spacing:1px; text-transform:uppercase; }
+  .badge-good { background: rgba(0,201,177,0.12); color: var(--teal); }
+  .badge-bad  { background: rgba(255,107,74,0.12); color: var(--coral); }
+
+  /* ── TWO COL ── */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:40px; }
+  @media(max-width:580px) { .two-col { grid-template-columns:1fr; } }
+
+  .errors-card, .techniques-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px;
+  }
+
+  .mini-title { font-size: 13px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+
+  .error-item { display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .error-item:last-child { border-bottom: none; }
+  .error-icon { width:24px; height:24px; background:rgba(255,107,74,0.1); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; margin-top:1px; }
+  .error-text { font-size:12px; color:#9090b0; line-height:1.5; }
+  .error-text strong { color:#dcdce8; font-size:13px; display:block; margin-bottom:1px; }
+
+  .tech-item { display:flex; align-items:center; gap:12px; padding:9px 12px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:10px; margin-bottom:7px; }
+  .tech-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .tech-name { font-size:13px; font-weight:700; color:#d0d0e8; }
+  .tech-desc { font-size:11px; color:var(--muted); margin-top:1px; }
+
+  /* ── FOOTER ── */
+  .footer { text-align:center; padding-top:20px; border-top:1px solid var(--border); }
+  .footer p { font-size:12px; color:var(--muted); }
+  .footer strong { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- VISITOR TOP BAR -->
+<div class="visitor-bar">
+  <div class="visitor-left">
+    <div class="visitor-stat">
+      <div class="stat-dot live"></div>
+      <div>
+        <div class="stat-label">متواجد الآن</div>
+        <div class="stat-value green" id="live-count">...</div>
+      </div>
+    </div>
+    <div class="visitor-stat">
+      <div class="stat-dot total"></div>
+      <div>
+        <div class="stat-label">إجمالي الزيارات</div>
+        <div class="stat-value gold" id="total-count">...</div>
+      </div>
+    </div>
+    <div class="visitor-stat">
+      <div>
+        <div class="stat-label">أول زيارة</div>
+        <div class="stat-value" id="first-visit">...</div>
+      </div>
+    </div>
+  </div>
+  <div class="visitor-right" id="last-update">جارٍ التحميل...</div>
+</div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-tag">Prompt Engineering دليل</div>
+    <h1>كتابة البرومت الاحترافي</h1>
+    <p>من الطلب العشوائي إلى الأمر المتقن — كل ما تحتاجه للحصول على النتائج التي تريدها</p>
+  </div>
+
+  <!-- VISITORS CARD -->
+  <div class="visitors-card">
+    <div class="v-stat">
+      <div class="v-icon">👁️</div>
+      <div class="v-num green" id="v-live"><span class="loading-shimmer"></span></div>
+      <div class="v-label">زائر متواجد الآن</div>
+    </div>
+    <div class="v-stat">
+      <div class="v-icon">📊</div>
+      <div class="v-num gold" id="v-total"><span class="loading-shimmer"></span></div>
+      <div class="v-label">إجمالي الزيارات</div>
+    </div>
+    <div class="v-stat">
+      <div class="v-icon">📅</div>
+      <div class="v-num teal" id="v-today"><span class="loading-shimmer"></span></div>
+      <div class="v-label">زيارات اليوم</div>
+    </div>
+  </div>
+
+  <!-- EQUATION -->
+  <div class="equation" style="margin-bottom:40px">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:10px">المعادلة الذهبية</div>
+    <div class="eq-parts">
+      <div class="eq-part gold">برومت ضعيف</div>
+      <span class="eq-symbol">→</span>
+      <div class="eq-part" style="color:#ff6b4a;border-color:rgba(255,107,74,0.3)">نتيجة عامة</div>
+      <span class="eq-symbol" style="margin:0 8px">|</span>
+      <div class="eq-part teal">برومت احترافي</div>
+      <span class="eq-symbol">→</span>
+      <div class="eq-part" style="color:#34d399;border-color:rgba(52,211,153,0.3)">نتيجة تحقق هدفك</div>
+    </div>
+  </div>
+
+  <!-- COMPONENTS -->
+  <div class="section-title">المكونات الأساسية الخمسة</div>
+  <div class="components-grid" style="margin-bottom:40px">
+    <div class="comp-card"><div class="comp-icon">🎭</div><div class="comp-name">الدور</div><div class="comp-desc">من تريد منه أن يكون؟</div></div>
+    <div class="comp-card"><div class="comp-icon">🎯</div><div class="comp-name">المهمة</div><div class="comp-desc">ماذا تريده بالتحديد؟</div></div>
+    <div class="comp-card"><div class="comp-icon">📋</div><div class="comp-name">السياق</div><div class="comp-desc">من أنت؟ من جمهورك؟</div></div>
+    <div class="comp-card"><div class="comp-icon">📐</div><div class="comp-name">الصيغة</div><div class="comp-desc">كيف تريد الإجابة؟</div></div>
+    <div class="comp-card"><div class="comp-icon">🚧</div><div class="comp-name">القيود</div><div class="comp-desc">ما الذي لا تريده؟</div></div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="section-title">الخطوات السبع للبرومت المحترف</div>
+  <div style="margin-bottom:40px">
+    <div class="step-card"><div class="step-num">١</div><div><div class="step-title">🎯 حدد هدفك بدقة</div><div class="step-desc">قبل الكتابة اسأل: ما النتيجة المثالية؟ كلما كان هدفك أوضح كانت النتيجة أدق.</div><div class="step-example"><span class="badge badge-bad">✗</span>"اكتب عن التسويق" &nbsp;|&nbsp; <span class="badge badge-good">✓</span>"اكتب 5 نصائح لمتجر ملابس يستهدف النساء 25-40"</div></div></div>
+    <div class="step-card"><div class="step-num">٢</div><div><div class="step-title">🎭 حدد الدور — Role Prompting</div><div class="step-desc">أعطِه هوية متخصصة — يفكر ويرد بطريقة الخبير الحقيقي.</div><div class="step-example">"أنت محامٍ خبير في قانون الشركات السعودي بخبرة 15 سنة..."</div></div></div>
+    <div class="step-card"><div class="step-num">٣</div><div><div class="step-title">📋 أضف السياق — Context</div><div class="step-desc">النموذج لا يعرف عنك شيئاً — أخبره بكل ما يحتاجه.</div><div class="step-example">"أنا صاحب متجر ناشئ / ميزانية محدودة / جمهوري شباب السعودية"</div></div></div>
+    <div class="step-card"><div class="step-num">٤</div><div><div class="step-title">📐 حدد الصيغة — Format</div><div class="step-desc">لا تترك الشكل للصدفة. قرر الطول، الأسلوب، التنسيق.</div><div class="step-example">"قائمة نقطية · 200 كلمة · أسلوب ودي · مثال عملي لكل نقطة"</div></div></div>
+    <div class="step-card"><div class="step-num">٥</div><div><div class="step-title">📌 استخدم الأمثلة — Few-Shot</div><div class="step-desc">أرِه النمط المطلوب مباشرة — 2-3 أمثلة أفضل من أي شرح.</div><div class="step-example">"اكتب بأسلوب: 'كيف أربحت 10,000 ريال وأنا نائم' — الآن اكتب 3 عناوين عن..."</div></div></div>
+    <div class="step-card"><div class="step-num">٦</div><div><div class="step-title">🧠 اطلب التفكير المتسلسل — Chain of Thought</div><div class="step-desc">للمسائل المعقدة اطلب التفكير بصوت عالٍ قبل الإجابة.</div><div class="step-example">"فكّر خطوة بخطوة قبل أن تعطيني الإجابة النهائية"</div></div></div>
+    <div class="step-card"><div class="step-num">٧</div><div><div class="step-title">🔄 اختبر وحسّن — Iterate</div><div class="step-desc">البرومت الأول نادراً مثالي. عدّل عنصراً واحداً في كل مرة.</div><div class="step-example">جرّب ← لاحظ النتيجة ← عدّل شيئاً واحداً ← جرّب ← احفظ ✓</div></div></div>
+  </div>
+
+  <!-- ERRORS + TECHNIQUES -->
+  <div class="two-col">
+    <div class="errors-card">
+      <div class="mini-title" style="color:var(--coral)">⚠️ أخطاء تجنّبها</div>
+      <div class="error-item"><div class="error-icon">💭</div><div class="error-text"><strong>الغموض</strong>"اكتب جيداً" — لا معنى لها</div></div>
+      <div class="error-item"><div class="error-icon">📦</div><div class="error-text"><strong>الطلب المركب</strong>10 مهام في برومت واحد</div></div>
+      <div class="error-item"><div class="error-icon">🌫️</div><div class="error-text"><strong>غياب السياق</strong>النموذج يخمّن من أنت</div></div>
+      <div class="error-item"><div class="error-icon">📏</div><div class="error-text"><strong>إهمال الصيغة</strong>لا تحدد الطول أو الأسلوب</div></div>
+      <div class="error-item"><div class="error-icon">🛑</div><div class="error-text"><strong>قبول أول نتيجة</strong>دون مراجعة أو تحسين</div></div>
+    </div>
+    <div class="techniques-card">
+      <div class="mini-title" style="color:var(--teal)">⚡ تقنيات متقدمة</div>
+      <div class="tech-item"><div class="tech-dot" style="background:var(--gold)"></div><div><div class="tech-name">Zero-Shot</div><div class="tech-desc">مباشرة دون أمثلة</div></div></div>
+      <div class="tech-item"><div class="tech-dot" style="background:var(--teal)"></div><div><div class="tech-name">Few-Shot</div><div class="tech-desc">2-3 أمثلة كنموذج</div></div></div>
+      <div class="tech-item"><div class="tech-dot" style="background:#a78bfa"></div><div><div class="tech-name">Chain of Thought</div><div class="tech-desc">التفكير خطوة بخطوة</div></div></div>
+      <div class="tech-item"><div class="tech-dot" style="background:var(--coral)"></div><div><div class="tech-name">Role Prompting</div><div class="tech-desc">دور متخصص للردود</div></div></div>
+      <div class="tech-item"><div class="tech-dot" style="background:var(--blue)"></div><div><div class="tech-name">Prompt Chaining</div><div class="tech-desc">برومتات متسلسلة</div></div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>📌 احفظ هذا الدليل · شاركه مع فريقك · <strong>Prompt Engineering</strong> مهارة المستقبل</p>
+  </div>
+
+</div>
+
+<script>
+// ── VISITOR COUNTER using Shared Storage ──
+
+const SESSION_KEY = 'prompt_guide_session';
+const TOTAL_KEY   = 'prompt_guide_total';
+const TODAY_KEY   = 'prompt_guide_today_' + new Date().toISOString().slice(0,10);
+const LIVE_KEY    = 'prompt_guide_live';
+const FIRST_KEY   = 'prompt_guide_first';
+
+let sessionId = null;
+
+function formatNum(n) {
+  if (n === null || n === undefined) return '0';
+  return parseInt(n).toLocaleString('ar-EG');
+}
+
+function timeAgo(ts) {
+  const diff = Date.now() - ts;
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'الآن';
+  if (mins < 60) return `منذ ${mins} دقيقة`;
+  const hrs = Math.floor(mins / 60);
+  return `منذ ${hrs} ساعة`;
+}
+
+async function safeGet(key) {
+  try {
+    const r = await window.storage.get(key, true);
+    return r ? r.value : null;
+  } catch { return null; }
+}
+
+async function safeSet(key, val) {
+  try {
+    await window.storage.set(key, String(val), true);
+  } catch(e) { console.warn('storage set failed:', e); }
+}
+
+async function initVisitor() {
+  // ── 1. Check if this is a new session ──
+  let isNew = false;
+  try {
+    const existing = await window.storage.get(SESSION_KEY, false);
+    if (!existing) {
+      isNew = true;
+      sessionId = 'sess_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+      await window.storage.set(SESSION_KEY, sessionId, false);
+    } else {
+      sessionId = existing.value;
+    }
+  } catch {
+    isNew = true;
+    sessionId = 'sess_new_' + Date.now();
+  }
+
+  if (isNew) {
+    // Increment total
+    const total = parseInt(await safeGet(TOTAL_KEY) || '0') + 1;
+    await safeSet(TOTAL_KEY, total);
+
+    // Increment today
+    const today = parseInt(await safeGet(TODAY_KEY) || '0') + 1;
+    await safeSet(TODAY_KEY, today);
+
+    // Set first visit if not set
+    const first = await safeGet(FIRST_KEY);
+    if (!first) await safeSet(FIRST_KEY, Date.now());
+  }
+
+  // ── 2. Live session: register presence ──
+  const liveKey = 'prompt_guide_live_' + sessionId;
+  await safeSet(liveKey, Date.now()); // heartbeat
+
+  // ── 3. Read & display ──
+  await refreshStats();
+
+  // Refresh every 15s (heartbeat + display update)
+  setInterval(async () => {
+    await safeSet(liveKey, Date.now());
+    await refreshStats();
+  }, 15000);
+}
+
+async function refreshStats() {
+  // Total
+  const total = await safeGet(TOTAL_KEY);
+  const totalNum = parseInt(total || '0');
+
+  // Today
+  const todayVal = await safeGet(TODAY_KEY);
+  const todayNum = parseInt(todayVal || '0');
+
+  // Live: count sessions with heartbeat < 30s ago
+  // We list keys starting with 'prompt_guide_live_'
+  let liveCount = 0;
+  try {
+    const keys = await window.storage.list('prompt_guide_live_', true);
+    if (keys && keys.keys) {
+      const now = Date.now();
+      for (const k of keys.keys) {
+        try {
+          const r = await window.storage.get(k, true);
+          if (r && (now - parseInt(r.value)) < 30000) liveCount++;
+        } catch {}
+      }
+    }
+  } catch { liveCount = 1; }
+  if (liveCount < 1) liveCount = 1;
+
+  // First visit
+  const firstTs = await safeGet(FIRST_KEY);
+
+  // ── Update DOM ──
+  document.getElementById('v-total').textContent = formatNum(totalNum);
+  document.getElementById('v-today').textContent = formatNum(todayNum);
+  document.getElementById('v-live').textContent  = liveCount;
+
+  document.getElementById('total-count').textContent = formatNum(totalNum);
+  document.getElementById('live-count').textContent  = liveCount;
+
+  if (firstTs) {
+    const d = new Date(parseInt(firstTs));
+    const formatted = d.toLocaleDateString('ar-SA', {year:'numeric',month:'short',day:'numeric'});
+    document.getElementById('first-visit').textContent = formatted;
+  }
+
+  document.getElementById('last-update').textContent =
+    'آخر تحديث: ' + new Date().toLocaleTimeString('ar-SA', {hour:'2-digit',minute:'2-digit'});
+}
+
+// ── Start ──
+initVisitor().catch(console.error);
+</script>
+</body>
+</html>
