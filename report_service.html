@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تقرير إثبات خدمة الحجاج - تحليل شامل 1447هـ</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f4f8;
+    color: #1a2332;
+    direction: rtl;
+  }
+
+  /* Header */
+  .report-header {
+    background: linear-gradient(135deg, #1a3a5c 0%, #0d6e6e 50%, #1a5276 100%);
+    color: white;
+    padding: 50px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .report-header::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+  }
+  .report-header h1 { font-size: 2.4em; font-weight: 700; margin-bottom: 10px; }
+  .report-header h2 { font-size: 1.3em; font-weight: 400; opacity: 0.85; margin-bottom: 20px; }
+  .header-meta { display: flex; justify-content: center; gap: 40px; margin-top: 20px; flex-wrap: wrap; }
+  .header-meta span { background: rgba(255,255,255,0.15); padding: 8px 20px; border-radius: 20px; font-size: 0.9em; }
+
+  /* Container */
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+
+  /* Section */
+  .section { margin-bottom: 40px; }
+  .section-title {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #1a3a5c;
+    border-right: 5px solid #0d6e6e;
+    padding-right: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .icon { font-size: 1.2em; }
+
+  /* KPI Cards */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 30px; }
+  .kpi-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border-top: 4px solid #0d6e6e;
+    transition: transform 0.2s;
+  }
+  .kpi-card:hover { transform: translateY(-3px); }
+  .kpi-card.accent1 { border-top-color: #1a5276; }
+  .kpi-card.accent2 { border-top-color: #922b21; }
+  .kpi-card.accent3 { border-top-color: #1e8449; }
+  .kpi-card.accent4 { border-top-color: #b7950b; }
+  .kpi-card.accent5 { border-top-color: #6c3483; }
+  .kpi-card.accent6 { border-top-color: #117a65; }
+  .kpi-card.accent7 { border-top-color: #1a6088; }
+  .kpi-value { font-size: 2em; font-weight: 800; color: #1a3a5c; line-height: 1; }
+  .kpi-label { font-size: 0.85em; color: #666; margin-top: 8px; }
+  .kpi-sub { font-size: 0.75em; color: #999; margin-top: 4px; }
+
+  /* Cards */
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+  .card h3 { font-size: 1.1em; color: #1a3a5c; margin-bottom: 16px; font-weight: 600; }
+
+  /* Grid layouts */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  @media (max-width: 900px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* Chart containers */
+  .chart-container { position: relative; width: 100%; }
+  .chart-tall { height: 400px; }
+  .chart-medium { height: 320px; }
+  .chart-short { height: 260px; }
+
+  /* Tables */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+  .data-table th {
+    background: #1a3a5c;
+    color: white;
+    padding: 10px 14px;
+    text-align: right;
+    font-weight: 600;
+  }
+  .data-table td { padding: 9px 14px; border-bottom: 1px solid #eee; }
+  .data-table tr:hover td { background: #f5f9ff; }
+  .data-table tr:nth-child(even) td { background: #fafbff; }
+  .rank-badge {
+    display: inline-block;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 26px;
+    font-size: 0.8em;
+    font-weight: 700;
+    color: white;
+  }
+  .rank-1 { background: #f0c040; color: #333; }
+  .rank-2 { background: #aaa; }
+  .rank-3 { background: #cd7f32; }
+  .rank-other { background: #1a3a5c; }
+
+  /* Progress bars */
+  .progress-bar-row { margin-bottom: 10px; }
+  .progress-label { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.85em; }
+  .progress-track { height: 10px; background: #e8ecf0; border-radius: 5px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 5px; transition: width 0.8s ease; }
+
+  /* Phase indicator */
+  .phase-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  @media (max-width: 700px) { .phase-cards { grid-template-columns: 1fr 1fr; } }
+  .phase-card {
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    color: white;
+  }
+  .phase-card.preparation { background: linear-gradient(135deg, #5d6d7e, #85929e); }
+  .phase-card.moderate { background: linear-gradient(135deg, #1a6088, #2980b9); }
+  .phase-card.peak { background: linear-gradient(135deg, #a93226, #cb4335); }
+  .phase-card.decline { background: linear-gradient(135deg, #1e8449, #27ae60); }
+  .phase-card .phase-value { font-size: 1.7em; font-weight: 800; }
+  .phase-card .phase-pct { font-size: 1.1em; font-weight: 600; opacity: 0.9; }
+  .phase-card .phase-label { font-size: 0.8em; opacity: 0.85; margin-top: 4px; }
+
+  /* Alert box */
+  .alert-box { border-radius: 10px; padding: 16px 20px; margin-bottom: 16px; display: flex; gap: 12px; align-items: flex-start; }
+  .alert-box.info { background: #eaf4fb; border-right: 4px solid #2980b9; }
+  .alert-box.success { background: #eafaf1; border-right: 4px solid #27ae60; }
+  .alert-box.warning { background: #fef9e7; border-right: 4px solid #f1c40f; }
+  .alert-box.danger { background: #fdedec; border-right: 4px solid #e74c3c; }
+  .alert-icon { font-size: 1.4em; }
+  .alert-content strong { display: block; margin-bottom: 4px; }
+
+  /* Summary executive */
+  .exec-summary {
+    background: linear-gradient(135deg, #1a3a5c, #0d6e6e);
+    color: white;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+  }
+  .exec-summary h2 { font-size: 1.3em; margin-bottom: 16px; opacity: 0.9; }
+  .exec-summary p { line-height: 1.8; opacity: 0.9; font-size: 0.95em; }
+  .exec-highlight { font-size: 1.4em; font-weight: 700; color: #f0c040; }
+
+  /* Observations */
+  .obs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 700px) { .obs-grid { grid-template-columns: 1fr; } }
+  .obs-item {
+    background: white;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    display: flex;
+    gap: 12px;
+    border-right: 4px solid #0d6e6e;
+  }
+  .obs-number {
+    width: 32px; height: 32px; min-width: 32px;
+    border-radius: 50%;
+    background: #0d6e6e;
+    color: white;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9em;
+  }
+  .obs-text { font-size: 0.88em; line-height: 1.6; color: #333; }
+
+  /* Recommendations */
+  .rec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .rec-grid { grid-template-columns: 1fr; } }
+  .rec-card {
+    background: white;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  }
+  .rec-card h4 {
+    font-size: 0.95em;
+    color: #1a3a5c;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .rec-card ul { list-style: none; padding: 0; }
+  .rec-card ul li {
+    padding: 5px 0;
+    font-size: 0.85em;
+    color: #555;
+    border-bottom: 1px solid #f0f0f0;
+    padding-right: 16px;
+    position: relative;
+  }
+  .rec-card ul li::before {
+    content: '◈';
+    position: absolute;
+    right: 0;
+    color: #0d6e6e;
+  }
+
+  /* Footer */
+  .report-footer {
+    background: #1a3a5c;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 20px;
+    font-size: 0.85em;
+    margin-top: 40px;
+  }
+
+  /* Heatmap */
+  .heatmap-container { overflow-x: auto; }
+  .heatmap-table { border-collapse: collapse; width: 100%; font-size: 0.78em; }
+  .heatmap-table th { padding: 6px 8px; background: #1a3a5c; color: white; text-align: center; }
+  .heatmap-table td { padding: 5px 8px; text-align: center; border: 1px solid #e8ecf0; min-width: 55px; }
+
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.78em; font-weight: 600; }
+  .badge-green { background: #d5f5e3; color: #1e8449; }
+  .badge-red { background: #fadbd8; color: #922b21; }
+  .badge-blue { background: #d6eaf8; color: #1a5276; }
+  .badge-orange { background: #fef9e7; color: #9a7d0a; }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="report-header">
+  <h1>📊 تقرير إثبات خدمة الحجاج</h1>
+  <h2>تحليل شامل لبيانات مراكز الخدمة الميدانية — موسم الحج 1447هـ / 2026م</h2>
+  <div class="header-meta">
+    <span>📁 36 ملف بيانات</span>
+    <span>📋 137,442 إثبات خدمة</span>
+    <span>🏢 36 مركز خدمة</span>
+    <span>📅 20 أبريل — 7 يونيو 2026</span>
+    <span>🕌 مكة المكرمة والمدينة المنورة</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ===== EXECUTIVE SUMMARY ===== -->
+<div class="exec-summary">
+  <h2>الملخص التنفيذي</h2>
+  <p>
+    رُصدت خلال موسم الحج 1447هـ ما مجموعه <span class="exec-highlight">137,442</span> إثبات خدمة،
+    موزَّعة على <span class="exec-highlight">36</span> مركزاً في مكة المكرمة والمدينة المنورة،
+    امتدت على فترة تقارب <span class="exec-highlight">49 يوماً</span> (20 أبريل — 7 يونيو 2026).
+    سجّل موسم الحج ذروته في <strong>23 مايو 2026</strong> بـ<span class="exec-highlight">12,444</span> إثباتاً في يوم واحد،
+    بينما استأثرت فترة الذروة (13–23 مايو) بـ<span class="exec-highlight">61.2%</span> من إجمالي الإثباتات.
+    قادت مراكز الضيافة في المدينة المنورة حجم الإثباتات بـ<span class="exec-highlight">50,618</span> إثباتاً،
+    فيما جاء مركز ضيافة 1 الأعلى على مستوى المراكز الفردية بـ19,167 إثباتاً.
+    الجنسية المصرية هي الأكثر حضوراً بـ<span class="exec-highlight">45,817</span> حاجاً (33.3%).
+  </p>
+</div>
+
+<!-- ===== KPIs ===== -->
+<div class="section">
+  <div class="section-title"><span class="icon">🎯</span> مؤشرات الأداء الرئيسية (KPIs)</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-value">137,442</div>
+      <div class="kpi-label">إجمالي إثباتات الخدمة</div>
+      <div class="kpi-sub">من 36 مركز خدمة</div>
+    </div>
+    <div class="kpi-card accent1">
+      <div class="kpi-value">36</div>
+      <div class="kpi-label">عدد مراكز الخدمة</div>
+      <div class="kpi-sub">مكة والمدينة المنورة</div>
+    </div>
+    <div class="kpi-card accent2">
+      <div class="kpi-value">2,805</div>
+      <div class="kpi-label">متوسط الإثباتات اليومية</div>
+      <div class="kpi-sub">على مدار 49 يوماً</div>
+    </div>
+    <div class="kpi-card accent3">
+      <div class="kpi-value">12,444</div>
+      <div class="kpi-label">أعلى يوم نشاطاً</div>
+      <div class="kpi-sub">23 مايو 2026</div>
+    </div>
+    <div class="kpi-card accent4">
+      <div class="kpi-value">961</div>
+      <div class="kpi-label">إثباتات آخر يوم</div>
+      <div class="kpi-sub">7 يونيو 2026</div>
+    </div>
+    <div class="kpi-card accent5">
+      <div class="kpi-value">19,167</div>
+      <div class="kpi-label">أعلى مركز خدمة</div>
+      <div class="kpi-sub">ضيافة 1 — المدينة المنورة</div>
+    </div>
+    <div class="kpi-card accent6">
+      <div class="kpi-value">312</div>
+      <div class="kpi-label">أقل مركز خدمة</div>
+      <div class="kpi-sub">مركز 163 — بنجلاديش</div>
+    </div>
+    <div class="kpi-card accent7">
+      <div class="kpi-value">61.2%</div>
+      <div class="kpi-label">نسبة فترة الذروة</div>
+      <div class="kpi-sub">13–23 مايو (11 يوماً فقط)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PHASES ===== -->
+<div class="section">
+  <div class="section-title"><span class="icon">📅</span> تحليل فترات العمل الموسمي</div>
+  <div class="phase-cards">
+    <div class="phase-card preparation">
+      <div class="phase-value">10,513</div>
+      <div class="phase-pct">7.6%</div>
+      <div class="phase-label">مرحلة الاستعداد<br>20 أبريل — 8 مايو</div>
+    </div>
+    <div class="phase-card moderate">
+      <div class="phase-value">18,332</div>
+      <div class="phase-pct">13.3%</div>
+      <div class="phase-label">مرحلة التصاعد<br>9 — 12 مايو</div>
+    </div>
+    <div class="phase-card peak">
+      <div class="phase-value">84,160</div>
+      <div class="phase-pct">61.2%</div>
+      <div class="phase-label">فترة الذروة 🔥<br>13 — 23 مايو</div>
+    </div>
+    <div class="phase-card decline">
+      <div class="phase-value">24,437</div>
+      <div class="phase-pct">17.8%</div>
+      <div class="phase-label">مرحلة التراجع<br>24 مايو — 7 يونيو</div>
+    </div>
+  </div>
+  <div class="alert-box danger">
+    <div class="alert-icon">🔥</div>
+    <div class="alert-content">
+      <strong>تحذير الضغط التشغيلي</strong>
+      61.2% من إجمالي الإثباتات (84,160 إثباتاً) تركّزت في 11 يوماً فقط خلال فترة الذروة،
+      بمعدل يومي يبلغ 7,651 إثباتاً — أي ما يعادل <strong>2.7 ضعف</strong> المتوسط اليومي العام.
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHARTS ROW 1 ===== -->
+<div class="section">
+  <div class="section-title"><span class="icon">📈</span> تطور الإثباتات عبر الزمن</div>
+  <div class="card">
+    <h3>منحنى الإثباتات اليومية (Line Chart + Area)</h3>
+    <div class="chart-container chart-tall">
+      <canvas id="lineChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHARTS ROW 2 ===== -->
+<div class="grid-2">
+  <div class="card">
+    <h3>إثباتات الخدمة حسب مركز الخدمة (Bar Chart)</h3>
+    <div class="chart-container chart-tall">
+      <canvas id="barChart"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <h3>أعلى 10 مراكز خدمة (Horizontal Bar)</h3>
+    <div class="chart-container chart-tall">
+      <canvas id="hbarChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHARTS ROW 3 ===== -->
+<div class="grid-2">
+  <div class="card">
+    <h3>توزيع الإثباتات حسب الجنسية (Donut Chart)</h3>
+    <div class="chart-container chart-medium">
+      <canvas id="donutChart"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <h3>توزيع الإثباتات حسب المدينة (Pie Chart)</h3>
+    <div class="chart-container chart-medium">
+      <canvas id="pieChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHARTS ROW 4 ===== -->
+<div class="grid-2">
+  <div class="card">
+    <h3>إثباتات أسبوعية — الحجم والنمو (Bar + Line)</h3>
+    <div class="chart-container chart-medium">
+      <canvas id="weeklyChart"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <h3>توزيع حسب يوم الأسبوع (Polar Area)</h3>
+    <div class="chart-container chart-medium">
+      <canvas id="polarChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PARETO ===== -->
+<div class="section">
+  <div class="section-title"><span class="icon">📊</span> مخطط باريتو — المراكز الأكثر مساهمة</div>
+  <div class="card">
+    <h3>Pareto Chart — المراكز حسب نسبة المساهمة التراكمية</h3>
+    <div class="chart-container chart-tall">
+      <canvas id="paretoChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HEATMAP ===== -->
+<div class="section">
+  <div class="section-title"><span class="icon">🗓️</span> خريطة حرارية — كثافة الإثباتات حسب الأسبوع والمرحلة</div>
+  <div class="card">
+    <div class="heatmap-container">
+      <table class="heatmap-table" id="heatmapTable">
+        <thead>
+          <tr>
+            <th>الأسبوع</th>
+            <th>الفترة</th>
+            <th>إجمالي الإثباتات</th>
+            <th>نسبة من الإجمالي</th>
+            <th>المستوى</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>الأسبوع 17 (20-25 أبريل)</td>
+            <td><span class="badge badge-blue">استعداد</span></td>
+            <td style="background:hsl(200,60%,92%)">2,767</td>
+            <td>2.0%</td>
+            <td>🟦 منخفض جداً</td>
+          </tr>
+          <tr>
+            <td>الأسبوع 18 (26 أبريل-2 مايو)</td>
+            <td><span class="badge badge-blue">استعداد</span></td>
+            <td style="background:hsl(200,60%,88%)">1,880</td>
+            <td>1.4%</td>
+            <td>🟦 منخفض جداً</td>
+          </tr>
+          <tr>
+            <td>الأسبوع 19 (3-9 مايو)</td>
+            <td><span class="badge badge-orange">تصاعد</span></td>
+            <td style="background:hsl(40,80%,80%)">15,254</td>
+            <td>11.1%</td>
+            <td>🟧 متوسط</td>
+          </tr>
+          <tr>
+            <td>الأسبوع 20 (10-16 مايو)</td>
+            <td><span class="badge badge-red">ذروة</span></td>
+            <td style="background:hsl(0,70%,75%)">45,307</td>
+            <td>33.0%</td>
+            <td>🔴 مرتفع جداً</td>
+          </tr>
+          <tr>
+            <td>الأسبوع 21 (17-23 مايو)</td>
+            <td><span class="badge badge-red">ذروة</span></td>
+            <td style="background:hsl(0,70%,70%)"><strong>50,243</strong></td>
+            <td><strong>36.5%</strong></td>
+            <td>🔴 <strong>أعلى أسبوع</strong></td>
+          </tr>
+          <tr>
+            <td>الأسبوع 22 (24-30 مايو)</td>
+            <td><span class="badge badge-green">تراجع</span></td>
+            <td style="background:hsl(120,50%,85%)">9,083</td>
+            <td>6.6%</td>
+            <td>🟩 منخفض</td>
+          </tr>
+          <tr>
+            <td>الأسبوع 23 (31 مايو-7 يونيو)</td>
+            <td><span class="badge badge-green">تراجع</span></td>
+            <td style="background:hsl(120,50%,82%)">12,908</td>
+            <td>9.4%</td>
+            <td>🟩 متوسط-منخفض</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CENTER TABLES ===== -->
+<div class="section">
+  <div class="section-title"><span class="icon">🏢</span> تحليل مراكز الخدمة</div>
+
+  <!-- Top 10 ascending/descending -->
+  <div class="grid-2">
+    <div class="card">
+      <h3>🔼 أعلى 10 مراكز خدمة (تنازلي)</h3>
+      <table class="data-table">
+        <thead><tr><th>#</th><th>المركز</th><th>الإثباتات</th><th>النسبة</th></tr></thead>
+        <tbody>
+          <tr><td><span class="rank-badge rank-1">1</span></td><td>ضيافة 1 — المدينة المنورة</td><td><strong>19,167</strong></td><td>13.9%</td></tr>
+          <tr><td><span class="rank-badge rank-2">2</span></td><td>ضيافة 2 — المدينة المنورة</td><td>18,525</td><td>13.5%</td></tr>
+          <tr><td><span class="rank-badge rank-3">3</span></td><td>ضيافة 3 — المدينة المنورة</td><td>12,926</td><td>9.4%</td></tr>
+          <tr><td><span class="rank-badge rank-other">4</span></td><td>102 — مصر قرعة</td><td>4,408</td><td>3.2%</td></tr>
+          <tr><td><span class="rank-badge rank-other">5</span></td><td>160 — بنجلاديش</td><td>4,047</td><td>2.9%</td></tr>
+          <tr><td><span class="rank-badge rank-other">6</span></td><td>161 — بنجلاديش</td><td>3,818</td><td>2.8%</td></tr>
+          <tr><td><span class="rank-badge rank-other">7</span></td><td>121 — روسيا</td><td>3,777</td><td>2.7%</td></tr>
+          <tr><td><span class="rank-badge rank-other">8</span></td><td>120 — روسيا</td><td>3,687</td><td>2.7%</td></tr>
+          <tr><td><span class="rank-badge rank-other">9</span></td><td>152 — B2C</td><td>3,539</td><td>2.6%</td></tr>
+          <tr><td><span class="rank-badge rank-other">10</span></td><td>122 — روسيا</td><td>3,502</td><td>2.5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>🔽 أقل 10 مراكز خدمة (تصاعدي)</h3>
+      <table class="data-table">
+        <thead><tr><th>#</th><th>المركز</th><th>الإثباتات</th><th>النسبة</th></tr></thead>
+        <tbody>
+          <tr><td>36</td><td>163 — بنجلاديش</td><td><strong>312</strong></td><td>0.23%</td></tr>
+          <tr><td>35</td><td>164 — بنجلاديش</td><td>564</td><td>0.41%</td></tr>
+          <tr><td>34</td><td>125 — إرتريا</td><td>730</td><td>0.53%</td></tr>
+          <tr><td>33</td><td>100 — مصر سياحة</td><td>953</td><td>0.69%</td></tr>
+          <tr><td>32</td><td>114 — تونس</td><td>1,023</td><td>0.74%</td></tr>
+          <tr><td>31</td><td>150 — البرج</td><td>1,059</td><td>0.77%</td></tr>
+          <tr><td>30</td><td>112 — تونس</td><td>1,648</td><td>1.20%</td></tr>
+          <tr><td>29</td><td>113 — تونس</td><td>1,867</td><td>1.36%</td></tr>
+          <tr><td>28</td><td>162 — بنجلاديش</td><td>1,935</td><td>1.41%</td></tr>
+          <tr><td>27</td><td>101 — مصر قرعة</td><td>2,279</td><td>1.66%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Centers by nationality group -->
+  <div class="card" style="margin-top:20px">
+    <h3>📊 مساهمة كل مجموعة جنسية في الإجمالي</h3>
+    <div id="nationalityBars">
+      <div class="progress-bar-row">
+        <div class="progress-label"><span>🇪🇬 مصر (مكة المكرمة)</span><span>45,817 — 33.3%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:33.3%;background:#1a5276;"></div></div>
+      </div>
+      <div class="progress-bar-row">
+        <div class="progress-label"><span>🕌 مراكز الضيافة (المدينة المنورة)</span><span>50,618 — 36.8%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:36.8%;background:#0d6e6e;"></div></div>
+      </div>
+      <div class="progress-bar-row">
+        <div class="progress-label"><span>🇷🇺 روسيا (مكة المكرمة)</span><span>13,871 — 10.1%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:10.1%;background:#922b21;"></div></div>
+      </div>
+      <div class="progress-bar-row">
+        <div class="progress-label"><span>🇧🇩 بنجلاديش (مكة المكرمة)</span><span>10,676 — 7.8%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:7.8%;background:#b7950b;"></div></div>
+      </div>
+      <div class="progress-bar-row">
+        <div class="progress-label"><span>🇹🇳 تونس (مكة المكرمة)</span><span>9,834 — 7.2%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:7.2%;background:#6c3483;"></div></div>
+      </div>
+      <div class="progress-bar-row">
+        <div class="progress-label"><span>🇴🇲 عمان (مكة المكرمة)</span><span>13,853 — 10.1%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:10.1%;background:#117a65;"></div></div>
+      </div>
+      <div class="progress-bar-row">
+        <div class="progress-label"><span>🇲🇷 موريتانيا + إرتريا + أخرى</span><span>8,573 — 6.2%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:6.2%;background:#85929e;"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PEAK DAY ANALYSIS ===== -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔥</span> تحليل يوم الذروة — 23 مايو 2026</div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>المراكز النشطة في يوم الذروة</h3>
+      <table class="data-table">
+        <thead><tr><th>المركز</th><th>الإثباتات</th><th>نسبة اليوم</th></tr></thead>
+        <tbody>
+          <tr><td>119 — عمان</td><td><strong>2,650</strong></td><td>21.3%</td></tr>
+          <tr><td>116 — عمان</td><td>2,205</td><td>17.7%</td></tr>
+          <tr><td>118 — عمان</td><td>1,857</td><td>14.9%</td></tr>
+          <tr><td>109 — موريتانيا</td><td>1,135</td><td>9.1%</td></tr>
+          <tr><td>114 — تونس</td><td>860</td><td>6.9%</td></tr>
+          <tr><td>104 — مصر قرعة</td><td>817</td><td>6.6%</td></tr>
+          <tr><td>120 — روسيا</td><td>667</td><td>5.4%</td></tr>
+          <tr><td>121 — روسيا</td><td>526</td><td>4.2%</td></tr>
+          <tr><td>161 — بنجلاديش</td><td>399</td><td>3.2%</td></tr>
+          <tr><td>أخرى (16 مركز)</td><td>1,328</td><td>10.7%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>مقارنة آخر يوم (7 يونيو) بالمتوسط</h3>
+      <div class="alert-box info">
+        <div class="alert-icon">📅</div>
+        <div class="alert-content">
+          <strong>آخر تاريخ في البيانات: 7 يونيو 2026</strong>
+          عدد الإثباتات: 961 إثباتاً — أي <strong>34.3%</strong> فقط من المتوسط اليومي العام (2,805).<br>
+          <strong>المراكز النشطة:</strong> ضيافة 1 (683) + ضيافة 3 (273) + ضيافة 2 (3) + 105-مصر (2)
+        </div>
+      </div>
+      <div class="alert-box success">
+        <div class="alert-icon">📉</div>
+        <div class="alert-content">
+          <strong>تقييم آخر يوم: مرحلة التراجع</strong>
+          يمثّل آخر يوم مرحلة ختامية واضحة للموسم. نشاط التاريخ الأخير أقل بـ65.7% من المتوسط،
+          وهذا يشير إلى أن الموسم في مراحله الأخيرة مع بقاء حجاج المدينة المنورة كمجموعة وحيدة نشطة.
+        </div>
+      </div>
+      <div class="alert-box warning">
+        <div class="alert-icon">📊</div>
+        <div class="alert-content">
+          <strong>مقارنة بيوم الذروة</strong>
+          يوم 7 يونيو يعادل 7.7% فقط من يوم الذروة (23 مايو: 12,444 إثباتاً).
+          التراجع من الذروة إلى آخر يوم = 92.3% انخفاضاً.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DAILY TABLE (Top/Bottom) ===== -->
+<div class="section">
+  <div class="section-title"><span class="icon">📋</span> التحليل التصاعدي والتنازلي للأيام</div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>أعلى 10 أيام نشاطاً (تنازلي)</h3>
+      <table class="data-table">
+        <thead><tr><th>#</th><th>التاريخ</th><th>الإثباتات</th><th>الفترة</th></tr></thead>
+        <tbody>
+          <tr><td><span class="rank-badge rank-1">1</span></td><td>السبت 23 مايو</td><td><strong>12,444</strong></td><td><span class="badge badge-red">ذروة</span></td></tr>
+          <tr><td><span class="rank-badge rank-2">2</span></td><td>الجمعة 22 مايو</td><td>8,150</td><td><span class="badge badge-red">ذروة</span></td></tr>
+          <tr><td><span class="rank-badge rank-3">3</span></td><td>السبت 16 مايو</td><td>7,931</td><td><span class="badge badge-red">ذروة</span></td></tr>
+          <tr><td>4</td><td>الأربعاء 13 مايو</td><td>7,870</td><td><span class="badge badge-red">ذروة</span></td></tr>
+          <tr><td>5</td><td>الخميس 21 مايو</td><td>7,365</td><td><span class="badge badge-red">ذروة</span></td></tr>
+          <tr><td>6</td><td>الأحد 17 مايو</td><td>7,312</td><td><span class="badge badge-red">ذروة</span></td></tr>
+          <tr><td>7</td><td>الثلاثاء 19 مايو</td><td>7,005</td><td><span class="badge badge-red">ذروة</span></td></tr>
+          <tr><td>8</td><td>الاثنين 20 مايو</td><td>6,708</td><td><span class="badge badge-red">ذروة</span></td></tr>
+          <tr><td>9</td><td>الجمعة 15 مايو</td><td>6,686</td><td><span class="badge badge-red">ذروة</span></td></tr>
+          <tr><td>10</td><td>الخميس 14 مايو</td><td>6,564</td><td><span class="badge badge-red">ذروة</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>أقل 10 أيام نشاطاً (تصاعدي)</h3>
+      <table class="data-table">
+        <thead><tr><th>#</th><th>التاريخ</th><th>الإثباتات</th><th>الفترة</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>الثلاثاء 21 أبريل</td><td><strong>1</strong></td><td><span class="badge badge-blue">استعداد</span></td></tr>
+          <tr><td>2</td><td>الاثنين 20 أبريل</td><td>3</td><td><span class="badge badge-blue">استعداد</span></td></tr>
+          <tr><td>3</td><td>السبت 25 أبريل</td><td>29</td><td><span class="badge badge-blue">استعداد</span></td></tr>
+          <tr><td>4</td><td>الثلاثاء 28 أبريل</td><td>38</td><td><span class="badge badge-blue">استعداد</span></td></tr>
+          <tr><td>5</td><td>الجمعة 29 مايو</td><td>72</td><td><span class="badge badge-green">تراجع</span></td></tr>
+          <tr><td>6</td><td>الأربعاء 29 أبريل</td><td>76</td><td><span class="badge badge-blue">استعداد</span></td></tr>
+          <tr><td>7</td><td>السبت 30 مايو</td><td>104</td><td><span class="badge badge-green">تراجع</span></td></tr>
+          <tr><td>8</td><td>الخميس 30 أبريل</td><td>222</td><td><span class="badge badge-blue">استعداد</span></td></tr>
+          <tr><td>9</td><td>الأحد 3 مايو</td><td>284</td><td><span class="badge badge-blue">استعداد</span></td></tr>
+          <tr><td>10</td><td>الأحد 26 أبريل</td><td>344</td><td><span class="badge badge-blue">استعداد</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== OBSERVATIONS ===== -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔍</span> أهم 10 ملاحظات تنفيذية</div>
+  <div class="obs-grid">
+    <div class="obs-item">
+      <div class="obs-number">1</div>
+      <div class="obs-text"><strong>تمركز الضغط في أسبوعين:</strong> الأسبوعان 20 و21 (10–23 مايو) استوعبا وحدهما 95,550 إثباتاً بنسبة 69.5% من الإجمالي، مما يعني تركّزاً حاداً جداً للعمليات في فترة زمنية قصيرة.</div>
+    </div>
+    <div class="obs-item">
+      <div class="obs-number">2</div>
+      <div class="obs-text"><strong>مراكز الضيافة تتصدر المشهد:</strong> المراكز الثلاثة في المدينة المنورة (ضيافة 1،2،3) مجتمعةً سجّلت 50,618 إثباتاً (36.8%)، وهي الكتلة الأكبر مقارنةً بأي تجمّع آخر للمراكز.</div>
+    </div>
+    <div class="obs-item">
+      <div class="obs-number">3</div>
+      <div class="obs-text"><strong>يوم الذروة المطلقة 23 مايو:</strong> حقق 12,444 إثباتاً في يوم واحد — أي 4.4 أضعاف المتوسط اليومي — مع هيمنة واضحة لمراكز عُمان (العُماني 1+2+3 = 6,712 إثباتاً = 53.9% من اليوم).</div>
+    </div>
+    <div class="obs-item">
+      <div class="obs-number">4</div>
+      <div class="obs-text"><strong>الجنسية المصرية الأعلى تمثيلاً:</strong> بـ45,817 إثباتاً (33.3%) تتصدر مصر الجنسيات، موزعةً على 8 مراكز في مكة المكرمة (100-108 بمسميات قرعة وسياحة).</div>
+    </div>
+    <div class="obs-item">
+      <div class="obs-number">5</div>
+      <div class="obs-text"><strong>السبت الأكثر ازدحاماً:</strong> يوم السبت استأثر بـ27,788 إثباتاً (20.2%) من إجمالي الأسبوع، يليه الخميس بـ21,609 (15.7%). الجمعة تأتي في المركز الرابع رغم كونها عطلة.</div>
+    </div>
+    <div class="obs-item">
+      <div class="obs-number">6</div>
+      <div class="obs-text"><strong>تباين حاد في أحجام المراكز:</strong> الفجوة بين أكبر مركز (ضيافة 1: 19,167) وأصغر مركز (163: 312) تبلغ 61 ضعفاً — مما يشير إلى تفاوت كبير في توزيع أعباء العمل.</div>
+    </div>
+    <div class="obs-item">
+      <div class="obs-number">7</div>
+      <div class="obs-text"><strong>مرحلة التراجع لا تزال نشطة:</strong> بعد الذروة، سجّلت مرحلة التراجع 24,437 إثباتاً (17.8%)، وهي نسبة غير مهملة، تحتاج استمرار تخصيص الموارد الميدانية حتى نهاية الموسم.</div>
+    </div>
+    <div class="obs-item">
+      <div class="obs-number">8</div>
+      <div class="obs-text"><strong>مراكز بنجلاديش تعاني تفاوتاً داخلياً:</strong> مركز 160 (4,047) يفوق مركز 163 (312) بأكثر من 12 ضعفاً رغم انتمائهما لنفس التصنيف الجنسي، مما يستوجب مراجعة توزيع الحجاج.</div>
+    </div>
+    <div class="obs-item">
+      <div class="obs-number">9</div>
+      <div class="obs-text"><strong>مراكز عُمان الأعلى أداءً نسبياً:</strong> 5 مراكز عُمانية (115–119) حققت مجتمعةً 13,853 إثباتاً بمتوسط 2,771 لكل مركز — أعلى من المتوسط العام 3,818 إثباتاً للمركز الواحد.</div>
+    </div>
+    <div class="obs-item">
+      <div class="obs-number">10</div>
+      <div class="obs-text"><strong>آخر يوم يؤكد اقتراب نهاية الموسم:</strong> 961 إثباتاً في 7 يونيو (34% من المتوسط)، مع تركّز النشاط حصرياً في مراكز الضيافة (المدينة المنورة)، يشير إلى انتهاء برامج مكة المكرمة فعلياً.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RECOMMENDATIONS ===== -->
+<div class="section">
+  <div class="section-title"><span class="icon">💡</span> التوصيات التنفيذية</div>
+  <div class="rec-grid">
+    <div class="rec-card">
+      <h4>⚙️ توصيات تشغيلية</h4>
+      <ul>
+        <li>إعداد خطة طوارئ تشغيلية مخصصة للأسبوعين 20 و21 من الموسم القادم</li>
+        <li>رفع طاقة المعالجة في يوم السبت بنسبة 25% على الأقل لاستيعاب الضغط المتوقع</li>
+        <li>تفعيل نظام الإنذار المبكر عند تجاوز 7,000 إثبات يومي</li>
+        <li>إنشاء وحدة متنقلة لدعم المراكز المتضررة خلال فترات الذروة</li>
+      </ul>
+    </div>
+    <div class="rec-card">
+      <h4>👥 توزيع القوى العاملة</h4>
+      <ul>
+        <li>مضاعفة الكوادر في مراكز عُمان (115-119) خلال الأيام 20-23 مايو</li>
+        <li>إعادة النظر في توزيع طاقة مراكز بنجلاديش (163 و164) لرفع كفاءتها</li>
+        <li>تخصيص 40% من القوى في مرحلة الذروة لمكة، و36% للمدينة المنورة</li>
+        <li>التدوير الوقائي للموظفين كل 6 ساعات خلال أيام الذروة الحادة</li>
+      </ul>
+    </div>
+    <div class="rec-card">
+      <h4>📈 تحسين مستوى الخدمة</h4>
+      <ul>
+        <li>تطوير نظام حجز مسبق للحجاج لتوزيع الأعباء على مدار اليوم</li>
+        <li>تفعيل الخدمة الذاتية الإلكترونية لإثبات الخدمة لتخفيف الضغط</li>
+        <li>مراجعة أوقات العمل في مراكز الضيافة لمواكبة حجم 50,618 إثباتاً</li>
+        <li>توحيد معايير قياس الأداء عبر جميع المراكز الـ36</li>
+      </ul>
+    </div>
+    <div class="rec-card">
+      <h4>🏢 تقليل الضغط على المراكز المزدحمة</h4>
+      <ul>
+        <li>إعادة هيكلة مركزَي ضيافة 1 وضيافة 2 بإضافة فرع ضيافة 4 في المدينة المنورة</li>
+        <li>تفعيل نظام التوجيه الذكي لتوزيع الحجاج على المراكز الأقل ازدحاماً</li>
+        <li>دراسة دمج مراكز 163 و164 بنجلاديش في مركز واحد أكثر كفاءة</li>
+        <li>إنشاء مركز احتياطي قابل للتشغيل خلال 4 ساعات عند الحاجة</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<div class="report-footer">
+  تقرير إثبات خدمة الحجاج — موسم 1447هـ / 2026م | إجمالي الإثباتات: 137,442 | 36 مركز خدمة | 49 يوماً | مكة المكرمة والمدينة المنورة
+</div>
+
+<!-- ===== CHARTS JAVASCRIPT ===== -->
+<script>
+Chart.defaults.font.family = "'Segoe UI', Arial, sans-serif";
+Chart.defaults.color = '#444';
+
+// ======= DATA =======
+const dailyLabels = ["20-أبر","21-أبر","22-أبر","23-أبر","24-أبر","25-أبر","26-أبر","27-أبر","28-أبر","29-أبر","30-أبر","1-ماي","2-ماي","3-ماي","4-ماي","5-ماي","6-ماي","7-ماي","8-ماي","9-ماي","10-ماي","11-ماي","12-ماي","13-ماي","14-ماي","15-ماي","16-ماي","17-ماي","18-ماي","19-ماي","20-ماي","21-ماي","22-ماي","23-ماي","24-ماي","25-ماي","26-ماي","27-ماي","28-ماي","29-ماي","30-ماي","31-ماي","1-يون","2-يون","3-يون","4-يون","5-يون","6-يون","7-يون"];
+const dailyValues = [3,1,904,857,629,29,344,370,38,76,222,516,374,284,675,792,1304,1392,1703,4278,5110,3335,5609,7870,6564,6686,7931,7312,6125,7005,6708,7365,8150,12444,2446,1988,1831,1636,3095,72,104,357,2520,2490,1207,2114,988,2628,961];
+
+const peakColors = dailyValues.map(v => {
+  if(v >= 7000) return 'rgba(169,50,38,0.85)';
+  if(v >= 4000) return 'rgba(211,84,0,0.75)';
+  if(v >= 1500) return 'rgba(26,82,118,0.65)';
+  return 'rgba(39,174,96,0.55)';
+});
+
+const centerLabels = ["ضيافة 1","ضيافة 2","ضيافة 3","102-مصر","160-بنج","161-بنج","121-روسيا","120-روسيا","152-B2C","122-روسيا","109-موريت","110-تونس","151-B2C","111-تونس","108-مصر","106-مصر","105-مصر","103-مصر","104-مصر","107-مصر","123-روسيا","117-عمان","116-عمان","118-عمان","115-عمان","119-عمان","101-مصر","162-بنج","113-تونس","112-تونس","150-البرج","114-تونس","100-مصر","125-إرتريا","164-بنج","163-بنج"];
+const centerValues = [19167,18525,12926,4408,4047,3818,3777,3687,3539,3502,3355,3326,3317,3171,3010,2984,2971,2953,2924,2907,2905,2867,2863,2771,2683,2669,2279,1935,1867,1648,1059,1023,953,730,564,312];
+
+// ======= LINE CHART =======
+const ctx1 = document.getElementById('lineChart').getContext('2d');
+new Chart(ctx1, {
+  type: 'line',
+  data: {
+    labels: dailyLabels,
+    datasets: [{
+      label: 'إثباتات يومية',
+      data: dailyValues,
+      borderColor: '#1a3a5c',
+      backgroundColor: 'rgba(26,58,92,0.12)',
+      fill: true,
+      tension: 0.4,
+      pointRadius: dailyValues.map(v => v > 6000 ? 6 : 3),
+      pointBackgroundColor: dailyValues.map(v => v >= 7000 ? '#e74c3c' : v >= 4000 ? '#e67e22' : '#1a3a5c'),
+      borderWidth: 2.5,
+    },{
+      label: 'المتوسط اليومي (2,805)',
+      data: Array(dailyValues.length).fill(2805),
+      borderColor: '#e74c3c',
+      borderDash: [6,4],
+      borderWidth: 1.5,
+      fill: false,
+      pointRadius: 0,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: true, position: 'top' },
+      tooltip: {
+        callbacks: {
+          label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('ar-SA')} إثبات`
+        }
+      }
+    },
+    scales: {
+      x: { ticks: { maxRotation: 45, font: { size: 10 } }, grid: { display: false } },
+      y: { ticks: { callback: v => v.toLocaleString('ar-SA') }, beginAtZero: true }
+    }
+  }
+});
+
+// ======= BAR CHART (all centers) =======
+const centerColors = centerValues.map(v => {
+  if(v >= 12000) return '#1a3a5c';
+  if(v >= 8000) return '#0d6e6e';
+  if(v >= 4000) return '#1a5276';
+  if(v >= 2500) return '#2980b9';
+  return '#85c1e9';
+});
+
+const ctx2 = document.getElementById('barChart').getContext('2d');
+new Chart(ctx2, {
+  type: 'bar',
+  data: {
+    labels: centerLabels,
+    datasets: [{
+      label: 'إجمالي الإثباتات',
+      data: centerValues,
+      backgroundColor: centerColors,
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { maxRotation: 60, font: { size: 9 } } },
+      y: { ticks: { callback: v => v.toLocaleString('ar-SA') }, beginAtZero: true }
+    }
+  }
+});
+
+// ======= HORIZONTAL BAR (top 10) =======
+const top10Labels = ["ضيافة 1 (مدينة)","ضيافة 2 (مدينة)","ضيافة 3 (مدينة)","102 — مصر قرعة","160 — بنجلاديش","161 — بنجلاديش","121 — روسيا","120 — روسيا","152 — B2C","122 — روسيا"];
+const top10Values = [19167,18525,12926,4408,4047,3818,3777,3687,3539,3502];
+const ctx3 = document.getElementById('hbarChart').getContext('2d');
+new Chart(ctx3, {
+  type: 'bar',
+  data: {
+    labels: top10Labels,
+    datasets: [{
+      label: 'إجمالي الإثباتات',
+      data: top10Values,
+      backgroundColor: ['#1a3a5c','#0d6e6e','#1a5276','#922b21','#b7950b','#b7950b','#6c3483','#6c3483','#117a65','#6c3483'],
+      borderRadius: 5,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => `${ctx.parsed.x.toLocaleString('ar-SA')} إثبات` } }
+    },
+    scales: {
+      x: { ticks: { callback: v => v.toLocaleString('ar-SA') }, beginAtZero: true },
+      y: { ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// ======= DONUT CHART (nationalities) =======
+const ctx4 = document.getElementById('donutChart').getContext('2d');
+new Chart(ctx4, {
+  type: 'doughnut',
+  data: {
+    labels: ['مصر','مراكز الضيافة (متعدد)','روسيا','عمان','بنجلاديش','تونس','موريتانيا','إرتريا وأخرى'],
+    datasets: [{
+      data: [45817, 50618, 13871, 13853, 10676, 9834, 6852, 1921],
+      backgroundColor: ['#1a5276','#0d6e6e','#922b21','#117a65','#b7950b','#6c3483','#1a6088','#85929e'],
+      borderWidth: 2,
+      borderColor: '#fff'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { font: { size: 11 } } },
+      tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed.toLocaleString('ar-SA')} (${(ctx.parsed/137442*100).toFixed(1)}%)` } }
+    },
+    cutout: '55%'
+  }
+});
+
+// ======= PIE CHART (cities) =======
+const ctx5 = document.getElementById('pieChart').getContext('2d');
+new Chart(ctx5, {
+  type: 'pie',
+  data: {
+    labels: ['مكة المكرمة','المدينة المنورة'],
+    datasets: [{
+      data: [86824, 50618],
+      backgroundColor: ['#1a3a5c','#0d6e6e'],
+      borderWidth: 3,
+      borderColor: '#fff'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom' },
+      tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed.toLocaleString('ar-SA')} (${(ctx.parsed/137442*100).toFixed(1)}%)` } }
+    }
+  }
+});
+
+// ======= WEEKLY CHART =======
+const ctx6 = document.getElementById('weeklyChart').getContext('2d');
+new Chart(ctx6, {
+  type: 'bar',
+  data: {
+    labels: ['أسبوع 17\n(أبريل20-25)','أسبوع 18\n(أبر26-ماي2)','أسبوع 19\n(ماي3-9)','أسبوع 20\n(ماي10-16)','أسبوع 21\n(ماي17-23)','أسبوع 22\n(ماي24-30)','أسبوع 23\n(ماي31-يون7)'],
+    datasets: [
+      {
+        label: 'الإثباتات الأسبوعية',
+        data: [2767,1880,15254,45307,50243,9083,12908],
+        backgroundColor: ['#85929e','#85929e','#2980b9','#e74c3c','#c0392b','#27ae60','#27ae60'],
+        borderRadius: 6,
+        yAxisID: 'y',
+        order: 2,
+      },
+      {
+        label: 'نسبة من الإجمالي (%)',
+        data: [2.0, 1.4, 11.1, 33.0, 36.5, 6.6, 9.4],
+        type: 'line',
+        borderColor: '#f39c12',
+        backgroundColor: 'rgba(243,156,18,0.1)',
+        tension: 0.4,
+        yAxisID: 'y2',
+        borderWidth: 2.5,
+        pointRadius: 5,
+        order: 1,
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' } },
+    scales: {
+      y: { position: 'right', ticks: { callback: v => v.toLocaleString('ar-SA') }, beginAtZero: true },
+      y2: { position: 'left', max: 45, ticks: { callback: v => v + '%' }, beginAtZero: true, grid: { display: false } }
+    }
+  }
+});
+
+// ======= POLAR AREA (day of week) =======
+const ctx7 = document.getElementById('polarChart').getContext('2d');
+new Chart(ctx7, {
+  type: 'polarArea',
+  data: {
+    labels: ['السبت','الخميس','الأربعاء','الجمعة','الثلاثاء','الأحد','الاثنين'],
+    datasets: [{
+      data: [27788,21609,19705,18744,17766,16814,15016],
+      backgroundColor: ['rgba(169,50,38,0.7)','rgba(26,58,92,0.7)','rgba(13,110,110,0.7)','rgba(183,149,11,0.7)','rgba(108,52,131,0.7)','rgba(17,122,101,0.7)','rgba(133,146,158,0.7)'],
+      borderColor: '#fff',
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { font: { size: 10 } } },
+      tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed.r.toLocaleString('ar-SA')} إثبات` } }
+    }
+  }
+});
+
+// ======= PARETO CHART =======
+const sortedLabels = centerLabels.slice();
+const sortedValues = centerValues.slice();
+// already sorted descending
+let cumulative = 0;
+const total = sortedValues.reduce((a,b)=>a+b,0);
+const cumulativePct = sortedValues.map(v => { cumulative += v; return Math.round(cumulative/total*100); });
+
+const ctx8 = document.getElementById('paretoChart').getContext('2d');
+new Chart(ctx8, {
+  type: 'bar',
+  data: {
+    labels: sortedLabels,
+    datasets: [
+      {
+        label: 'الإثباتات',
+        data: sortedValues,
+        backgroundColor: sortedValues.map((v,i) => {
+          if(i < 3) return '#1a3a5c';
+          if(i < 10) return '#2980b9';
+          return '#85c1e9';
+        }),
+        borderRadius: 3,
+        order: 2,
+        yAxisID: 'y',
+      },
+      {
+        label: '% تراكمي',
+        data: cumulativePct,
+        type: 'line',
+        borderColor: '#e74c3c',
+        backgroundColor: 'rgba(231,76,60,0.1)',
+        tension: 0.2,
+        fill: true,
+        yAxisID: 'y2',
+        borderWidth: 2.5,
+        pointRadius: 3,
+        order: 1,
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' } },
+    scales: {
+      x: { ticks: { maxRotation: 60, font: { size: 9 } } },
+      y: { position: 'right', beginAtZero: true, ticks: { callback: v => v.toLocaleString('ar-SA') } },
+      y2: { position: 'left', min: 0, max: 100, ticks: { callback: v => v + '%' }, grid: { display: false } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
