@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تقرير الدرجات — مدرسة الوليد بن عبدالملك المتوسطة</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');
+
+:root {
+  --teal:   #0BAFA0;
+  --teal2:  #0D9488;
+  --blue:   #1E40AF;
+  --blue2:  #1D4ED8;
+  --gold:   #B45309;
+  --gold2:  #D97706;
+  --green:  #059669;
+  --red:    #DC2626;
+  --orange: #EA580C;
+  --bg:     #F1F5F9;
+  --card:   #FFFFFF;
+  --border: #E2E8F0;
+  --text:   #0F172A;
+  --muted:  #64748B;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Cairo', 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ══════════════════════════════════════════
+   HEADER
+══════════════════════════════════════════ */
+header {
+  background: #0F172A;
+  padding: 0;
+  box-shadow: 0 4px 24px rgba(0,0,0,.45);
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(11,175,160,.18) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(30,64,175,.22) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.header-inner {
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  z-index: 1;
+  min-height: 130px;
+}
+
+/* Right: logo block */
+.logo-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 28px;
+  background: rgba(255,255,255,.04);
+  border-left: 1px solid rgba(255,255,255,.08);
+  min-width: 200px;
+  gap: 8px;
+}
+.logo-block img {
+  width: 110px;
+  height: auto;
+  object-fit: contain;
+  /* remove white background */
+  mix-blend-mode: screen;
+  filter: brightness(1.1);
+}
+.logo-sub {
+  text-align: center;
+  color: #94A3B8;
+  font-size: 10px;
+  line-height: 1.7;
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+.logo-sub span {
+  display: block;
+  color: #CBD5E1;
+}
+.logo-sub span:first-child { color: #E2E8F0; font-size: 11px; }
+
+/* Center: title */
+.title-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 32px;
+  text-align: center;
+  gap: 6px;
+}
+.title-block .school-name {
+  font-size: 13px;
+  color: var(--teal);
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.title-block h1 {
+  font-size: 1.65rem;
+  font-weight: 900;
+  color: #F8FAFC;
+  line-height: 1.2;
+  text-shadow: 0 2px 12px rgba(0,0,0,.4);
+}
+.title-block .subtitle {
+  font-size: .82rem;
+  color: #64748B;
+  margin-top: 2px;
+}
+.title-block .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(11,175,160,.15);
+  border: 1px solid rgba(11,175,160,.3);
+  color: #5EEAD4;
+  font-size: .75rem;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 99px;
+  margin-top: 4px;
+}
+
+/* Left: stat pills */
+.stats-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px 28px;
+  background: rgba(255,255,255,.04);
+  border-right: 1px solid rgba(255,255,255,.08);
+  min-width: 180px;
+}
+.hstat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,.06);
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+.hstat .ico { font-size: 1.3rem; }
+.hstat .info .v {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #F8FAFC;
+  line-height: 1;
+}
+.hstat .info .l {
+  font-size: .68rem;
+  color: #64748B;
+  margin-top: 1px;
+}
+
+/* ══════════════════════════════════════════
+   NAV TABS
+══════════════════════════════════════════ */
+nav {
+  background: #1E293B;
+  display: flex;
+  gap: 2px;
+  padding: 0 24px;
+  border-bottom: 2px solid var(--teal);
+  overflow-x: auto;
+}
+nav::-webkit-scrollbar { height: 3px; }
+nav::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 99px; }
+.tab {
+  padding: 12px 20px;
+  color: #64748B;
+  cursor: pointer;
+  font-size: .82rem;
+  font-weight: 700;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  white-space: nowrap;
+  transition: all .2s;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tab:hover { color: #CBD5E1; background: rgba(255,255,255,.04); }
+.tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+.tab .t-icon { font-size: 1rem; }
+
+/* ══════════════════════════════════════════
+   MAIN
+══════════════════════════════════════════ */
+main {
+  flex: 1;
+  padding: 28px 28px 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+.section { display: none; animation: fadeUp .3s ease; }
+.section.active { display: block; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+
+/* ══════════════════════════════════════════
+   KPI ROW
+══════════════════════════════════════════ */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.kpi {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 18px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.07);
+  border: 1px solid var(--border);
+  transition: transform .18s, box-shadow .18s;
+  position: relative;
+  overflow: hidden;
+}
+.kpi::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; left: 0;
+  height: 3px;
+  background: var(--accent, var(--teal));
+  border-radius: 14px 14px 0 0;
+}
+.kpi:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.10); }
+.kpi .ico { font-size: 1.6rem; }
+.kpi .val { font-size: 1.9rem; font-weight: 900; color: var(--text); line-height: 1; }
+.kpi .lbl { font-size: .72rem; color: var(--muted); font-weight: 600; text-align: center; }
+.kpi.c-teal  { --accent: var(--teal); }
+.kpi.c-blue  { --accent: var(--blue2); }
+.kpi.c-green { --accent: var(--green); }
+.kpi.c-red   { --accent: var(--red); }
+.kpi.c-gold  { --accent: var(--gold2); }
+.kpi.c-orange{ --accent: var(--orange); }
+
+/* ══════════════════════════════════════════
+   CARDS
+══════════════════════════════════════════ */
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 6px rgba(0,0,0,.06);
+  margin-bottom: 22px;
+  overflow: hidden;
+}
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: #0F172A;
+  color: #E2E8F0;
+  font-size: .92rem;
+  font-weight: 800;
+  border-bottom: 2px solid var(--teal);
+}
+.card-head .ico { font-size: 1.1rem; }
+.card-body { padding: 20px; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 22px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 22px; }
+@media(max-width:900px) { .grid2,.grid3 { grid-template-columns:1fr; } }
+
+.chart-wrap { position: relative; height: 280px; }
+.chart-wrap-lg { position: relative; height: 340px; }
+
+/* ══════════════════════════════════════════
+   LEVEL BARS
+══════════════════════════════════════════ */
+.level-bars { display: flex; flex-direction: column; gap: 14px; }
+.lb-row { display: flex; align-items: center; gap: 12px; }
+.lb-label { min-width: 140px; font-size: .82rem; font-weight: 700; color: var(--text); text-align: right; }
+.lb-track { flex: 1; background: #F1F5F9; border-radius: 99px; height: 26px; overflow: hidden; position: relative; }
+.lb-fill {
+  height: 100%; border-radius: 99px;
+  display: flex; align-items: center; justify-content: flex-end;
+  padding-left: 10px; padding-right: 12px;
+  font-size: .72rem; font-weight: 800; color: white;
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+  min-width: 50px;
+}
+.lb-pct { min-width: 46px; font-size: .8rem; font-weight: 800; color: var(--muted); text-align: left; }
+
+/* ══════════════════════════════════════════
+   SECTION CARDS
+══════════════════════════════════════════ */
+.sec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 14px;
+}
+.sec-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  position: relative;
+  transition: all .2s;
+  overflow: hidden;
+}
+.sec-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 4px;
+  background: var(--teal);
+  border-radius: 0 14px 14px 0;
+}
+.sec-card.best::before { background: var(--green); }
+.sec-card.worst::before { background: var(--red); }
+.sec-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.10); }
+.sec-card h3 { font-size: .9rem; font-weight: 800; color: var(--text); margin-bottom: 12px; }
+.sec-pill {
+  position: absolute; top: 10px; left: 10px;
+  font-size: .6rem; font-weight: 800; padding: 2px 7px;
+  border-radius: 99px; color: white;
+}
+.pill-best { background: var(--green); }
+.pill-worst { background: var(--red); }
+.sec-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border); font-size: .78rem; }
+.sec-row:last-child { border: none; }
+.sec-row .sv { font-weight: 800; color: var(--teal2); }
+.avg-ring {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1;
+}
+.avg-ring small { display: block; font-size: .65rem; font-weight: 600; color: var(--muted); }
+
+/* ══════════════════════════════════════════
+   STUDENT TABLE
+══════════════════════════════════════════ */
+.controls {
+  display: flex; gap: 10px; margin-bottom: 14px;
+  flex-wrap: wrap; align-items: center;
+}
+.inp {
+  flex: 1; min-width: 190px;
+  padding: 9px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: inherit; font-size: .85rem;
+  background: var(--card); color: var(--text);
+  outline: none; direction: rtl;
+  transition: border-color .2s;
+}
+.inp:focus { border-color: var(--teal); }
+.sel {
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: inherit; font-size: .82rem;
+  background: var(--card); color: var(--text);
+  cursor: pointer; outline: none; direction: rtl;
+  transition: border-color .2s;
+}
+.sel:focus { border-color: var(--teal); }
+.cnt-badge {
+  background: #ECFDF5; color: var(--green);
+  font-size: .75rem; font-weight: 800;
+  padding: 4px 12px; border-radius: 99px;
+  border: 1px solid #A7F3D0;
+  white-space: nowrap;
+}
+.tbl-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+thead th {
+  background: #0F172A; color: #E2E8F0;
+  padding: 11px 14px; font-weight: 800; text-align: center;
+  white-space: nowrap; cursor: pointer; user-select: none;
+}
+thead th:hover { background: #1E293B; }
+thead th.sorted { color: var(--teal); }
+.sort-ic { opacity: .4; margin-right: 3px; }
+thead th.sorted .sort-ic { opacity: 1; }
+tbody tr:nth-child(even) { background: #F8FAFC; }
+tbody tr:hover { background: #ECFDF5; }
+tbody td { padding: 9px 14px; text-align: center; border-bottom: 1px solid var(--border); }
+.td-name { text-align: right; font-weight: 600; }
+.badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 2px 10px; border-radius: 99px;
+  font-size: .7rem; font-weight: 800; color: white;
+}
+.b-ex { background: #059669; }
+.b-vg { background: #2563EB; }
+.b-gd { background: #D97706; }
+.b-ac { background: #EA580C; }
+.b-wk { background: #DC2626; }
+.score-cell {
+  display: flex; align-items: center;
+  justify-content: center; gap: 6px;
+}
+.mini-bar { width: 56px; height: 7px; background: #E2E8F0; border-radius: 99px; overflow: hidden; display: inline-block; }
+.mini-fill { height: 100%; border-radius: 99px; }
+
+/* ══════════════════════════════════════════
+   RANKING
+══════════════════════════════════════════ */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 22px; }
+@media(max-width:700px) { .two-col { grid-template-columns:1fr; } }
+.rank-ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.rank-li {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #F8FAFC;
+  border: 1px solid var(--border);
+  transition: background .15s;
+}
+.rank-li:hover { background: #F0FDF4; }
+.rank-no {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .75rem; font-weight: 900; color: white;
+  flex-shrink: 0;
+}
+.rank-info { flex: 1; }
+.rank-name { font-size: .86rem; font-weight: 700; }
+.rank-sec  { font-size: .7rem; color: var(--muted); }
+.rank-score { font-size: 1.05rem; font-weight: 900; }
+
+/* ══════════════════════════════════════════
+   COMPONENT CARDS
+══════════════════════════════════════════ */
+.comp-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 22px; }
+@media(max-width:700px) { .comp-cards { grid-template-columns:1fr; } }
+.comp-card {
+  border-radius: 14px; padding: 22px 20px;
+  color: white; text-align: center;
+  position: relative; overflow: hidden;
+}
+.comp-card::after {
+  content: ''; position: absolute;
+  bottom: -30px; right: -30px;
+  width: 100px; height: 100px; border-radius: 50%;
+  background: rgba(255,255,255,.08);
+}
+.comp-card .ct { font-size: .8rem; font-weight: 700; opacity: .85; margin-bottom: 8px; }
+.comp-card .cv { font-size: 2.4rem; font-weight: 900; line-height: 1; }
+.comp-card .cp { font-size: .95rem; opacity: .8; margin-top: 4px; }
+.comp-card .cbar { background: rgba(255,255,255,.25); border-radius: 99px; height: 7px; margin-top: 14px; overflow:hidden; }
+.comp-card .cbar-fill { height: 100%; border-radius: 99px; background: rgba(255,255,255,.85); }
+
+/* ══════════════════════════════════════════
+   RECOMMENDATIONS
+══════════════════════════════════════════ */
+.rec-grid { display: flex; flex-direction: column; gap: 12px; }
+.rec {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 15px 16px;
+  border-radius: 12px;
+  background: #F8FAFC;
+  border: 1px solid var(--border);
+  border-right: 4px solid var(--teal);
+}
+.rec-n {
+  background: var(--teal); color: white;
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: .85rem; flex-shrink: 0;
+}
+.rec-t { font-size: .88rem; line-height: 1.7; padding-top: 4px; }
+.rec-t strong { color: var(--teal2); }
+
+/* ══════════════════════════════════════════
+   STRENGTHS / WEAKNESSES
+══════════════════════════════════════════ */
+.sw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:700px) { .sw-grid { grid-template-columns:1fr; } }
+.sw-head { font-size: .85rem; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.sw-item {
+  padding: 9px 14px; border-radius: 10px;
+  font-size: .82rem; margin-bottom: 7px;
+  border-right: 3px solid;
+  line-height: 1.5;
+}
+.sw-item.s { background:#ECFDF5; border-color:var(--green); }
+.sw-item.w { background:#FEF2F2; border-color:var(--red); }
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer {
+  background: #0F172A;
+  color: #94A3B8;
+  text-align: center;
+  padding: 20px 30px;
+  border-top: 3px solid var(--teal);
+}
+.foot-names {
+  display: flex; justify-content: center;
+  gap: 60px; flex-wrap: wrap; margin-bottom: 10px;
+}
+.fn { display: flex; align-items: center; gap: 10px; }
+.fn-ico { font-size: 1.4rem; }
+.fn-lbl { font-size: .7rem; color: #475569; }
+.fn-val { font-size: .95rem; font-weight: 800; color: var(--teal); }
+.foot-copy { font-size: .72rem; color: #334155; margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     HEADER
+══════════════════════════════════════ -->
+<header>
+  <div class="header-inner">
+
+    <!-- RIGHT: Logo -->
+    <div class="logo-block">
+      <img src="https://halawanni.github.io/ash/images.png"
+           alt="شعار وزارة التعليم"
+           onerror="this.style.display='none'">
+      <div class="logo-sub">
+        <span>وزارة التعليم</span>
+        <span>إدارة تعليم مكة المكرمة</span>
+        <span>مدرسة الوليد بن عبدالملك المتوسطة</span>
+      </div>
+    </div>
+
+    <!-- CENTER: Title -->
+    <div class="title-block">
+      <div class="school-name">مدرسة الوليد بن عبدالملك المتوسطة</div>
+      <h1>تقرير التحليل الإحصائي الشامل<br>للدرجات النهائية</h1>
+      <div class="subtitle">إدارة تعليم مكة المكرمة — وزارة التعليم</div>
+      <div class="tag"><span>📊</span> 270 طالباً في 9 فصول دراسية</div>
+    </div>
+
+    <!-- LEFT: Stats -->
+    <div class="stats-block">
+      <div class="hstat">
+        <div class="ico">📈</div>
+        <div class="info"><div class="v">82.70</div><div class="l">المتوسط العام</div></div>
+      </div>
+      <div class="hstat">
+        <div class="ico">✅</div>
+        <div class="info"><div class="v">81.1%</div><div class="l">نسبة النجاح</div></div>
+      </div>
+      <div class="hstat">
+        <div class="ico">🥇</div>
+        <div class="info"><div class="v">56.7%</div><div class="l">نسبة الممتازين</div></div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════
+     NAV
+══════════════════════════════════════ -->
+<nav>
+  <div class="tab active" onclick="showTab('overview',this)"><span class="t-icon">📊</span>نظرة عامة</div>
+  <div class="tab" onclick="showTab('sections',this)"><span class="t-icon">🏫</span>تحليل الفصول</div>
+  <div class="tab" onclick="showTab('students',this)"><span class="t-icon">👨‍🎓</span>قائمة الطلاب</div>
+  <div class="tab" onclick="showTab('ranking',this)"><span class="t-icon">🏆</span>المتميزون والدعم</div>
+  <div class="tab" onclick="showTab('components',this)"><span class="t-icon">📝</span>مكونات التقييم</div>
+  <div class="tab" onclick="showTab('recommendations',this)"><span class="t-icon">💡</span>التوصيات</div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     MAIN
+══════════════════════════════════════ -->
+<main>
+
+<!-- ─── TAB 1: OVERVIEW ─── -->
+<div id="tab-overview" class="section active">
+
+  <div class="kpi-row">
+    <div class="kpi c-teal">  <div class="ico">📚</div><div class="val">270</div><div class="lbl">إجمالي الطلاب</div></div>
+    <div class="kpi c-blue">  <div class="ico">📈</div><div class="val">82.70</div><div class="lbl">المتوسط العام / 100</div></div>
+    <div class="kpi c-teal">  <div class="ico">⚖️</div><div class="val">95.0</div><div class="lbl">الوسيط</div></div>
+    <div class="kpi c-green"> <div class="ico">✅</div><div class="val">81.1%</div><div class="lbl">نسبة النجاح</div></div>
+    <div class="kpi c-gold">  <div class="ico">🥇</div><div class="val">100</div><div class="lbl">أعلى درجة</div></div>
+    <div class="kpi c-red">   <div class="ico">⚠️</div><div class="val">50</div><div class="lbl">أدنى درجة</div></div>
+    <div class="kpi c-orange"> <div class="ico">📉</div><div class="val">19.18</div><div class="lbl">الانحراف المعياري</div></div>
+    <div class="kpi c-blue">  <div class="ico">🏫</div><div class="val">9</div><div class="lbl">فصول دراسية</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-head"><span class="ico">🎯</span>توزيع مستويات الأداء</div>
+      <div class="card-body">
+        <div class="level-bars">
+          <div class="lb-row">
+            <div class="lb-label">ممتاز (90 – 100)</div>
+            <div class="lb-track"><div class="lb-fill" style="width:56.7%;background:#059669">153 طالباً</div></div>
+            <div class="lb-pct">56.7%</div>
+          </div>
+          <div class="lb-row">
+            <div class="lb-label">جيد جداً (80 – 89)</div>
+            <div class="lb-track"><div class="lb-fill" style="width:7%;background:#2563EB;min-width:60px">19</div></div>
+            <div class="lb-pct">7.0%</div>
+          </div>
+          <div class="lb-row">
+            <div class="lb-label">جيد (70 – 79)</div>
+            <div class="lb-track"><div class="lb-fill" style="width:3.3%;background:#D97706;min-width:46px">9</div></div>
+            <div class="lb-pct">3.3%</div>
+          </div>
+          <div class="lb-row">
+            <div class="lb-label">مقبول (60 – 69)</div>
+            <div class="lb-track"><div class="lb-fill" style="width:14.1%;background:#EA580C">38 طالباً</div></div>
+            <div class="lb-pct">14.1%</div>
+          </div>
+          <div class="lb-row">
+            <div class="lb-label">ضعيف (أقل من 60)</div>
+            <div class="lb-track"><div class="lb-fill" style="width:18.9%;background:#DC2626">51 طالباً</div></div>
+            <div class="lb-pct">18.9%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="ico">🥧</span>نسب التقديرات</div>
+      <div class="card-body"><div class="chart-wrap"><canvas id="cPie"></canvas></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="ico">📊</span>متوسط الفصول مقارنةً بالمتوسط العام (82.70)</div>
+    <div class="card-body"><div class="chart-wrap-lg"><canvas id="cBar"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ─── TAB 2: SECTIONS ─── -->
+<div id="tab-sections" class="section">
+  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);max-width:680px">
+    <div class="kpi c-green"><div class="ico">🏆</div><div class="val">ف 6</div><div class="lbl">أفضل فصل — 90.30</div></div>
+    <div class="kpi c-red">  <div class="ico">📌</div><div class="val">ف 8</div><div class="lbl">يحتاج دعماً — 72.80</div></div>
+    <div class="kpi c-orange"><div class="ico">📏</div><div class="val">17.5</div><div class="lbl">الفرق بين الأفضل والأضعف</div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-head"><span class="ico">📈</span>مقارنة شاملة — المتوسط والحد الأعلى والأدنى</div>
+    <div class="card-body"><div class="chart-wrap-lg"><canvas id="cSecDetail"></canvas></div></div>
+  </div>
+
+  <div class="sec-grid">
+    <div class="sec-card">
+      <h3>الفصل الأول</h3>
+      <div class="avg-ring">84.30<small>المتوسط</small></div>
+      <div class="sec-row"><span>أعلى</span><span class="sv">100</span></div>
+      <div class="sec-row"><span>أدنى</span><span class="sv">50</span></div>
+      <div class="sec-row"><span>عدد الطلاب</span><span class="sv">30</span></div>
+    </div>
+    <div class="sec-card">
+      <h3>الفصل الثاني</h3>
+      <div class="avg-ring">83.17<small>المتوسط</small></div>
+      <div class="sec-row"><span>أعلى</span><span class="sv">100</span></div>
+      <div class="sec-row"><span>أدنى</span><span class="sv">50</span></div>
+      <div class="sec-row"><span>عدد الطلاب</span><span class="sv">30</span></div>
+    </div>
+    <div class="sec-card">
+      <h3>الفصل الثالث</h3>
+      <div class="avg-ring">79.67<small>المتوسط</small></div>
+      <div class="sec-row"><span>أعلى</span><span class="sv">100</span></div>
+      <div class="sec-row"><span>أدنى</span><span class="sv">50</span></div>
+      <div class="sec-row"><span>عدد الطلاب</span><span class="sv">30</span></div>
+    </div>
+    <div class="sec-card best">
+      <span class="sec-pill pill-best">🏆 الأفضل</span>
+      <h3>الفصل الرابع</h3>
+      <div class="avg-ring" style="color:var(--green)">89.93<small>المتوسط</small></div>
+      <div class="sec-row"><span>أعلى</span><span class="sv">100</span></div>
+      <div class="sec-row"><span>أدنى</span><span class="sv">55</span></div>
+      <div class="sec-row"><span>عدد الطلاب</span><span class="sv">30</span></div>
+    </div>
+    <div class="sec-card">
+      <h3>الفصل الخامس</h3>
+      <div class="avg-ring">83.13<small>المتوسط</small></div>
+      <div class="sec-row"><span>أعلى</span><span class="sv">100</span></div>
+      <div class="sec-row"><span>أدنى</span><span class="sv">50</span></div>
+      <div class="sec-row"><span>عدد الطلاب</span><span class="sv">30</span></div>
+    </div>
+    <div class="sec-card best">
+      <span class="sec-pill pill-best">🥇 الأول</span>
+      <h3>الفصل السادس</h3>
+      <div class="avg-ring" style="color:var(--green)">90.30<small>المتوسط</small></div>
+      <div class="sec-row"><span>أعلى</span><span class="sv">100</span></div>
+      <div class="sec-row"><span>أدنى</span><span class="sv">50</span></div>
+      <div class="sec-row"><span>عدد الطلاب</span><span class="sv">30</span></div>
+    </div>
+    <div class="sec-card">
+      <h3>الفصل السابع</h3>
+      <div class="avg-ring">83.17<small>المتوسط</small></div>
+      <div class="sec-row"><span>أعلى</span><span class="sv">100</span></div>
+      <div class="sec-row"><span>أدنى</span><span class="sv">50</span></div>
+      <div class="sec-row"><span>عدد الطلاب</span><span class="sv">30</span></div>
+    </div>
+    <div class="sec-card worst">
+      <span class="sec-pill pill-worst">⚠ يحتاج دعماً</span>
+      <h3>الفصل الثامن</h3>
+      <div class="avg-ring" style="color:var(--red)">72.80<small>المتوسط</small></div>
+      <div class="sec-row"><span>أعلى</span><span class="sv">100</span></div>
+      <div class="sec-row"><span>أدنى</span><span class="sv">50</span></div>
+      <div class="sec-row"><span>عدد الطلاب</span><span class="sv">30</span></div>
+    </div>
+    <div class="sec-card">
+      <h3>الفصل التاسع</h3>
+      <div class="avg-ring">77.80<small>المتوسط</small></div>
+      <div class="sec-row"><span>أعلى</span><span class="sv">100</span></div>
+      <div class="sec-row"><span>أدنى</span><span class="sv">50</span></div>
+      <div class="sec-row"><span>عدد الطلاب</span><span class="sv">30</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TAB 3: STUDENTS ─── -->
+<div id="tab-students" class="section">
+  <div class="controls">
+    <input type="text" class="inp" id="srch" placeholder="🔍 ابحث عن طالب..." oninput="filterTbl()">
+    <select class="sel" id="fSec" onchange="filterTbl()">
+      <option value="">جميع الفصول</option>
+      <option value="1">الفصل الأول</option><option value="2">الفصل الثاني</option>
+      <option value="3">الفصل الثالث</option><option value="4">الفصل الرابع</option>
+      <option value="5">الفصل الخامس</option><option value="6">الفصل السادس</option>
+      <option value="7">الفصل السابع</option><option value="8">الفصل الثامن</option>
+      <option value="9">الفصل التاسع</option>
+    </select>
+    <select class="sel" id="fGrd" onchange="filterTbl()">
+      <option value="">جميع التقديرات</option>
+      <option value="ممتاز">ممتاز</option><option value="جيد جداً">جيد جداً</option>
+      <option value="جيد">جيد</option><option value="مقبول">مقبول</option>
+      <option value="ضعيف">ضعيف</option>
+    </select>
+    <div class="cnt-badge" id="cnt">270 طالب</div>
+  </div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table id="tbl">
+        <thead><tr>
+          <th onclick="sortTbl(0)"><span class="sort-ic">↕</span>م</th>
+          <th onclick="sortTbl(1)"><span class="sort-ic">↕</span>اسم الطالب</th>
+          <th onclick="sortTbl(2)"><span class="sort-ic">↕</span>الفصل</th>
+          <th onclick="sortTbl(3)"><span class="sort-ic">↕</span>الواجب/20</th>
+          <th onclick="sortTbl(4)"><span class="sort-ic">↕</span>الاختبار/20</th>
+          <th onclick="sortTbl(5)"><span class="sort-ic">↕</span>المشروع/40</th>
+          <th onclick="sortTbl(6)"><span class="sort-ic">↕</span>المجموع/100</th>
+          <th>التقدير</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TAB 4: RANKING ─── -->
+<div id="tab-ranking" class="section">
+  <div class="two-col">
+    <div class="card">
+      <div class="card-head" style="background:linear-gradient(90deg,#064E3B,#059669)"><span class="ico">🏆</span>أعلى 10 طلاب</div>
+      <div class="card-body"><ul class="rank-ul" id="topUl"></ul></div>
+    </div>
+    <div class="card">
+      <div class="card-head" style="background:linear-gradient(90deg,#7F1D1D,#DC2626)"><span class="ico">⚠️</span>طلاب يحتاجون دعماً</div>
+      <div class="card-body"><ul class="rank-ul" id="botUl"></ul></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head"><span class="ico">📊</span>توزيع درجات جميع الطلاب</div>
+    <div class="card-body"><div class="chart-wrap-lg"><canvas id="cScatter"></canvas></div></div>
+  </div>
+</div>
+
+<!-- ─── TAB 5: COMPONENTS ─── -->
+<div id="tab-components" class="section">
+  <div class="comp-cards">
+    <div class="comp-card" style="background:linear-gradient(135deg,#0F172A,#1E3A5F)">
+      <div class="ct">📝 الواجب المنزلي (من 20)</div>
+      <div class="cv">18.52</div>
+      <div class="cp">92.6% من الدرجة الكاملة</div>
+      <div class="cbar"><div class="cbar-fill" style="width:92.6%"></div></div>
+    </div>
+    <div class="comp-card" style="background:linear-gradient(135deg,#0C4A6E,#0369A1)">
+      <div class="ct">📋 الاختبار (من 20)</div>
+      <div class="cv">14.30</div>
+      <div class="cp">71.5% من الدرجة الكاملة</div>
+      <div class="cbar"><div class="cbar-fill" style="width:71.5%"></div></div>
+    </div>
+    <div class="comp-card" style="background:linear-gradient(135deg,#064E3B,#047857)">
+      <div class="ct">🗂️ المشروع (من 40)</div>
+      <div class="cv">29.87</div>
+      <div class="cp">74.7% من الدرجة الكاملة</div>
+      <div class="cbar"><div class="cbar-fill" style="width:74.7%"></div></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-head"><span class="ico">📡</span>مقارنة نسب الإنجاز (Radar)</div>
+      <div class="card-body"><div class="chart-wrap"><canvas id="cRadar"></canvas></div></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="ico">📈</span>متوسط الاختبار لكل فصل</div>
+      <div class="card-body"><div class="chart-wrap"><canvas id="cExam"></canvas></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TAB 6: RECOMMENDATIONS ─── -->
+<div id="tab-recommendations" class="section">
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-head"><span class="ico">💡</span>التوصيات التربوية المبنية على التحليل الإحصائي</div>
+    <div class="card-body">
+      <div class="rec-grid">
+        <div class="rec"><div class="rec-n">1</div><div class="rec-t"><strong>برامج الإثراء:</strong> 153 طالباً (56.7%) في مستوى ممتاز — يُنصح بتفعيل برامج إثراء متقدمة ومسابقات أكاديمية لهم.</div></div>
+        <div class="rec"><div class="rec-n">2</div><div class="rec-t"><strong>تدخل فوري للفصل الثامن:</strong> أدنى متوسط (72.80) مع تكدس درجات 50 — يستدعي خطة دعم فورية ومكثفة.</div></div>
+        <div class="rec"><div class="rec-n">3</div><div class="rec-t"><strong>نقل تجربة الفصل السادس:</strong> أعلى متوسط (90.30) — دراسة الممارسات الناجحة فيه ونقلها للفصول الأضعف.</div></div>
+        <div class="rec"><div class="rec-n">4</div><div class="rec-t"><strong>تعزيز مهارات الاختبار:</strong> أضعف مكوّن (71.5%) — تدريب على أساليب الإجابة وإدارة الوقت وتنويع أنماط الأسئلة.</div></div>
+        <div class="rec"><div class="rec-n">5</div><div class="rec-t"><strong>دعم طلاب الضعف:</strong> 51 طالباً (18.9%) دون 60 — مجموعات دعم أسبوعية وتعلّم تعاوني بالأقران.</div></div>
+        <div class="rec"><div class="rec-n">6</div><div class="rec-t"><strong>رفع إنجاز المشروع:</strong> 74.7% — إرشادات واضحة وجدول زمني مرحلي مع متابعة دورية داخل الفصل.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><span class="ico">⚡</span>ملخص نقاط القوة والضعف</div>
+    <div class="card-body">
+      <div class="sw-grid">
+        <div>
+          <div class="sw-head" style="color:var(--green)">✅ نقاط القوة</div>
+          <div class="sw-item s">الواجب المنزلي 92.6% — أعلى مكوّن وأداء متميز</div>
+          <div class="sw-item s">الفصلان الرابع والسادس تجاوزا متوسط 89 درجة</div>
+          <div class="sw-item s">56.7% من الطلاب في مستوى ممتاز (90–100)</div>
+          <div class="sw-item s">نسبة نجاح عامة 81.1%</div>
+        </div>
+        <div>
+          <div class="sw-head" style="color:var(--red)">⚠️ مجالات التحسين</div>
+          <div class="sw-item w">الاختبار 71.5% — أدنى مكوّن ويحتاج رفعاً</div>
+          <div class="sw-item w">51 طالباً في مستوى ضعيف (18.9%)</div>
+          <div class="sw-item w">الفصل الثامن أدنى متوسط (72.80)</div>
+          <div class="sw-item w">انحراف معياري 19.18 يعكس تفاوتاً واسعاً</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer>
+  <div class="foot-names">
+    <div class="fn">
+      <div class="fn-ico">🏫</div>
+      <div><div class="fn-lbl">مدير المدرسة</div><div class="fn-val">فايز الثبيتي</div></div>
+    </div>
+    <div class="fn">
+      <div class="fn-ico">👨‍🏫</div>
+      <div><div class="fn-lbl">معلم المادة</div><div class="fn-val">أحمد حلواني</div></div>
+    </div>
+  </div>
+  <div class="foot-copy">مدرسة الوليد بن عبدالملك المتوسطة — إدارة تعليم مكة المكرمة — وزارة التعليم</div>
+</footer>
+
+<script>
+// ════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════
+const S=[{"name":"ابراهيم حمود السكيبي","section":1,"homework":10,"exam":5,"project":15,"total":50},{"name":"ابراهيم فهد العتيبي","section":1,"homework":20,"exam":20,"project":5,"total":65},{"name":"ابراهيم محمد النفيعي","section":1,"homework":20,"exam":16,"project":40,"total":96},{"name":"احمد ماجد الزهراني","section":1,"homework":20,"exam":20,"project":40,"total":100},{"name":"انس فادى ابويونس جامع","section":1,"homework":20,"exam":20,"project":40,"total":100},{"name":"بتال عدنان القرشي","section":1,"homework":20,"exam":19,"project":5,"total":64},{"name":"بندر بهلول جعفري","section":1,"homework":20,"exam":5,"project":5,"total":50},{"name":"تركي سامي العتيبي","section":1,"homework":20,"exam":20,"project":40,"total":100},{"name":"ثنيان يوسف الحصيني","section":1,"homework":20,"exam":2,"project":40,"total":82},{"name":"رياض رابح البجالي","section":1,"homework":20,"exam":15,"project":40,"total":95},{"name":"سعود عبدالله القرني","section":1,"homework":20,"exam":20,"project":40,"total":100},{"name":"سلمان بن عابد بن الدعدي","section":1,"homework":20,"exam":18,"project":5,"total":63},{"name":"صالح هاني القرشي","section":1,"homework":20,"exam":18,"project":40,"total":98},{"name":"صلاح حمود الهذلى","section":1,"homework":20,"exam":18,"project":5,"total":63},{"name":"عبدالله ابن عبدالعزيز بن البقمي","section":1,"homework":20,"exam":19,"project":40,"total":99},{"name":"عبدالله فهد الجعيد","section":1,"homework":20,"exam":13,"project":40,"total":93},{"name":"عزام عبدالله الروقي","section":1,"homework":20,"exam":19,"project":40,"total":99},{"name":"عزام فهد المطرفى","section":1,"homework":20,"exam":18,"project":40,"total":98},{"name":"فيصل ضاوي العصيمي","section":1,"homework":20,"exam":18,"project":40,"total":98},{"name":"مبارك مطلق الذيابي","section":1,"homework":20,"exam":17,"project":5,"total":62},{"name":"معاذ صالح الزهراني","section":1,"homework":20,"exam":19,"project":40,"total":99},{"name":"نواف جمعان الزهراني","section":1,"homework":20,"exam":17,"project":20,"total":77},{"name":"نواف خالد العتيبي","section":1,"homework":20,"exam":17,"project":40,"total":97},{"name":"نواف صالح الثبيتى","section":1,"homework":20,"exam":20,"project":40,"total":100},{"name":"هاني يوسف الذبياني","section":1,"homework":20,"exam":5,"project":5,"total":50},{"name":"وائل محمد العصيمى","section":1,"homework":20,"exam":0,"project":40,"total":80},{"name":"وسام موسي خبراني","section":1,"homework":20,"exam":20,"project":40,"total":100},{"name":"ياسر عبدالله الحكمي","section":1,"homework":20,"exam":15,"project":0,"total":55},{"name":"يزن عبدالعزيز الزهراني","section":1,"homework":20,"exam":20,"project":40,"total":100},{"name":"يزيد علي الزويهري","section":1,"homework":20,"exam":16,"project":40,"total":96},{"name":"ابراهيم سامي هتان","section":2,"homework":20,"exam":19,"project":40,"total":99},{"name":"ابراهيم منصور العتيبى","section":2,"homework":10,"exam":5,"project":15,"total":50},{"name":"بتال علي النفاعي","section":2,"homework":20,"exam":19,"project":40,"total":99},{"name":"تميم محمد المطرفى","section":2,"homework":20,"exam":5,"project":5,"total":50},{"name":"جميل ماجد المطرفي","section":2,"homework":10,"exam":5,"project":15,"total":50},{"name":"خالد ابراهيم المطرفي","section":2,"homework":10,"exam":5,"project":15,"total":50},{"name":"خالد فيصل الروقى","section":2,"homework":20,"exam":18,"project":40,"total":98},{"name":"زياد جابر المالكي","section":2,"homework":20,"exam":14,"project":40,"total":94},{"name":"سعيد ربيع الزهراني","section":2,"homework":10,"exam":5,"project":15,"total":50},{"name":"سلطان مساعد النباتي","section":2,"homework":10,"exam":5,"project":15,"total":50},{"name":"سلمان محمد الزهراني","section":2,"homework":20,"exam":17,"project":40,"total":97},{"name":"طراد فهد المولد","section":2,"homework":20,"exam":17,"project":40,"total":97},{"name":"عبدالرحمن بن صالح بن الزهراني","section":2,"homework":20,"exam":19,"project":40,"total":99},{"name":"عبدالرحمن محمد القحطاني","section":2,"homework":20,"exam":18,"project":40,"total":98},{"name":"عبدالله علي هزازي","section":2,"homework":20,"exam":16,"project":40,"total":96},{"name":"عبدالله محمد القحطاني","section":2,"homework":20,"exam":20,"project":40,"total":100},{"name":"عبدالمجيد عبدالله القرشى","section":2,"homework":20,"exam":17,"project":40,"total":97},{"name":"فارس علي الزبيدي","section":2,"homework":20,"exam":19,"project":10,"total":69},{"name":"فيصل محمد الصليمى","section":2,"homework":20,"exam":18,"project":40,"total":98},{"name":"فيصل ياسر الياسي","section":2,"homework":20,"exam":19,"project":40,"total":99},{"name":"محمد ابن عبدالرحمن بن القرشي","section":2,"homework":20,"exam":18,"project":40,"total":98},{"name":"مشاري مخلد الزيادي","section":2,"homework":20,"exam":5,"project":15,"total":60},{"name":"مشاري نواف المالكي","section":2,"homework":20,"exam":19,"project":40,"total":99},{"name":"مشعل عوض الحصيني","section":2,"homework":20,"exam":13,"project":10,"total":63},{"name":"مطلق سامي العبيدي","section":2,"homework":20,"exam":17,"project":40,"total":97},{"name":"هاني سعد القرشي","section":2,"homework":20,"exam":5,"project":40,"total":85},{"name":"هاني مصنف اليزيدي","section":2,"homework":20,"exam":16,"project":40,"total":96},{"name":"ياسر علاء الحازمي","section":2,"homework":20,"exam":18,"project":40,"total":98},{"name":"يوسف علي الزهرانى","section":2,"homework":20,"exam":5,"project":15,"total":60},{"name":"يوسف نايف الثبيتي","section":2,"homework":20,"exam":19,"project":40,"total":99},{"name":"أسامة علي الغامدي","section":3,"homework":20,"exam":20,"project":40,"total":100},{"name":"ابراهيم محمد الريشى","section":3,"homework":20,"exam":17,"project":10,"total":67},{"name":"احمد سلطان المطرفى","section":3,"homework":10,"exam":5,"project":15,"total":50},{"name":"البراء هلال الحساني","section":3,"homework":10,"exam":5,"project":15,"total":50},{"name":"باسل ممدوح كيكي","section":3,"homework":20,"exam":16,"project":40,"total":96},{"name":"بدر محمد العصيمي","section":3,"homework":20,"exam":17,"project":40,"total":97},{"name":"بسام بن عمر بن ال حمدان الغامدي","section":3,"homework":5,"exam":17,"project":40,"total":82},{"name":"تميم عادل العصيمى","section":3,"homework":20,"exam":20,"project":40,"total":100},{"name":"جاسر منصور السعيدي","section":3,"homework":10,"exam":17,"project":15,"total":62},{"name":"عبدالباري محمد يمانى","section":3,"homework":20,"exam":11,"project":40,"total":91},{"name":"عبدالرحمن خالد الغريبي","section":3,"homework":20,"exam":13,"project":40,"total":93},{"name":"عبدالرحمن سالم المالكي","section":3,"homework":20,"exam":17,"project":40,"total":97},{"name":"عبدالرحمن مخلد القرشي","section":3,"homework":20,"exam":18,"project":40,"total":98},{"name":"عبدالعزيز سعود العتيبي","section":3,"homework":20,"exam":18,"project":40,"total":98},{"name":"عبدالعزيز عبدالله الربيعي","section":3,"homework":20,"exam":19,"project":40,"total":99},{"name":"عبدالله بندر المطرفي","section":3,"homework":20,"exam":19,"project":10,"total":69},{"name":"عبدالله حمود الشريف","section":3,"homework":20,"exam":5,"project":40,"total":85},{"name":"عبدالله سامي الزهراني","section":3,"homework":20,"exam":19,"project":10,"total":69},{"name":"عبدالله محمد العتيبي","section":3,"homework":20,"exam":5,"project":10,"total":55},{"name":"عبدالمجيد عبدالله الفضلي","section":3,"homework":20,"exam":5,"project":10,"total":55},{"name":"عزام منصور الدعجاني","section":3,"homework":20,"exam":5,"project":40,"total":85},{"name":"علي ابن عبدالرحمن بن الشمراني","section":3,"homework":20,"exam":20,"project":40,"total":100},{"name":"علي احمد عسيري","section":3,"homework":20,"exam":10,"project":40,"total":90},{"name":"عمار زهير باصم","section":3,"homework":20,"exam":11,"project":10,"total":61},{"name":"غيث ماجد المطرفي","section":3,"homework":20,"exam":5,"project":10,"total":55},{"name":"فارس فهد الشلوى","section":3,"homework":20,"exam":19,"project":10,"total":69},{"name":"مسعود عبدالرحمن المسعودي","section":3,"homework":20,"exam":20,"project":40,"total":100},{"name":"نواف غالب الشريف","section":3,"homework":20,"exam":5,"project":5,"total":50},{"name":"هتان فواز العصيمى","section":3,"homework":20,"exam":19,"project":10,"total":69},{"name":"ياسر فؤاد القرشى","section":3,"homework":20,"exam":18,"project":40,"total":98},{"name":"باسل ماطر المطرفي","section":4,"homework":20,"exam":19,"project":40,"total":99},{"name":"باسل محمد الهذلى","section":4,"homework":20,"exam":20,"project":40,"total":100},{"name":"بدر عبدالله المالكي","section":4,"homework":20,"exam":19,"project":40,"total":99},{"name":"تركي علي القرني","section":4,"homework":20,"exam":18,"project":10,"total":68},{"name":"تركي هاني النفيعي","section":4,"homework":20,"exam":20,"project":40,"total":100},{"name":"جاسر سعود المطرفي","section":4,"homework":5,"exam":17,"project":40,"total":82},{"name":"جسار عبدالهادي الحصيني","section":4,"homework":20,"exam":15,"project":40,"total":95},{"name":"حاتم بن نايف بن السويهري","section":4,"homework":20,"exam":20,"project":40,"total":100},{"name":"حامد عبدالله قربان","section":4,"homework":20,"exam":20,"project":40,"total":100},{"name":"حمزة عايش الحارثي","section":4,"homework":20,"exam":18,"project":40,"total":98},{"name":"حمود صالح اللحياني","section":4,"homework":20,"exam":20,"project":40,"total":100},{"name":"ريان حامد القرشى","section":4,"homework":20,"exam":10,"project":40,"total":90},{"name":"زياد احمد الحسني","section":4,"homework":20,"exam":16,"project":40,"total":96},{"name":"صالح حاتم الغامدي","section":4,"homework":20,"exam":17,"project":10,"total":67},{"name":"عبدالعزيز ماجد العتيبي","section":4,"homework":20,"exam":5,"project":40,"total":85},{"name":"عبدالله سمير الذبياني","section":4,"homework":20,"exam":20,"project":40,"total":100},{"name":"عبدالله سويلم الرشيدي","section":4,"homework":20,"exam":20,"project":40,"total":100},{"name":"عبدالله عادل الثبيتي","section":4,"homework":20,"exam":17,"project":40,"total":97},{"name":"عبدالله محمد المنتشري","section":4,"homework":20,"exam":19,"project":10,"total":69},{"name":"عزام عادل الشنبري","section":4,"homework":20,"exam":12,"project":40,"total":92},{"name":"علي حسن علواني","section":4,"homework":20,"exam":17,"project":40,"total":97},{"name":"علي طلال الغامدي","section":4,"homework":20,"exam":20,"project":40,"total":100},{"name":"عمر محمد الغامدي","section":4,"homework":20,"exam":18,"project":40,"total":98},{"name":"فارس فيصل المغير","section":4,"homework":20,"exam":20,"project":40,"total":100},{"name":"قيس مهند ربيقان","section":4,"homework":20,"exam":10,"project":5,"total":55},{"name":"محمد حامد العميري","section":4,"homework":20,"exam":5,"project":10,"total":55},{"name":"مشعل رائد الغامدى","section":4,"homework":10,"exam":5,"project":40,"total":75},{"name":"ناصر خالد الكعبي","section":4,"homework":20,"exam":17,"project":40,"total":97},{"name":"نواف سلمان العتيبي","section":4,"homework":20,"exam":19,"project":40,"total":99},{"name":"هيثم بن بندر بن الزهراني","section":4,"homework":20,"exam":5,"project":40,"total":85},{"name":"أحمد بندر السعيدي","section":5,"homework":20,"exam":20,"project":40,"total":100},{"name":"ثامر عادل العتيبي","section":5,"homework":20,"exam":5,"project":15,"total":60},{"name":"حارث مشهور الحارثى","section":5,"homework":20,"exam":19,"project":40,"total":99},{"name":"حسان طارق شوا","section":5,"homework":20,"exam":11,"project":40,"total":91},{"name":"حسن حمزه رجب","section":5,"homework":20,"exam":15,"project":40,"total":95},{"name":"رائد يحي العصيمي","section":5,"homework":20,"exam":20,"project":40,"total":100},{"name":"زيد حسن العيسي","section":5,"homework":20,"exam":20,"project":40,"total":100},{"name":"صالح ياسر بوقس","section":5,"homework":20,"exam":14,"project":10,"total":64},{"name":"عاطي نايف المطرفي","section":5,"homework":20,"exam":17,"project":40,"total":97},{"name":"عبدالله محمد الكعبي","section":5,"homework":20,"exam":20,"project":40,"total":100},{"name":"عزام منصور الجعيد","section":5,"homework":20,"exam":19,"project":40,"total":99},{"name":"علي بن نايف بن الحسيني الشريف","section":5,"homework":20,"exam":5,"project":10,"total":55},{"name":"علي مساعد الشمراني","section":5,"homework":10,"exam":5,"project":15,"total":50},{"name":"عماد ماجد الزهرانى","section":5,"homework":20,"exam":15,"project":40,"total":95},{"name":"عمار محمد الجابري","section":5,"homework":20,"exam":20,"project":40,"total":100},{"name":"عمار مروان باسليمان","section":5,"homework":20,"exam":17,"project":40,"total":97},{"name":"غالب حسن اليزيدي","section":5,"homework":10,"exam":5,"project":15,"total":50},{"name":"فهد صلاح الدهاسي","section":5,"homework":20,"exam":6,"project":40,"total":86},{"name":"فهد محمد لغبي","section":5,"homework":20,"exam":20,"project":10,"total":70},{"name":"محمد بندر الهذلي","section":5,"homework":20,"exam":19,"project":40,"total":99},{"name":"محمد تركى المصري","section":5,"homework":20,"exam":16,"project":15,"total":71},{"name":"محمد عبادي السويهري","section":5,"homework":20,"exam":16,"project":40,"total":96},{"name":"محمد عبدالاله الحربي","section":5,"homework":20,"exam":16,"project":40,"total":96},{"name":"محمود بشير منقول","section":5,"homework":20,"exam":16,"project":40,"total":96},{"name":"محمود ياسر بوقس","section":5,"homework":20,"exam":5,"project":10,"total":55},{"name":"مصطفى حسن اليزيدي","section":5,"homework":10,"exam":5,"project":15,"total":50},{"name":"معن حمود العتيبي","section":5,"homework":20,"exam":5,"project":40,"total":85},{"name":"هاني جمعان المتعانى","section":5,"homework":20,"exam":14,"project":40,"total":94},{"name":"يوسف ساطع الشيخ محمد","section":5,"homework":20,"exam":14,"project":40,"total":94},{"name":"يونس سعود العتيبي","section":5,"homework":1,"exam":19,"project":10,"total":50},{"name":"ابراهيم حسن قرون","section":6,"homework":20,"exam":17,"project":40,"total":97},{"name":"بتال غازي الريشى","section":6,"homework":20,"exam":18,"project":40,"total":98},{"name":"ثنيان بن عاطف بن النباتي","section":6,"homework":20,"exam":11,"project":5,"total":56},{"name":"ثنيان حمد المسعودي","section":6,"homework":20,"exam":17,"project":40,"total":97},{"name":"جاسر عواض الشلوى","section":6,"homework":20,"exam":5,"project":40,"total":85},{"name":"حازم سامي السويهري","section":6,"homework":20,"exam":18,"project":40,"total":98},{"name":"خالد عبدالرحمن اليتمي","section":6,"homework":20,"exam":18,"project":40,"total":98},{"name":"خالد وليد الجميعي","section":6,"homework":20,"exam":19,"project":40,"total":99},{"name":"راشد جابر الصليمي","section":6,"homework":10,"exam":19,"project":10,"total":59},{"name":"راكان خالد العتيبي","section":6,"homework":20,"exam":18,"project":40,"total":98},{"name":"رشيد عواض المسعودي","section":6,"homework":20,"exam":5,"project":40,"total":85},{"name":"رياض بدر الزهراني","section":6,"homework":20,"exam":20,"project":40,"total":100},{"name":"زايد مشعل المطرفى","section":6,"homework":20,"exam":10,"project":40,"total":90},{"name":"زياد حسام الزهراني","section":6,"homework":20,"exam":14,"project":40,"total":94},{"name":"سيف فارس الحارثي","section":6,"homework":20,"exam":17,"project":40,"total":97},{"name":"عبدالملك عمر العصيمي","section":6,"homework":20,"exam":18,"project":40,"total":98},{"name":"عمر مشارى المطرفى","section":6,"homework":20,"exam":19,"project":40,"total":99},{"name":"غيث حمدى الحسني","section":6,"homework":20,"exam":18,"project":40,"total":98},{"name":"فارس سعيد الزهراني","section":6,"homework":20,"exam":17,"project":10,"total":67},{"name":"فهد وليد الجميعي","section":6,"homework":20,"exam":20,"project":10,"total":70},{"name":"فيصل سعود المطرفى","section":6,"homework":20,"exam":16,"project":40,"total":96},{"name":"فيصل محمد المطرفى","section":6,"homework":20,"exam":20,"project":40,"total":100},{"name":"لؤي شرف عومان","section":6,"homework":10,"exam":5,"project":15,"total":50},{"name":"محمد ايمن الذيابى","section":6,"homework":20,"exam":7,"project":40,"total":87},{"name":"محمد طلال الجهنى","section":6,"homework":20,"exam":20,"project":40,"total":100},{"name":"محمد لطفي الصيعري","section":6,"homework":20,"exam":18,"project":40,"total":98},{"name":"مشاري احمد القناوى","section":6,"homework":20,"exam":16,"project":40,"total":96},{"name":"مصعب مصلح العتيبي","section":6,"homework":20,"exam":20,"project":40,"total":100},{"name":"مصلح بنيان الفهمي","section":6,"homework":20,"exam":20,"project":40,"total":100},{"name":"مناف صالح الزهراني","section":6,"homework":20,"exam":19,"project":40,"total":99},{"name":"بدر ماجد العتيبى","section":7,"homework":20,"exam":10,"project":10,"total":60},{"name":"حاتم سامي المسعودى","section":7,"homework":20,"exam":18,"project":40,"total":98},{"name":"حازم عبدالله الزهراني","section":7,"homework":20,"exam":20,"project":40,"total":100},{"name":"حسام محمد القاسمي","section":7,"homework":20,"exam":17,"project":40,"total":97},{"name":"خالد فهد الدوسرى","section":7,"homework":20,"exam":19,"project":40,"total":99},{"name":"رضوان على العتيبي","section":7,"homework":20,"exam":19,"project":15,"total":74},{"name":"ريان خالد الزهراني","section":7,"homework":20,"exam":19,"project":40,"total":99},{"name":"سطام عبدالعزيز العصيمي","section":7,"homework":10,"exam":5,"project":15,"total":50},{"name":"سعد خالد القرشي","section":7,"homework":20,"exam":15,"project":40,"total":95},{"name":"سلطان احمد الزهراني","section":7,"homework":20,"exam":17,"project":40,"total":97},{"name":"سليمان علي المزيني","section":7,"homework":20,"exam":19,"project":40,"total":99},{"name":"عادل تركي المطرفي","section":7,"homework":20,"exam":18,"project":40,"total":98},{"name":"عامر جبران لغبي","section":7,"homework":20,"exam":19,"project":10,"total":69},{"name":"عبدالرحمن سالم الحسنى","section":7,"homework":20,"exam":20,"project":10,"total":70},{"name":"عبدالعزيز نايف القرشى","section":7,"homework":20,"exam":18,"project":40,"total":98},{"name":"عبدالمجيد حاتم القرشى","section":7,"homework":20,"exam":5,"project":40,"total":85},{"name":"عساف محمد العتيبي","section":7,"homework":10,"exam":5,"project":15,"total":50},{"name":"فهاد فهد الحربي","section":7,"homework":20,"exam":19,"project":40,"total":99},{"name":"فهد فايز المطرفي","section":7,"homework":20,"exam":18,"project":40,"total":98},{"name":"فيصل عارف الزيادي","section":7,"homework":20,"exam":19,"project":30,"total":89},{"name":"مازن محمد الزهراني","section":7,"homework":20,"exam":19,"project":40,"total":99},{"name":"محمد ابن عبدالله بن الشمراني","section":7,"homework":20,"exam":8,"project":15,"total":63},{"name":"محمد عبدالرحمن حفني","section":7,"homework":20,"exam":20,"project":40,"total":100},{"name":"محمد عبدالوهاب الزهراني","section":7,"homework":20,"exam":16,"project":40,"total":96},{"name":"محمد فهد العتيبي","section":7,"homework":20,"exam":19,"project":40,"total":99},{"name":"محمد فهد المطرفى","section":7,"homework":10,"exam":5,"project":20,"total":55},{"name":"معاذ سعيد الزهراني","section":7,"homework":20,"exam":14,"project":10,"total":64},{"name":"ناصر جمالي امام دين بلوشي","section":7,"homework":10,"exam":5,"project":15,"total":50},{"name":"نايف رداد الفهمي","section":7,"homework":20,"exam":15,"project":40,"total":95},{"name":"وسام عيضه الهذلي","section":7,"homework":10,"exam":5,"project":15,"total":50},{"name":"أسامه صالح الحتيرشى","section":8,"homework":20,"exam":5,"project":40,"total":85},{"name":"خالد طلال الحساني","section":8,"homework":20,"exam":19,"project":40,"total":99},{"name":"رضوان أحمد كعبي","section":8,"homework":10,"exam":5,"project":15,"total":50},{"name":"زاهر ماجد الجودي","section":8,"homework":10,"exam":5,"project":15,"total":50},{"name":"زيد صالح الشقافه","section":8,"homework":20,"exam":19,"project":40,"total":99},{"name":"سعد محمد المقاطي","section":8,"homework":10,"exam":5,"project":15,"total":50},{"name":"سعود محمد النفيعي","section":8,"homework":20,"exam":17,"project":40,"total":97},{"name":"سلطان فهد الشيباني","section":8,"homework":20,"exam":10,"project":10,"total":60},{"name":"طيب مروان المطرفي","section":8,"homework":5,"exam":18,"project":10,"total":53},{"name":"عبدالاله مانع القرشي","section":8,"homework":20,"exam":14,"project":40,"total":94},{"name":"عبدالاله يوسف العولقي","section":8,"homework":10,"exam":5,"project":15,"total":50},{"name":"عبدالله سعد السعيدي","section":8,"homework":10,"exam":5,"project":15,"total":50},{"name":"عبدالله ماجد الغامدي","section":8,"homework":10,"exam":5,"project":40,"total":75},{"name":"فارس سيف الثبيتي","section":8,"homework":20,"exam":18,"project":40,"total":98},{"name":"قصي بن خالد بن الجعيد","section":8,"homework":20,"exam":17,"project":40,"total":97},{"name":"مؤيد عامر العفيفي","section":8,"homework":20,"exam":20,"project":40,"total":100},{"name":"محمد حاتم العتيبى","section":8,"homework":20,"exam":18,"project":40,"total":98},{"name":"محمد خالد نعمان","section":8,"homework":10,"exam":18,"project":40,"total":88},{"name":"محمد سامي المفرجي","section":8,"homework":10,"exam":5,"project":15,"total":50},{"name":"مشاري سعود العتيبي","section":8,"homework":20,"exam":9,"project":20,"total":69},{"name":"مصعب محمد العتيبي","section":8,"homework":20,"exam":6,"project":10,"total":56},{"name":"معاذ خالد الزهراني","section":8,"homework":10,"exam":5,"project":15,"total":50},{"name":"ميسر عصام بكاوي","section":8,"homework":20,"exam":5,"project":15,"total":60},{"name":"ميلاد محمد القثامى","section":8,"homework":20,"exam":5,"project":15,"total":60},{"name":"نايف تركي الشريف","section":8,"homework":20,"exam":17,"project":10,"total":67},{"name":"نايف هلال المطرفي","section":8,"homework":20,"exam":19,"project":10,"total":69},{"name":"هاني حسين العميري","section":8,"homework":20,"exam":5,"project":15,"total":60},{"name":"هذال فهد العتيبي","section":8,"homework":20,"exam":5,"project":10,"total":55},{"name":"همام هاني المطرفي","section":8,"homework":20,"exam":18,"project":40,"total":98},{"name":"وسام سلطان الحضرمي","section":8,"homework":20,"exam":17,"project":40,"total":97},{"name":"أحمد صلاح القرشى","section":9,"homework":20,"exam":19,"project":40,"total":99},{"name":"أسامة احمد الهذلى","section":9,"homework":20,"exam":18,"project":40,"total":98},{"name":"أصيل فواز الذبياني","section":9,"homework":20,"exam":5,"project":15,"total":60},{"name":"أنس مازن العميري","section":9,"homework":20,"exam":9,"project":5,"total":54},{"name":"ابراهيم هلال الزهراني","section":9,"homework":5,"exam":18,"project":10,"total":53},{"name":"الوليد فهد القرشي","section":9,"homework":20,"exam":17,"project":40,"total":97},{"name":"انس محمد العمري","section":9,"homework":20,"exam":5,"project":5,"total":50},{"name":"رواف عبدالله المالكي","section":9,"homework":20,"exam":20,"project":40,"total":100},{"name":"سلطان محمد السعيدى","section":9,"homework":20,"exam":5,"project":10,"total":55},{"name":"شاهر ايمن السلمي","section":9,"homework":20,"exam":20,"project":40,"total":100},{"name":"صالح ابن مشعل بن القرشي","section":9,"homework":20,"exam":18,"project":40,"total":98},{"name":"عبدالرحمن على العصيمي","section":9,"homework":20,"exam":16,"project":10,"total":66},{"name":"عبدالرحمن فاضل المالكي","section":9,"homework":20,"exam":19,"project":40,"total":99},{"name":"عبدالله حميد القرشي","section":9,"homework":20,"exam":9,"project":10,"total":59},{"name":"عبدالله صالح الكبكبي","section":9,"homework":20,"exam":20,"project":40,"total":100},{"name":"عصام صالح الذبياني","section":9,"homework":20,"exam":20,"project":40,"total":100},{"name":"فهد امين المطرفى","section":9,"homework":20,"exam":19,"project":40,"total":99},{"name":"محمد سفر الحارثي","section":9,"homework":10,"exam":5,"project":15,"total":50},{"name":"محمد شاكر السويهري","section":9,"homework":20,"exam":19,"project":40,"total":99},{"name":"محمد عائض القرني","section":9,"homework":20,"exam":14,"project":10,"total":64},{"name":"معاذ سعد الحساني","section":9,"homework":20,"exam":5,"project":10,"total":55},{"name":"منصور فيصل سرحان","section":9,"homework":20,"exam":5,"project":40,"total":85},{"name":"نادر ياسر المولد","section":9,"homework":20,"exam":5,"project":15,"total":60},{"name":"نايف معتوق القناوى","section":9,"homework":10,"exam":5,"project":15,"total":50},{"name":"نايف نادر العتيبي","section":9,"homework":20,"exam":20,"project":40,"total":100},{"name":"نمر هاني المقاطي","section":9,"homework":10,"exam":5,"project":15,"total":50},{"name":"نواف سفر الحارثي","section":9,"homework":20,"exam":5,"project":15,"total":60},{"name":"نواف وائل العصيمي","section":9,"homework":20,"exam":20,"project":40,"total":100},{"name":"هتان سامي الحارثي","section":9,"homework":20,"exam":20,"project":40,"total":100},{"name":"ياسر سعد المطرفي","section":9,"homework":20,"exam":19,"project":15,"total":74}];
+
+// helpers
+const grade=t=>t>=90?{l:'ممتاز',c:'b-ex'}:t>=80?{l:'جيد جداً',c:'b-vg'}:t>=70?{l:'جيد',c:'b-gd'}:t>=60?{l:'مقبول',c:'b-ac'}:{l:'ضعيف',c:'b-wk'};
+const gradeColor=t=>t>=90?'#059669':t>=80?'#2563EB':t>=70?'#D97706':t>=60?'#EA580C':'#DC2626';
+
+// ── TAB SWITCHING ──
+function showTab(id,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── STUDENT TABLE ──
+let data=[...S], sortCol=-1, asc=true;
+function buildTbl(rows){
+  const tb=document.getElementById('tbody'); tb.innerHTML='';
+  rows.forEach((s,i)=>{
+    const g=grade(s.total), clr=gradeColor(s.total);
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${i+1}</td>
+      <td class="td-name">${s.name}</td>
+      <td>فصل ${s.section}</td>
+      <td>${s.homework}</td><td>${s.exam}</td><td>${s.project}</td>
+      <td><div class="score-cell">
+        <div class="mini-bar"><div class="mini-fill" style="width:${s.total}%;background:${clr}"></div></div>
+        <strong style="color:${clr}">${s.total}</strong>
+      </div></td>
+      <td><span class="badge ${g.c}">${g.l}</span></td>`;
+    tb.appendChild(tr);
+  });
+  document.getElementById('cnt').textContent=rows.length+' طالب';
+}
+function filterTbl(){
+  const q=document.getElementById('srch').value.trim();
+  const sec=document.getElementById('fSec').value;
+  const grd=document.getElementById('fGrd').value;
+  const rows=data.filter(s=>{
+    if(sec&&s.section!=sec)return false;
+    if(grd&&grade(s.total).l!==grd)return false;
+    if(q&&!s.name.includes(q))return false;
+    return true;
+  });
+  buildTbl(rows);
+}
+function sortTbl(col){
+  if(sortCol===col)asc=!asc; else{sortCol=col;asc=true;}
+  document.querySelectorAll('thead th').forEach((th,i)=>{
+    th.classList.toggle('sorted',i===col);
+    const ic=th.querySelector('.sort-ic');
+    if(ic)ic.textContent=i===col?(asc?'↑':'↓'):'↕';
+  });
+  const keys=['_i','name','section','homework','exam','project','total'];
+  data.sort((a,b)=>{
+    let va=a[keys[col]],vb=b[keys[col]];
+    if(typeof va==='string')return asc?va.localeCompare(vb,'ar'):vb.localeCompare(va,'ar');
+    return asc?va-vb:vb-va;
+  });
+  filterTbl();
+}
+
+// ── RANKING ──
+function buildRanking(){
+  const sorted=[...S].sort((a,b)=>b.total-a.total);
+  const top=sorted.slice(0,10), bot=sorted.slice(-10).reverse();
+  const colors=['#B45309','#6B7280','#92400E','#059669','#059669','#059669','#059669','#059669','#059669','#059669'];
+  const ul1=document.getElementById('topUl'), ul2=document.getElementById('botUl');
+  top.forEach((s,i)=>{
+    const li=document.createElement('li'); li.className='rank-li';
+    li.innerHTML=`<div class="rank-no" style="background:${colors[i]}">${i+1}</div>
+      <div class="rank-info"><div class="rank-name">${s.name}</div><div class="rank-sec">فصل ${s.section}</div></div>
+      <div class="rank-score" style="color:#059669">${s.total}</div>`;
+    ul1.appendChild(li);
+  });
+  bot.forEach((s,i)=>{
+    const li=document.createElement('li'); li.className='rank-li';
+    li.innerHTML=`<div class="rank-no" style="background:#DC2626">${i+1}</div>
+      <div class="rank-info"><div class="rank-name">${s.name}</div><div class="rank-sec">فصل ${s.section}</div></div>
+      <div class="rank-score" style="color:#DC2626">${s.total}</div>`;
+    ul2.appendChild(li);
+  });
+}
+
+// ── CHARTS ──
+Chart.defaults.font.family="'Cairo','Segoe UI',Arial,sans-serif";
+const secAvgs=[84.30,83.17,79.67,89.93,83.13,90.30,83.17,72.80,77.80];
+const secLbls=['ف١','ف٢','ف٣','ف٤','ف٥','ف٦','ف٧','ف٨','ف٩'];
+const barClrs=secAvgs.map(v=>v>=90?'#059669':v<=73?'#DC2626':'#0BAFA0');
+
+function initCharts(){
+  // PIE
+  new Chart(document.getElementById('cPie'),{type:'doughnut',data:{
+    labels:['ممتاز (153)','جيد جداً (19)','جيد (9)','مقبول (38)','ضعيف (51)'],
+    datasets:[{data:[153,19,9,38,51],backgroundColor:['#059669','#2563EB','#D97706','#EA580C','#DC2626'],borderWidth:3,borderColor:'#fff'}]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},padding:12}}}}});
+
+  // BAR
+  new Chart(document.getElementById('cBar'),{type:'bar',data:{
+    labels:secLbls,
+    datasets:[
+      {label:'متوسط الفصل',data:secAvgs,backgroundColor:barClrs,borderRadius:8,borderSkipped:false},
+      {label:'المتوسط العام 82.70',data:Array(9).fill(82.70),type:'line',borderColor:'#D97706',borderDash:[6,4],borderWidth:2,pointRadius:0,fill:false,tension:0}
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom'}},
+    scales:{y:{min:60,max:100,grid:{color:'#F1F5F9'},ticks:{font:{size:11}}},x:{grid:{display:false}}}}});
+
+  // SECTION DETAIL
+  new Chart(document.getElementById('cSecDetail'),{type:'bar',data:{
+    labels:['الفصل ١','الفصل ٢','الفصل ٣','الفصل ٤','الفصل ٥','الفصل ٦','الفصل ٧','الفصل ٨','الفصل ٩'],
+    datasets:[
+      {label:'المتوسط',data:secAvgs,backgroundColor:barClrs,borderRadius:6},
+      {label:'أعلى درجة',data:[100,100,100,100,100,100,100,100,100],backgroundColor:'rgba(5,150,105,.25)',borderRadius:4},
+      {label:'أدنى درجة',data:[50,50,50,55,50,50,50,50,50],backgroundColor:'rgba(220,38,38,.25)',borderRadius:4}
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom'}},
+    scales:{y:{min:40,max:108},x:{grid:{display:false}}}}});
+
+  // SCATTER
+  const pts=S.map((s,i)=>({x:i+1,y:s.total,name:s.name,sec:s.section}));
+  new Chart(document.getElementById('cScatter'),{type:'scatter',data:{datasets:[{
+    label:'درجة الطالب',
+    data:pts.map(p=>({x:p.x,y:p.y})),
+    backgroundColor:pts.map(p=>gradeColor(p.y)),
+    pointRadius:4,pointHoverRadius:7
+  }]},options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${pts[ctx.dataIndex].name}: ${ctx.parsed.y}`}}},
+    scales:{y:{min:40,max:105,title:{display:true,text:'الدرجة'}},x:{display:false}}}});
+
+  // RADAR
+  new Chart(document.getElementById('cRadar'),{type:'radar',data:{
+    labels:['الواجب 92.6%','الاختبار 71.5%','المشروع 74.7%'],
+    datasets:[{label:'نسبة الإنجاز',data:[92.6,71.5,74.7],
+      backgroundColor:'rgba(11,175,160,.15)',borderColor:'#0BAFA0',
+      borderWidth:2,pointBackgroundColor:'#0BAFA0',pointRadius:5}]
+  },options:{responsive:true,maintainAspectRatio:false,
+    scales:{r:{min:0,max:100,ticks:{stepSize:20}}},
+    plugins:{legend:{position:'bottom'}}}});
+
+  // EXAM BY SEC
+  const examAvgs=Array.from({length:9},(_,i)=>{
+    const sec=S.filter(s=>s.section===i+1);
+    return+(sec.reduce((a,s)=>a+s.exam,0)/sec.length).toFixed(2);
+  });
+  new Chart(document.getElementById('cExam'),{type:'bar',data:{
+    labels:secLbls,
+    datasets:[{label:'متوسط الاختبار / 20',data:examAvgs,backgroundColor:'#0369A1',borderRadius:6}]
+  },options:{responsive:true,maintainAspectRatio:false,
+    scales:{y:{min:0,max:20},x:{grid:{display:false}}},
+    plugins:{legend:{position:'bottom'}}}});
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded',()=>{
+  buildTbl(data);
+  buildRanking();
+  initCharts();
+});
+</script>
+</body>
+</html>
