@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مراجعة شاملة - Super Goal 3 | الفصل الثاني</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:#1a3a6b; --primary-light:#2556a4; --accent:#f5a623; --accent2:#e74c3c;
+  --success:#27ae60; --danger:#e74c3c; --bg:#f0f4fc; --card:#fff;
+  --text:#1a2340; --muted:#6b7a9a; --border:#dce6f5;
+  --u7:#6c3483; --u8:#1a5276; --u9:#0e6655; --u10:#784212; --u11:#922b21; --u12:#154360;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Tajawal','Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+.site-header{background:linear-gradient(135deg,var(--primary) 0%,#0d2444 60%,#1a3a6b 100%);color:#fff;position:sticky;top:0;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.3);}
+.header-top{padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.header-title{display:flex;align-items:center;gap:12px;}
+.header-icon{font-size:2rem;}
+.header-text h1{font-size:1.25rem;font-weight:900;}
+.header-text p{font-size:.78rem;opacity:.8;}
+.exam-badge{background:var(--accent);color:#1a2340;padding:6px 16px;border-radius:20px;font-weight:800;font-size:.82rem;animation:pulse 2s infinite;white-space:nowrap;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+.nav-tabs{display:flex;overflow-x:auto;padding:0 12px;scrollbar-width:none;gap:4px;border-top:1px solid rgba(255,255,255,.1);}
+.nav-tabs::-webkit-scrollbar{display:none;}
+.nav-tab{padding:10px 16px;background:transparent;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-family:'Tajawal',sans-serif;font-size:.86rem;font-weight:600;white-space:nowrap;border-bottom:3px solid transparent;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.nav-tab:hover{color:#fff;background:rgba(255,255,255,.08);}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(255,255,255,.05);}
+.nav-dot{width:8px;height:8px;border-radius:50%;}
+
+/* PAGES */
+.page{display:none;padding:20px;max-width:960px;margin:0 auto;}
+.page.active{display:block;}
+
+/* HOME */
+.home-hero{background:linear-gradient(135deg,var(--primary),#0d2444);border-radius:20px;padding:36px 28px;color:#fff;text-align:center;margin-bottom:24px;position:relative;overflow:hidden;}
+.home-hero::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(245,166,35,.15);}
+.home-hero h2{font-size:1.8rem;font-weight:900;margin-bottom:8px;}
+.home-hero p{opacity:.85;font-size:1rem;line-height:1.7;}
+.units-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:24px;}
+.unit-card{background:#fff;border-radius:16px;padding:20px;cursor:pointer;transition:all .25s;border:2px solid transparent;box-shadow:0 2px 12px rgba(0,0,0,.06);position:relative;overflow:hidden;}
+.unit-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.12);}
+.unit-card::before{content:'';position:absolute;top:0;right:0;width:6px;height:100%;}
+.unit-card.u7::before{background:var(--u7);}
+.unit-card.u8::before{background:var(--u8);}
+.unit-card.u9::before{background:var(--u9);}
+.unit-card.u10::before{background:var(--u10);}
+.unit-card.u11::before{background:var(--u11);}
+.unit-card.u12::before{background:var(--u12);}
+.unit-num{font-size:.78rem;font-weight:700;opacity:.6;margin-bottom:4px;text-transform:uppercase;}
+.unit-title{font-size:1.08rem;font-weight:800;margin-bottom:8px;}
+.unit-topics{font-size:.8rem;color:var(--muted);line-height:1.6;}
+.unit-arrow{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:1.4rem;opacity:.35;}
+
+/* Important box */
+.important-box{background:linear-gradient(135deg,#fff3cd,#fffbf0);border:2px solid var(--accent);border-radius:16px;padding:20px 24px;margin-bottom:24px;}
+.important-box h3{color:#8B6914;font-size:1.05rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.imp-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed #f0d088;font-size:.88rem;line-height:1.6;}
+.imp-item:last-child{border-bottom:none;}
+
+/* UNIT HEADER */
+.unit-header{border-radius:16px;padding:24px 24px 20px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden;}
+.unit-header::after{content:attr(data-emoji);position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:4rem;opacity:.12;}
+.unit-header h2{font-size:1.35rem;font-weight:900;margin-bottom:4px;}
+.unit-header p{opacity:.85;font-size:.88rem;}
+
+/* SECTIONS */
+.section{margin-bottom:24px;}
+.section-title{font-size:1rem;font-weight:800;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px;color:var(--primary);}
+
+/* Grammar Cards */
+.grammar-card{background:#fff;border-radius:14px;padding:20px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.05);border-right:4px solid var(--primary-light);}
+.grammar-card h4{font-size:.98rem;font-weight:800;color:var(--primary);margin-bottom:10px;}
+.rule-ar{color:var(--text);font-size:.9rem;line-height:1.85;margin-bottom:10px;background:#f8f9fc;padding:12px 14px;border-radius:8px;}
+.examples{display:flex;flex-direction:column;gap:7px;}
+.ex-en{background:#eaf1fb;color:var(--primary);padding:7px 12px;border-radius:8px;font-weight:600;direction:ltr;text-align:left;font-size:.88rem;}
+.ex-ar{color:var(--muted);font-size:.8rem;margin-top:2px;padding-right:4px;}
+
+/* Vocab */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;}
+.vocab-item{background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid var(--border);transition:all .2s;}
+.vocab-item:hover{border-color:var(--primary-light);transform:translateY(-2px);}
+.vocab-en{font-weight:700;color:var(--primary);font-size:.92rem;margin-bottom:2px;}
+.vocab-ar{color:var(--muted);font-size:.8rem;}
+
+/* QUIZ */
+.quiz-section{background:#fff;border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+.quiz-section h3{font-size:.98rem;font-weight:800;color:var(--primary);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.question{background:#f7f9fc;border-radius:12px;padding:16px;margin-bottom:14px;border:2px solid transparent;transition:border-color .2s;}
+.question.correct{border-color:var(--success);background:#f0faf4;}
+.question.wrong{border-color:var(--danger);background:#fef5f5;}
+.q-num{font-size:.75rem;font-weight:700;color:var(--muted);margin-bottom:4px;}
+.q-text{font-size:.93rem;font-weight:600;margin-bottom:12px;line-height:1.65;direction:ltr;text-align:left;}
+.q-source{font-size:.73rem;color:var(--muted);font-style:italic;margin-bottom:10px;direction:rtl;text-align:right;}
+.options{display:flex;flex-direction:column;gap:8px;}
+.option{background:#fff;border:2px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;font-size:.87rem;transition:all .15s;direction:ltr;text-align:left;display:flex;align-items:center;gap:10px;font-family:'Tajawal',sans-serif;}
+.option:hover:not(.disabled){border-color:var(--primary-light);background:#f0f4fb;}
+.option.correct{border-color:var(--success);background:#e9f7ef;color:#1a6035;font-weight:700;}
+.option.wrong{border-color:var(--danger);background:#fdf0f0;color:#8b1a1a;}
+.option.disabled{cursor:not-allowed;}
+.opt-label{width:24px;height:24px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.73rem;font-weight:800;flex-shrink:0;}
+.option.correct .opt-label{background:var(--success);color:#fff;}
+.option.wrong .opt-label{background:var(--danger);color:#fff;}
+
+/* Feedback box */
+.q-feedback{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:.85rem;line-height:1.6;display:none;}
+.q-feedback.show{display:block;}
+.q-feedback.fb-correct{background:#d5f5e3;color:#1a5e37;border-right:3px solid var(--success);}
+.q-feedback.fb-wrong{background:#fadbd8;color:#7b241c;border-right:3px solid var(--danger);}
+
+/* True/False */
+.tf-item{background:#f7f9fc;border-radius:12px;padding:14px 16px;margin-bottom:10px;border:2px solid transparent;}
+.tf-item.tf-ok{border-color:var(--success);background:#f0faf4;}
+.tf-item.tf-err{border-color:var(--danger);background:#fef5f5;}
+.tf-text{font-size:.9rem;font-weight:500;margin-bottom:10px;direction:ltr;text-align:left;line-height:1.55;}
+.tf-source{font-size:.73rem;color:var(--muted);font-style:italic;margin-bottom:8px;direction:rtl;text-align:right;}
+.tf-btns{display:flex;gap:10px;}
+.tf-btn{flex:1;padding:8px;border:2px solid var(--border);border-radius:8px;cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:700;font-size:.88rem;transition:all .15s;background:#fff;}
+.tf-btn:hover:not(.disabled){transform:scale(1.02);}
+.tf-btn.true-btn:hover:not(.disabled){border-color:var(--success);background:#e9f7ef;color:var(--success);}
+.tf-btn.false-btn:hover:not(.disabled){border-color:var(--danger);background:#fdf0f0;color:var(--danger);}
+.tf-btn.sel-t{border-color:var(--success);background:#e9f7ef;color:var(--success);}
+.tf-btn.sel-f{border-color:var(--danger);background:#fdf0f0;color:var(--danger);}
+.tf-feedback{margin-top:8px;font-size:.83rem;font-weight:600;padding:8px 12px;border-radius:6px;display:none;line-height:1.6;}
+.tf-feedback.show{display:block;}
+.tf-feedback.ok{color:#1a6035;background:#d5f5e3;}
+.tf-feedback.err{color:#7b241c;background:#fadbd8;}
+
+/* Score */
+.quiz-score{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:12px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;margin-top:16px;}
+.score-num{font-size:2rem;font-weight:900;}
+.score-label{font-size:.82rem;opacity:.85;}
+.quiz-reset-btn{background:rgba(255,255,255,.2);color:#fff;border:2px solid rgba(255,255,255,.4);border-radius:8px;padding:10px 20px;cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:700;font-size:.88rem;transition:all .2s;}
+.quiz-reset-btn:hover{background:rgba(255,255,255,.3);}
+
+/* Writing */
+.writing-card{background:#fff;border-radius:14px;padding:20px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.05);border-top:4px solid var(--accent);}
+.writing-card h4{font-size:.98rem;font-weight:800;color:#8B6914;margin-bottom:10px;}
+.writing-model{background:#fffbf0;border:1px dashed var(--accent);border-radius:8px;padding:14px;font-size:.87rem;line-height:2;direction:ltr;text-align:left;}
+.tip-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.tip-list li{display:flex;gap:8px;align-items:flex-start;font-size:.87rem;line-height:1.6;}
+.tip-list li::before{content:'✦';color:var(--accent);flex-shrink:0;}
+
+/* Hot badge */
+.hot{display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;padding:2px 9px;border-radius:12px;font-size:.7rem;font-weight:700;margin-right:6px;vertical-align:middle;}
+
+/* Exam Tips */
+.exam-tips{background:linear-gradient(135deg,var(--primary),#0d2444);color:#fff;border-radius:16px;padding:20px 24px;margin-bottom:20px;}
+.exam-tips h3{font-size:1rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;}
+.tip-item{display:flex;gap:10px;align-items:flex-start;font-size:.83rem;line-height:1.6;opacity:.9;}
+
+/* Footer */
+.site-footer{text-align:center;padding:32px 20px 24px;margin-top:40px;border-top:2px solid var(--border);background:#fff;}
+.site-footer .footer-main{font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:6px;}
+.site-footer .footer-sub{font-size:.85rem;color:var(--muted);line-height:1.8;}
+.site-footer .footer-ai{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;padding:6px 16px;border-radius:20px;font-size:.82rem;font-weight:700;margin-top:10px;}
+
+@media(max-width:600px){
+  .header-text h1{font-size:1rem;}
+  .home-hero h2{font-size:1.4rem;}
+  .units-grid{grid-template-columns:1fr;}
+  .vocab-grid{grid-template-columns:1fr 1fr;}
+  .tips-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <div class="header-title">
+      <span class="header-icon">📚</span>
+      <div class="header-text">
+        <h1>Super Goal 3 | مراجعة شاملة</h1>
+        <p>ثالث متوسط • الفصل الدراسي الثاني • ١٤٤٧ هـ</p>
+      </div>
+    </div>
+    <div class="exam-badge">🔥 الاختبار قريب!</div>
+  </div>
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('home')"><span class="nav-dot" style="background:#f5a623"></span>الرئيسية</button>
+    <button class="nav-tab" onclick="showPage('exams')"><span class="nav-dot" style="background:#e67e22"></span>نماذج الاختبارات</button>
+    <button class="nav-tab" onclick="showPage('unit7')"><span class="nav-dot" style="background:var(--u7)"></span>وحدة ٧</button>
+    <button class="nav-tab" onclick="showPage('unit8')"><span class="nav-dot" style="background:var(--u8)"></span>وحدة ٨</button>
+    <button class="nav-tab" onclick="showPage('unit9')"><span class="nav-dot" style="background:var(--u9)"></span>وحدة ٩</button>
+    <button class="nav-tab" onclick="showPage('unit10')"><span class="nav-dot" style="background:var(--u10)"></span>وحدة ١٠</button>
+    <button class="nav-tab" onclick="showPage('unit11')"><span class="nav-dot" style="background:var(--u11)"></span>وحدة ١١</button>
+    <button class="nav-tab" onclick="showPage('unit12')"><span class="nav-dot" style="background:var(--u12)"></span>وحدة ١٢</button>
+  </nav>
+</header>
+
+<!-- ===== HOME ===== -->
+<div id="page-home" class="page active">
+  <div class="home-hero">
+    <h2>🎯 استعد للاختبار المركزي بثقة!</h2>
+    <p>مراجعة شاملة لجميع وحدات الفصل الثاني (٧–١٢) • تمارين حقيقية من الكتاب • نمط الاختبارات المركزية الفعلية</p>
+  </div>
+
+  <div class="important-box">
+    <h3>⭐ أهم ما يتوقع في الاختبار المركزي (بناءً على تحليل اختبارات جميع المناطق)</h3>
+    <div class="imp-item"><span style="color:var(--danger);font-size:1rem;">🔴</span><span><strong>Grammar (7 درجات):</strong> Past Progressive + when/while • Present Perfect (already/yet/just) • Conditional (If…) • Relative Pronouns (who/which/that) • Verb+Gerund • Verb+Infinitive • So/Such…that • Would Rather</span></div>
+    <div class="imp-item"><span style="color:var(--danger);font-size:1rem;">🔴</span><span><strong>Vocabulary (7 درجات):</strong> Matching + اختيار متعدد + صور • أهم مفردات: ملحقات الشخص (toothpaste/scissors/shampoo) • المرور (ticket/speed limit/license) • الثقافة (customs/gesture/polite/rude)</span></div>
+    <div class="imp-item"><span style="color:var(--danger);font-size:1rem;">🔴</span><span><strong>Comprehension (6 درجات):</strong> فقرة + 3 اختيار متعدد + 2-3 صح وخطأ • مواضيع متوقعة: السياحة والأماكن / الثقافة والعادات / شخصية ملهمة</span></div>
+    <div class="imp-item"><span style="color:var(--danger);font-size:1rem;">🔴</span><span><strong>Composition (6 درجات):</strong> فقرة بكلمات مرشدة • المواضيع المتوقعة: صديق مثالي / مكان مفضل / اختلافات ثقافية / سلوكيات سيئة / قصة حياتك</span></div>
+    <div class="imp-item"><span style="color:var(--accent);font-size:1rem;">🟡</span><span><strong>Spelling (4 درجات):</strong> إكمال الحرف الناقص من مجموعة حروف • أو اختيار الكلمة الصحيحة</span></div>
+  </div>
+
+  <div style="font-size:1rem;font-weight:800;color:var(--primary);margin-bottom:14px;">📖 اختر الوحدة للمراجعة:</div>
+  <div class="units-grid">
+    <div class="unit-card u7" onclick="showPage('unit7')">
+      <div class="unit-num">الوحدة السابعة</div>
+      <div class="unit-title">It's a Good Deal, Isn't It?</div>
+      <div class="unit-topics">Tag Questions • Negative Questions • Be Able To • مفردات البيع</div>
+      <span class="unit-arrow">←</span>
+    </div>
+    <div class="unit-card u8" onclick="showPage('unit8')">
+      <div class="unit-num">الوحدة الثامنة</div>
+      <div class="unit-title">Drive Slowly!</div>
+      <div class="unit-topics">Must/Should/Mustn't • Adverbs of Manner • مفردات القيادة</div>
+      <span class="unit-arrow">←</span>
+    </div>
+    <div class="unit-card u9" onclick="showPage('unit9')">
+      <div class="unit-num">الوحدة التاسعة</div>
+      <div class="unit-title">All Kinds of People</div>
+      <div class="unit-topics">Relative Pronouns who/which/that • Past Progressive + when/while</div>
+      <span class="unit-arrow">←</span>
+    </div>
+    <div class="unit-card u10" onclick="showPage('unit10')">
+      <div class="unit-num">الوحدة العاشرة</div>
+      <div class="unit-title">Who Used My Toothpaste?</div>
+      <div class="unit-topics">Present Perfect + already/yet/just • Verb+Gerund • So/Such</div>
+      <span class="unit-arrow">←</span>
+    </div>
+    <div class="unit-card u11" onclick="showPage('unit11')">
+      <div class="unit-num">الوحدة الحادية عشرة</div>
+      <div class="unit-title">Making Choices</div>
+      <div class="unit-topics">Conditional Sentences (If…) • Would Rather • مفردات الاختيارات</div>
+      <span class="unit-arrow">←</span>
+    </div>
+    <div class="unit-card u12" onclick="showPage('unit12')">
+      <div class="unit-num">الوحدة الثانية عشرة</div>
+      <div class="unit-title">Culture Shock</div>
+      <div class="unit-topics">Verb+Infinitive • Gerund as Subject • Past Perfect • الثقافة</div>
+      <span class="unit-arrow">←</span>
+    </div>
+  </div>
+
+  <div class="exam-tips">
+    <h3>💡 نصائح ذهبية للاختبار</h3>
+    <div class="tips-grid">
+      <div class="tip-item"><span>✏️</span><span>ابدأ بالأسئلة السهلة أولاً واترك الصعبة لآخر الوقت</span></div>
+      <div class="tip-item"><span>⏱️</span><span>وقت الاختبار ١.٥ ساعة — Composition 20 دقيقة + الباقي 70 دقيقة</span></div>
+      <div class="tip-item"><span>📝</span><span>في التعبير الكتابي استخدم كلمات المفتاح كلها للحصول على الدرجة كاملة</span></div>
+      <div class="tip-item"><span>🔍</span><span>في الاستيعاب اقرأ الأسئلة أولاً ثم ابحث عن الإجابات في النص</span></div>
+      <div class="tip-item"><span>🎯</span><span>في الإملاء انطق الكلمة في ذهنك وستتذكر الحرف الناقص</span></div>
+      <div class="tip-item"><span>⭐</span><span>راجع إجاباتك قبل التسليم — أخطاء كثيرة تُكتشف عند المراجعة</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== UNIT 7 ===== -->
+<div id="page-unit7" class="page">
+  <div class="unit-header" style="background:linear-gradient(135deg,#6c3483,#4a235a);" data-emoji="🏷️">
+    <h2>الوحدة السابعة: It's a Good Deal, Isn't It?</h2>
+    <p>Tag Questions • Negative Questions • Be Able To • مفردات معرض البيع</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📐 القواعد النحوية — Grammar</div>
+    <div class="grammar-card" style="border-color:#6c3483;">
+      <h4>١. أسئلة الذيل — Tag Questions <span class="hot">🔥 مهم جداً</span></h4>
+      <div class="rule-ar">
+        📌 <strong>القاعدة الذهبية:</strong><br>
+        • جملة <strong>مثبتة</strong> → ذيل <strong>منفي</strong> &nbsp;|&nbsp; جملة <strong>منفية</strong> → ذيل <strong>مثبت</strong><br><br>
+        🔑 <strong>خطوات التكوين:</strong><br>
+        ١. استخدم نفس الفعل المساعد (is/are/was/were/do/does/did/has/have/will)<br>
+        ٢. غيّر الضمير ليتوافق مع الاسم في الجملة<br>
+        ٣. إذا مثبتة → أضف not &nbsp;|&nbsp; إذا منفية → لا تضف not
+      </div>
+      <div class="examples">
+        <div><div class="ex-en">You're from Jeddah, <strong>aren't you?</strong></div><div class="ex-ar">مثبتة → ذيل منفي (aren't)</div></div>
+        <div><div class="ex-en">She doesn't speak French, <strong>does she?</strong></div><div class="ex-ar">منفية → ذيل مثبت (does)</div></div>
+        <div><div class="ex-en">They were here yesterday, <strong>weren't they?</strong></div><div class="ex-ar">ماضٍ مثبت → wasn't/weren't</div></div>
+        <div><div class="ex-en">You've had garage sales before, <strong>haven't you?</strong></div><div class="ex-ar">مضارع تام مثبت → haven't/hasn't</div></div>
+        <div><div class="ex-en">This isn't your bag, <strong>is it?</strong></div><div class="ex-ar">منفية → ذيل مثبت (is)</div></div>
+      </div>
+    </div>
+    <div class="grammar-card" style="border-color:#6c3483;">
+      <h4>٢. الأسئلة المنفية — Negative Questions</h4>
+      <div class="rule-ar">📌 نستخدمها للتعبير عن <strong>الدهشة</strong> أو التحقق من شيء نتوقعه صحيحاً.</div>
+      <div class="examples">
+        <div><div class="ex-en"><strong>Aren't</strong> you coming with us?</div><div class="ex-ar">أما أنت قادم معنا؟ (متوقع أن يأتي)</div></div>
+        <div><div class="ex-en"><strong>Don't</strong> you live near the beach?</div><div class="ex-ar">أما تسكن بالقرب من الشاطئ؟</div></div>
+        <div><div class="ex-en"><strong>Haven't</strong> you finished yet?!</div><div class="ex-ar">أما انتهيت بعد؟! (تعبير عن الدهشة)</div></div>
+      </div>
+    </div>
+    <div class="grammar-card" style="border-color:#6c3483;">
+      <h4>٣. القدرة — Be Able To</h4>
+      <div class="rule-ar">📌 يُستخدم للتعبير عن القدرة مثل can/can't — مفيد لأنه يعمل مع جميع الأزمنة.</div>
+      <div class="examples">
+        <div><div class="ex-en">He <strong>will be able to</strong> play basketball soon.</div><div class="ex-ar">سيتمكن من اللعب قريباً (المستقبل)</div></div>
+        <div><div class="ex-en">They <strong>weren't able to</strong> sell the tools.</div><div class="ex-ar">لم يتمكنوا من بيع الأدوات (الماضي) ← من الكتاب</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📝 المفردات — Vocabulary</div>
+    <div class="vocab-grid">
+      <div class="vocab-item"><div class="vocab-en">🪜 ladder</div><div class="vocab-ar">سلّم</div></div>
+      <div class="vocab-item"><div class="vocab-en">🗑️ garbage can</div><div class="vocab-ar">سلة المهملات</div></div>
+      <div class="vocab-item"><div class="vocab-en">🪣 hose</div><div class="vocab-ar">خرطوم الماء</div></div>
+      <div class="vocab-item"><div class="vocab-en">🧳 luggage</div><div class="vocab-ar">أمتعة</div></div>
+      <div class="vocab-item"><div class="vocab-en">🫖 teapot</div><div class="vocab-ar">إبريق الشاي</div></div>
+      <div class="vocab-item"><div class="vocab-en">🍳 frying pan</div><div class="vocab-ar">مقلاة</div></div>
+      <div class="vocab-item"><div class="vocab-en">🧹 broom</div><div class="vocab-ar">مكنسة</div></div>
+      <div class="vocab-item"><div class="vocab-en">🔨 hammer</div><div class="vocab-ar">مطرقة</div></div>
+      <div class="vocab-item"><div class="vocab-en">🔧 pliers</div><div class="vocab-ar">كماشة</div></div>
+      <div class="vocab-item"><div class="vocab-en">🪛 screwdriver</div><div class="vocab-ar">مفك براغي</div></div>
+      <div class="vocab-item"><div class="vocab-en">🧹 vacuum cleaner</div><div class="vocab-ar">مكنسة كهربائية</div></div>
+      <div class="vocab-item"><div class="vocab-en">🏷️ bargain</div><div class="vocab-ar">صفقة ممتازة / رخيص</div></div>
+      <div class="vocab-item"><div class="vocab-en">🏺 antique</div><div class="vocab-ar">قطعة أثرية / تحفة</div></div>
+      <div class="vocab-item"><div class="vocab-en">🏪 garage sale</div><div class="vocab-ar">بيع منزلي مخفض</div></div>
+      <div class="vocab-item"><div class="vocab-en">🔮 crystal</div><div class="vocab-ar">كريستال / بلوري</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✅ اختيار من متعدد — من الكتاب مباشرة</div>
+    <div class="quiz-section">
+      <h3>📖 التمرين (A) ص٧٦ — Complete the tag questions:</h3>
+      <div id="u7-mcq"></div>
+      <div class="quiz-score" id="u7-mcq-score" style="display:none;">
+        <div><div class="score-num" id="u7-mcq-num">-</div><div class="score-label">نتيجتك</div></div>
+        <button class="quiz-reset-btn" onclick="resetMCQ('u7')">🔄 أعد المحاولة</button>
+      </div>
+    </div>
+
+    <div class="section-title">✓✗ صح وخطأ — من الكتاب مباشرة</div>
+    <div class="quiz-section">
+      <h3>📖 التمرين (B) ص٧٥ — Comprehension: Answer about the garage sale:</h3>
+      <div id="u7-tf"></div>
+      <div class="quiz-score" id="u7-tf-score" style="display:none;">
+        <div><div class="score-num" id="u7-tf-num">-</div><div class="score-label">نتيجتك</div></div>
+        <button class="quiz-reset-btn" onclick="resetTF('u7')">🔄 أعد المحاولة</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✍️ التعبير الكتابي — Composition</div>
+    <div class="writing-card">
+      <h4>📖 التمرين (C) ص٨٣ — Write about a strange coincidence or chance meeting:</h4>
+      <ul class="tip-list">
+        <li>اكتب قصة لقاء غريب أو صدفة حدثت معك أو سمعتها</li>
+        <li>استخدم الماضي البسيط والماضي الاستمراري</li>
+        <li>كلمات مفيدة: suddenly, coincidence, mistake, recognized, twins</li>
+      </ul>
+      <div class="writing-model">Last year, I was walking around the shopping mall when suddenly I heard someone call my name. I turned around and saw a man who looked exactly like my old friend Khalid. "You're Khalid, aren't you?" I said. But he wasn't! He was Khalid's twin brother Ahmed. I hadn't seen them in five years because their family had moved to Riyadh. What a coincidence! We exchanged phone numbers and I was able to meet them again the following week. It was one of the strangest coincidences in my life.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== UNIT 8 ===== -->
+<div id="page-unit8" class="page">
+  <div class="unit-header" style="background:linear-gradient(135deg,#1a5276,#0d2f45);" data-emoji="🚗">
+    <h2>الوحدة الثامنة: Drive Slowly!</h2>
+    <p>Must/Should/Mustn't/Shouldn't • Adverbs of Manner • مفردات القيادة والمرور</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📐 القواعد النحوية — Grammar</div>
+    <div class="grammar-card" style="border-color:#1a5276;">
+      <h4>١. Must / Mustn't / Should / Shouldn't <span class="hot">🔥 مهم</span></h4>
+      <div class="rule-ar">
+        📌 <strong>Must</strong> = يجب (قانون وقواعد رسمية — أقوى من should)<br>
+        📌 <strong>Mustn't / Must not</strong> = يحظر تماماً (ممنوع)<br>
+        📌 <strong>Should</strong> = ينبغي (نصيحة وتوصية)<br>
+        📌 <strong>Shouldn't</strong> = لا ينبغي (نصيحة بالامتناع)
+      </div>
+      <div class="examples">
+        <div><div class="ex-en">You <strong>must</strong> stop at the red light.</div><div class="ex-ar">يجب التوقف عند الإشارة الحمراء. (قانون)</div></div>
+        <div><div class="ex-en">You <strong>mustn't</strong> park on the sidewalk.</div><div class="ex-ar">يحظر الإيقاف على الرصيف. (محظور)</div></div>
+        <div><div class="ex-en">You <strong>should</strong> drive carefully.</div><div class="ex-ar">ينبغي القيادة بحذر. (نصيحة)</div></div>
+        <div><div class="ex-en">You <strong>shouldn't</strong> eat when you're driving.</div><div class="ex-ar">لا ينبغي الأكل أثناء القيادة. (نصيحة)</div></div>
+      </div>
+    </div>
+    <div class="grammar-card" style="border-color:#1a5276;">
+      <h4>٢. ظروف الحال — Adverbs of Manner <span class="hot">🔥 مهم</span></h4>
+      <div class="rule-ar">
+        📌 تصف <strong>كيف</strong> يتم الفعل — تُضاف <strong>-ly</strong> للصفة<br>
+        📌 إذا انتهت الصفة بـ <strong>-l</strong> → تُضاعف (careful → carefully)<br>
+        📌 <strong>استثناء:</strong> fast → fast | hard → hard (نفس الشكل)
+      </div>
+      <div class="examples">
+        <div><div class="ex-en">Adel is a careful driver. → Adel drives <strong>carefully</strong>.</div><div class="ex-ar">من الكتاب ص٨٦ — الصفة تصبح ظرفاً بإضافة -ly</div></div>
+        <div><div class="ex-en">Khalid is a hard worker. → Khalid works <strong>hard</strong>.</div><div class="ex-ar">hard لا تتغير (استثناء)</div></div>
+        <div><div class="ex-en">Majid and Ali are <strong>fast</strong> runners. → They run <strong>fast</strong>.</div><div class="ex-ar">fast لا تتغير (استثناء)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📝 المفردات — Vocabulary</div>
+    <div class="vocab-grid">
+      <div class="vocab-item"><div class="vocab-en">🎫 ticket</div><div class="vocab-ar">مخالفة مرورية</div></div>
+      <div class="vocab-item"><div class="vocab-en">🚦 traffic light</div><div class="vocab-ar">إشارة المرور</div></div>
+      <div class="vocab-item"><div class="vocab-en">🛞 seat belt</div><div class="vocab-ar">حزام الأمان</div></div>
+      <div class="vocab-item"><div class="vocab-en">🛣️ speed limit</div><div class="vocab-ar">حد السرعة المسموح</div></div>
+      <div class="vocab-item"><div class="vocab-en">🚶 sidewalk</div><div class="vocab-ar">رصيف المشاة</div></div>
+      <div class="vocab-item"><div class="vocab-en">😡 aggressive</div><div class="vocab-ar">عدواني / متهور</div></div>
+      <div class="vocab-item"><div class="vocab-en">😤 reckless</div><div class="vocab-ar">متهور / طائش</div></div>
+      <div class="vocab-item"><div class="vocab-en">📜 license</div><div class="vocab-ar">رخصة القيادة</div></div>
+      <div class="vocab-item"><div class="vocab-en">🔄 tailgate</div><div class="vocab-ar">يلاصق السيارة أمامه</div></div>
+      <div class="vocab-item"><div class="vocab-en">⚠️ distracted</div><div class="vocab-ar">مشتت الانتباه</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✅ اختيار من متعدد — من الكتاب مباشرة</div>
+    <div class="quiz-section">
+      <h3>📖 التمرين (A) ص٨٦ — Rewrite using Adverbs of Manner / Complete with must/should:</h3>
+      <div id="u8-mcq"></div>
+      <div class="quiz-score" id="u8-mcq-score" style="display:none;">
+        <div><div class="score-num" id="u8-mcq-num">-</div><div class="score-label">نتيجتك</div></div>
+        <button class="quiz-reset-btn" onclick="resetMCQ('u8')">🔄 أعد المحاولة</button>
+      </div>
+    </div>
+
+    <div class="section-title">✓✗ صح وخطأ — من قراءة الكتاب ص٩١</div>
+    <div class="quiz-section">
+      <h3>📖 After Reading — Is Right, Right?</h3>
+      <div id="u8-tf"></div>
+      <div class="quiz-score" id="u8-tf-score" style="display:none;">
+        <div><div class="score-num" id="u8-tf-num">-</div><div class="score-label">نتيجتك</div></div>
+        <button class="quiz-reset-btn" onclick="resetTF('u8')">🔄 أعد المحاولة</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✍️ التعبير الكتابي — Composition</div>
+    <div class="writing-card">
+      <h4>📖 التمرين (D) ص٩٢ — Write an essay: Why should the driving age be raised to 18?</h4>
+      <ul class="tip-list">
+        <li>استخدم: because (of), since, as, due to → للسبب</li>
+        <li>استخدم: for this reason, as a result, consequently → للنتيجة</li>
+        <li>مفردات: immature, reflexes, distracted, responsible, impulses, accident</li>
+      </ul>
+      <div class="writing-model">I think the legal driving age should be raised to 18 because young people are not mature enough. Due to their age, teenagers are easily distracted by phones and friends. As a result, they often cause accidents on the roads. Moreover, young drivers don't have good reflexes because they lack experience. Since teenagers are unable to control their impulses, they take unnecessary risks. For this reason, raising the driving age will make roads safer for everyone. In conclusion, responsible driving requires maturity that most teenagers don't have yet.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== UNIT 9 ===== -->
+<div id="page-unit9" class="page">
+  <div class="unit-header" style="background:linear-gradient(135deg,#0e6655,#07422f);" data-emoji="👥">
+    <h2>الوحدة التاسعة: All Kinds of People</h2>
+    <p>Relative Pronouns who/which/that • Past Progressive + when/while • شخصيات الناس</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📐 القواعد النحوية — Grammar</div>
+    <div class="grammar-card" style="border-color:#0e6655;">
+      <h4>١. ضمائر الوصل — Relative Pronouns <span class="hot">🔥 مهم جداً</span></h4>
+      <div class="rule-ar">
+        📌 <strong>who / that</strong> → للأشخاص فقط<br>
+        📌 <strong>which / that</strong> → للأشياء والحيوانات<br>
+        📌 <strong>where</strong> → للأماكن<br>
+        📌 <strong>whose</strong> → للملكية (الذي ينتمي إليه)
+      </div>
+      <div class="examples">
+        <div><div class="ex-en">A rude person is someone <strong>who</strong> isn't polite.</div><div class="ex-ar">من الكتاب ص٩٦ — who للأشخاص</div></div>
+        <div><div class="ex-en">The flowers <strong>that</strong> grow in the city garden are colorful.</div><div class="ex-ar">من الكتاب ص٩٧ — that للأشياء</div></div>
+        <div><div class="ex-en">The neighbor <strong>who</strong> lives downstairs is very quiet.</div><div class="ex-ar">من الكتاب ص٩٧ — تمرين D</div></div>
+        <div><div class="ex-en">That isn't the camera <strong>that</strong> is on sale.</div><div class="ex-ar">من الكتاب ص٩٧</div></div>
+      </div>
+    </div>
+    <div class="grammar-card" style="border-color:#0e6655;">
+      <h4>٢. الماضي الاستمراري — Past Progressive <span class="hot">🔥 مهم جداً</span></h4>
+      <div class="rule-ar">
+        📌 <strong>التكوين:</strong> was/were + فعل + ing<br>
+        📌 مع <strong>when</strong> → حدث طويل (Past Progressive) + حدث قصير قاطعه (Past Simple)<br>
+        📌 مع <strong>while</strong> → حدثان يسيران في نفس الوقت (Past Progressive + Past Progressive)
+      </div>
+      <div class="examples">
+        <div><div class="ex-en">I <strong>was looking</strong> in the window <strong>when</strong> the thief grabbed my bag.</div><div class="ex-ar">من الكتاب — كنت أنظر (مستمر) عندما سرق (قصير)</div></div>
+        <div><div class="ex-en">Jack <strong>was talking</strong> on the phone <strong>while</strong> he <strong>was driving</strong>.</div><div class="ex-ar">من الكتاب — حدثان يسيران معاً</div></div>
+        <div><div class="ex-en">She <strong>was cooking</strong> dinner <strong>when</strong> I arrived.</div><div class="ex-ar">من الكتاب — نمط متكرر في الاختبارات</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📝 المفردات — Vocabulary</div>
+    <div class="vocab-grid">
+      <div class="vocab-item"><div class="vocab-en">🦹 thief</div><div class="vocab-ar">لص / سارق</div></div>
+      <div class="vocab-item"><div class="vocab-en">👮 police officer</div><div class="vocab-ar">ضابط شرطة</div></div>
+      <div class="vocab-item"><div class="vocab-en">🎭 pretend</div><div class="vocab-ar">يتظاهر</div></div>
+      <div class="vocab-item"><div class="vocab-en">🏃 in a hurry</div><div class="vocab-ar">في عجلة / مسرعاً</div></div>
+      <div class="vocab-item"><div class="vocab-en">📍 give directions</div><div class="vocab-ar">يعطي توجيهات</div></div>
+      <div class="vocab-item"><div class="vocab-en">💬 talkative</div><div class="vocab-ar">ثرثار</div></div>
+      <div class="vocab-item"><div class="vocab-en">🌟 generous</div><div class="vocab-ar">كريم / سخي</div></div>
+      <div class="vocab-item"><div class="vocab-en">🧠 clever</div><div class="vocab-ar">ذكي</div></div>
+      <div class="vocab-item"><div class="vocab-en">🏋️ athletic</div><div class="vocab-ar">رياضي</div></div>
+      <div class="vocab-item"><div class="vocab-en">😊 friendly</div><div class="vocab-ar">ودود / اجتماعي</div></div>
+      <div class="vocab-item"><div class="vocab-en">⏰ punctual</div><div class="vocab-ar">دقيق في المواعيد</div></div>
+      <div class="vocab-item"><div class="vocab-en">🎩 fashionable</div><div class="vocab-ar">أنيق / عصري</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✅ اختيار من متعدد — من التمرين (A) ص٩٦ و (D) ص٩٧</div>
+    <div class="quiz-section">
+      <h3>📖 Complete the definitions (الكتاب ص٩٦-٩٧):</h3>
+      <div id="u9-mcq"></div>
+      <div class="quiz-score" id="u9-mcq-score" style="display:none;">
+        <div><div class="score-num" id="u9-mcq-num">-</div><div class="score-label">نتيجتك</div></div>
+        <button class="quiz-reset-btn" onclick="resetMCQ('u9')">🔄 أعد المحاولة</button>
+      </div>
+    </div>
+
+    <div class="section-title">✓✗ صح وخطأ — من قراءة الكتاب ص٩٩</div>
+    <div class="quiz-section">
+      <h3>📖 Answer true or false about the gallery (ص٩٩):</h3>
+      <div id="u9-tf"></div>
+      <div class="quiz-score" id="u9-tf-score" style="display:none;">
+        <div><div class="score-num" id="u9-tf-num">-</div><div class="score-label">نتيجتك</div></div>
+        <button class="quiz-reset-btn" onclick="resetTF('u9')">🔄 أعد المحاولة</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✍️ التعبير الكتابي — Composition</div>
+    <div class="writing-card">
+      <h4>📖 التمرين ص١٠٢ — Write about your vision (Saudi 2030) OR describe a humanitarian person:</h4>
+      <ul class="tip-list">
+        <li>موضوع متوقع في الاختبار: كتابة عن شخص ملهم أو شخصية خيرية</li>
+        <li>استخدم: who/that/which في الجمل الوصفية</li>
+        <li>كلمات مرشدة: generous, hardworking, reliable, kind, responsible, community</li>
+      </ul>
+      <div class="writing-model">I admire people who are generous and work hard to help others. A person who I really respect is my uncle. He is someone who always helps people in need. He is a hardworking man who never gives up. He founded a small charity that helps poor families in our neighborhood. The children who benefit from his charity are very lucky. I think that kind and responsible people who care about their community make the world a better place. I hope to be like him when I grow up.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== UNIT 10 ===== -->
+<div id="page-unit10" class="page">
+  <div class="unit-header" style="background:linear-gradient(135deg,#784212,#4a2a0a);" data-emoji="🏠">
+    <h2>الوحدة العاشرة: Who Used My Toothpaste?</h2>
+    <p>Present Perfect + already/yet/just • Verb+Gerund • So/Such…that • مفردات المنزل</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📐 القواعد النحوية — Grammar</div>
+    <div class="grammar-card" style="border-color:#784212;">
+      <h4>١. المضارع التام — Present Perfect + already/yet/just <span class="hot">🔥 مهم جداً</span></h4>
+      <div class="rule-ar">
+        📌 <strong>التكوين:</strong> have/has + تصريف ثالث (past participle)<br>
+        📌 <strong>already</strong> = بالفعل ← في الجمل المثبتة، قبل التصريف الثالث<br>
+        📌 <strong>yet</strong> = بعد / حتى الآن ← في المنفي والسؤال، في نهاية الجملة<br>
+        📌 <strong>just</strong> = للتو ← في الجمل المثبتة، قبل التصريف الثالث<br>
+        <br>
+        🔑 <strong>من الكتاب ص١١٢:</strong><br>
+        Have you done the dishes <strong>yet</strong>? → Yes, I've <strong>already</strong> done them. / Yes, I've <strong>just</strong> done them. / No, I haven't done them <strong>yet</strong>.
+      </div>
+      <div class="examples">
+        <div><div class="ex-en">I've <strong>already</strong> finished my homework.</div><div class="ex-ar">لقد انتهيت من واجبي بالفعل (في وقت مبكر)</div></div>
+        <div><div class="ex-en">Have you eaten dinner <strong>yet</strong>?</div><div class="ex-ar">هل أكلت العشاء بعد؟ (yet في السؤال)</div></div>
+        <div><div class="ex-en">She has <strong>just</strong> washed the clothes.</div><div class="ex-ar">غسلت الملابس للتو (منذ لحظات)</div></div>
+        <div><div class="ex-en">He hasn't made his bed <strong>yet</strong>.</div><div class="ex-ar">لم يرتب سريره بعد (yet في المنفي)</div></div>
+      </div>
+    </div>
+    <div class="grammar-card" style="border-color:#784212;">
+      <h4>٢. الفعل + الفعل الاسمي — Verb + Gerund (-ing) <span class="hot">🔥 مهم جداً</span></h4>
+      <div class="rule-ar">
+        📌 <strong>احفظ هذه الأفعال — من الكتاب ص١١٢:</strong><br>
+        <strong>avoid • enjoy • give up • imagine • mind • stop</strong><br>
+        <strong>can't stand • finish • hate • keep • miss • suggest</strong>
+      </div>
+      <div class="examples">
+        <div><div class="ex-en">He can't stand <strong>waiting</strong> in line.</div><div class="ex-ar">من الكتاب — لا يطيق الانتظار</div></div>
+        <div><div class="ex-en">She can't stand <strong>cleaning</strong> the house.</div><div class="ex-ar">من تمرين D ص١١٣</div></div>
+        <div><div class="ex-en">My sister has to stop <strong>using</strong> my toothpaste.</div><div class="ex-ar">من تمرين D ص١١٣</div></div>
+        <div><div class="ex-en">The workers finished <strong>painting</strong> the house.</div><div class="ex-ar">من تمرين D ص١١٣</div></div>
+      </div>
+    </div>
+    <div class="grammar-card" style="border-color:#784212;">
+      <h4>٣. So / Such…that <span class="hot">🔥 مهم</span></h4>
+      <div class="rule-ar">
+        📌 <strong>so + صفة/ظرف + that</strong> (He is so fast <em>that</em>…)<br>
+        📌 <strong>so + many + اسم معدود + that</strong> (so many books <em>that</em>…)<br>
+        📌 <strong>so + much + اسم غير معدود + that</strong> (so much homework <em>that</em>…)<br>
+        📌 <strong>such + a/an + صفة + اسم مفرد + that</strong> (such a nice day <em>that</em>…)
+      </div>
+      <div class="examples">
+        <div><div class="ex-en">He has <strong>so many</strong> books that he can hardly carry them.</div><div class="ex-ar">من الكتاب ص١١٩ — many مع الاسم المعدود</div></div>
+        <div><div class="ex-en">I have <strong>so much</strong> homework that I can't go out.</div><div class="ex-ar">من الكتاب ص١١٩ — much مع الاسم غير المعدود</div></div>
+        <div><div class="ex-en">It was <strong>such a</strong> difficult test that no one did well.</div><div class="ex-ar">من الكتاب ص١١٩ — such a + صفة + اسم مفرد</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📝 المفردات — Vocabulary</div>
+    <div class="vocab-grid">
+      <div class="vocab-item"><div class="vocab-en">🪥 toothpaste</div><div class="vocab-ar">معجون أسنان</div></div>
+      <div class="vocab-item"><div class="vocab-en">✂️ scissors</div><div class="vocab-ar">مقص</div></div>
+      <div class="vocab-item"><div class="vocab-en">🧴 shampoo</div><div class="vocab-ar">شامبو</div></div>
+      <div class="vocab-item"><div class="vocab-en">💨 hair dryer</div><div class="vocab-ar">مجفف الشعر</div></div>
+      <div class="vocab-item"><div class="vocab-en">🪞 mirror</div><div class="vocab-ar">مرآة</div></div>
+      <div class="vocab-item"><div class="vocab-en">🪥 hairbrush</div><div class="vocab-ar">فرشاة الشعر</div></div>
+      <div class="vocab-item"><div class="vocab-en">🧼 dishwashing liquid</div><div class="vocab-ar">سائل غسيل الصحون</div></div>
+      <div class="vocab-item"><div class="vocab-en">💊 fake</div><div class="vocab-ar">مزيف / غير حقيقي</div></div>
+      <div class="vocab-item"><div class="vocab-en">🤝 borrow</div><div class="vocab-ar">يستعير</div></div>
+      <div class="vocab-item"><div class="vocab-en">↩️ give back</div><div class="vocab-ar">يُعيد / يرجع</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✅ اختيار من متعدد — من تمارين الكتاب ص١١٢-١١٩</div>
+    <div class="quiz-section">
+      <h3>📖 اختر الإجابة الصحيحة (من تمارين الكتاب):</h3>
+      <div id="u10-mcq"></div>
+      <div class="quiz-score" id="u10-mcq-score" style="display:none;">
+        <div><div class="score-num" id="u10-mcq-num">-</div><div class="score-label">نتيجتك</div></div>
+        <button class="quiz-reset-btn" onclick="resetMCQ('u10')">🔄 أعد المحاولة</button>
+      </div>
+    </div>
+
+    <div class="section-title">✓✗ صح وخطأ — من الكتاب ص١١٧</div>
+    <div class="quiz-section">
+      <h3>📖 التمرين (C) ص١١٧ — Answer true or false about the forum complaints:</h3>
+      <div id="u10-tf"></div>
+      <div class="quiz-score" id="u10-tf-score" style="display:none;">
+        <div><div class="score-num" id="u10-tf-num">-</div><div class="score-label">نتيجتك</div></div>
+        <button class="quiz-reset-btn" onclick="resetTF('u10')">🔄 أعد المحاولة</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✍️ التعبير الكتابي — Composition</div>
+    <div class="writing-card">
+      <h4>📖 التمرين (C) ص١١٨ — Write 5 forum entries about impolite behavior:</h4>
+      <ul class="tip-list">
+        <li>استخدم who/which/that في كل جملة</li>
+        <li>كلمات: annoy, irritate, can't stand, impolite, rude, behavior, affect</li>
+      </ul>
+      <div class="writing-model">There are many behaviors that I find very annoying. First, I can't stand people who talk loudly on their phones in restaurants. It's so rude that it ruins the meal for everyone. Second, I hate it when people who borrow things don't give them back. Third, it irritates me when someone who is late doesn't apologize. People who don't say "Please" or "Thank you" also annoy me a lot. Finally, I dislike people who don't hold the elevator door for others who are right behind them. I think we should all try to be more considerate of others.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== UNIT 11 ===== -->
+<div id="page-unit11" class="page">
+  <div class="unit-header" style="background:linear-gradient(135deg,#922b21,#5b1a14);" data-emoji="🤔">
+    <h2>الوحدة الحادية عشرة: Making Choices</h2>
+    <p>Conditional Sentences (If…) • Would Rather (I'd Rather) • البيئة والاختيارات</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📐 القواعد النحوية — Grammar</div>
+    <div class="grammar-card" style="border-color:#922b21;">
+      <h4>١. الجمل الشرطية — Conditional Sentences <span class="hot">🔥 مهم جداً</span></h4>
+      <div class="rule-ar">
+        📌 <strong>حقائق حاضرة (Present Facts):</strong><br>
+        If + مضارع بسيط → مضارع بسيط (نتيجة حتمية دائماً)<br><br>
+        📌 <strong>حقائق مستقبلية (Future / First Conditional):</strong><br>
+        If + مضارع بسيط → will/won't + فعل<br><br>
+        📌 <strong>يمكن استخدام may/might بدلاً من will للدلالة على الاحتمال:</strong><br>
+        If Noura doesn't study, she <strong>may fail</strong>.
+      </div>
+      <div class="examples">
+        <div><div class="ex-en">If you <strong>cook</strong> an egg in the microwave, it <strong>explodes</strong>.</div><div class="ex-ar">من الكتاب ص١٢٢ — حقيقة دائمة (Present)</div></div>
+        <div><div class="ex-en">If you <strong>heat</strong> water to 100°C, it <strong>boils</strong>.</div><div class="ex-ar">من تمرين A ص١٢٢ — حقيقة علمية</div></div>
+        <div><div class="ex-en">If Saeed <strong>gets</strong> the job, he <strong>'ll be</strong> very happy.</div><div class="ex-ar">من الكتاب — المستقبل (will)</div></div>
+        <div><div class="ex-en">If he <strong>doesn't obey</strong> the speed limit, he <strong>'ll get</strong> a ticket.</div><div class="ex-ar">من تمرين A ص١٢٢</div></div>
+        <div><div class="ex-en">If she <strong>leaves</strong> the food on the ground, the ants <strong>will take</strong> it.</div><div class="ex-ar">من تمرين C ص١٢٣</div></div>
+      </div>
+    </div>
+    <div class="grammar-card" style="border-color:#922b21;">
+      <h4>٢. التفضيل — I'd Rather (Would Rather) <span class="hot">🔥 مهم</span></h4>
+      <div class="rule-ar">
+        📌 <strong>I'd rather</strong> = أفضّل (فعل أساسي بدون to)<br>
+        📌 للمقارنة بين خيارين: I'd rather A <strong>than</strong> B
+      </div>
+      <div class="examples">
+        <div><div class="ex-en">I'd <strong>rather</strong> live in the country <strong>than</strong> live in the city.</div><div class="ex-ar">من تمرين E ص١٢٣</div></div>
+        <div><div class="ex-en">Faisal: I'd much <strong>rather</strong> go to the Saudi Hawks airshow.</div><div class="ex-ar">من محادثة الكتاب ص١٢٥</div></div>
+        <div><div class="ex-en">Do you <strong>prefer</strong> to drive or take the bus? → I'd <strong>rather</strong> drive.</div><div class="ex-ar">من الكتاب ص١٢٢</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📝 المفردات — Vocabulary</div>
+    <div class="vocab-grid">
+      <div class="vocab-item"><div class="vocab-en">🌿 conservationist</div><div class="vocab-ar">حامي البيئة</div></div>
+      <div class="vocab-item"><div class="vocab-en">🏭 pollution</div><div class="vocab-ar">تلوث</div></div>
+      <div class="vocab-item"><div class="vocab-en">💰 benefit</div><div class="vocab-ar">فائدة / ميزة</div></div>
+      <div class="vocab-item"><div class="vocab-en">🏔️ scenic</div><div class="vocab-ar">خلاب / طبيعي جميل</div></div>
+      <div class="vocab-item"><div class="vocab-en">⚡ generate</div><div class="vocab-ar">يولّد / ينتج</div></div>
+      <div class="vocab-item"><div class="vocab-en">🎓 graduation</div><div class="vocab-ar">تخرج</div></div>
+      <div class="vocab-item"><div class="vocab-en">👟 fit in</div><div class="vocab-ar">ينسجم / يتأقلم</div></div>
+      <div class="vocab-item"><div class="vocab-en">🛣️ highway</div><div class="vocab-ar">طريق سريع</div></div>
+      <div class="vocab-item"><div class="vocab-en">✈️ airshow</div><div class="vocab-ar">عرض جوي</div></div>
+      <div class="vocab-item"><div class="vocab-en">🔄 interfere</div><div class="vocab-ar">يتدخل / يعيق</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✅ اختيار من متعدد — من تمارين الكتاب ص١٢٢-١٢٣</div>
+    <div class="quiz-section">
+      <h3>📖 التمرين (A/C) ص١٢٢-١٢٣ — Conditional Sentences:</h3>
+      <div id="u11-mcq"></div>
+      <div class="quiz-score" id="u11-mcq-score" style="display:none;">
+        <div><div class="score-num" id="u11-mcq-num">-</div><div class="score-label">نتيجتك</div></div>
+        <button class="quiz-reset-btn" onclick="resetMCQ('u11')">🔄 أعد المحاولة</button>
+      </div>
+    </div>
+
+    <div class="section-title">✓✗ صح وخطأ — من محادثة الكتاب ص١٢٥</div>
+    <div class="quiz-section">
+      <h3>📖 About the Conversation (Faisal's choices) ص١٢٥:</h3>
+      <div id="u11-tf"></div>
+      <div class="quiz-score" id="u11-tf-score" style="display:none;">
+        <div><div class="score-num" id="u11-tf-num">-</div><div class="score-label">نتيجتك</div></div>
+        <button class="quiz-reset-btn" onclick="resetTF('u11')">🔄 أعد المحاولة</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✍️ التعبير الكتابي — Composition</div>
+    <div class="writing-card">
+      <h4>📖 موضوع متوقع: Write about a difficult choice you had to make:</h4>
+      <ul class="tip-list">
+        <li>استخدم الشرطية: If I… I will/might…</li>
+        <li>استخدم: I'd rather… than… / I prefer… to…</li>
+        <li>كلمات: choice, decision, result, benefit, consequence, prefer, regret</li>
+      </ul>
+      <div class="writing-model">Last year, I had a very difficult choice to make. I had to choose between joining the school football team or focusing on my studies. If I join the football team, I will enjoy playing and make new friends. However, if I don't study hard, I might not get good grades. I'd rather be successful in my studies than spend all my time playing sports. In the end, I decided to study harder. As a result, I got excellent grades. I believe that if you make wise choices now, you will have a better future. Every decision we make has consequences, so we must think carefully.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== UNIT 12 ===== -->
+<div id="page-unit12" class="page">
+  <div class="unit-header" style="background:linear-gradient(135deg,#154360,#0a2540);" data-emoji="🌍">
+    <h2>الوحدة الثانية عشرة: Culture Shock</h2>
+    <p>Verb+Infinitive • Gerund as Subject • Past Perfect • مفردات الثقافة والسفر</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📐 القواعد النحوية — Grammar</div>
+    <div class="grammar-card" style="border-color:#154360;">
+      <h4>١. الفعل + المصدر — Verb + Infinitive (to + verb) <span class="hot">🔥 مهم جداً</span></h4>
+      <div class="rule-ar">
+        📌 <strong>احفظ هذه الأفعال من الكتاب ص١٣٢:</strong><br>
+        <strong>afford • choose • decide • expect • forget • hope</strong><br>
+        <strong>learn • manage • offer • promise • refuse • remember • try</strong>
+      </div>
+      <div class="examples">
+        <div><div class="ex-en">They <strong>managed to get</strong> an earlier flight.</div><div class="ex-ar">من الكتاب ص١٣٢</div></div>
+        <div><div class="ex-en">The airline <strong>refused to pay</strong> for our hotel.</div><div class="ex-ar">من الكتاب ص١٣٢</div></div>
+        <div><div class="ex-en">I didn't <strong>remember to bring</strong> my toothbrush.</div><div class="ex-ar">من الكتاب ص١٣٢</div></div>
+        <div><div class="ex-en">She <strong>decided to stay</strong> at home.</div><div class="ex-ar">decide → to + فعل</div></div>
+      </div>
+    </div>
+    <div class="grammar-card" style="border-color:#154360;">
+      <h4>٢. الفعل الاسمي كمبتدأ + It's + Infinitive <span class="hot">🔥 مهم</span></h4>
+      <div class="rule-ar">
+        📌 <strong>Gerund كمبتدأ:</strong> يمكن استخدام فعل + ing في بداية الجملة<br>
+        📌 <strong>It's + صفة + to + فعل:</strong> (polite / impolite / rude / common / wrong)
+      </div>
+      <div class="examples">
+        <div><div class="ex-en"><strong>Traveling</strong> is a good way to learn about cultures.</div><div class="ex-ar">من الكتاب ص١٣٢ — Gerund كمبتدأ</div></div>
+        <div><div class="ex-en"><strong>Tipping</strong> is not common in Japan.</div><div class="ex-ar">من الكتاب ص١٣٢</div></div>
+        <div><div class="ex-en">It's <strong>polite to</strong> stand in line for a bus.</div><div class="ex-ar">من تمرين A ص١٣٢</div></div>
+        <div><div class="ex-en">It's not <strong>advisable to</strong> carry a lot of money.</div><div class="ex-ar">من تمرين A ص١٣٢</div></div>
+      </div>
+    </div>
+    <div class="grammar-card" style="border-color:#154360;">
+      <h4>٣. الماضي التام — Past Perfect <span class="hot">🔥 مهم</span></h4>
+      <div class="rule-ar">
+        📌 <strong>التكوين:</strong> had + تصريف ثالث (past participle)<br>
+        📌 <strong>الاستخدام:</strong> للتعبير عن حدث وقع <strong>قبل</strong> حدث آخر في الماضي<br>
+        📌 <strong>كلمات تستخدم معه:</strong> before, after, <strong>already</strong>, <strong>by the time</strong>, ever, never, until<br>
+        📌 <strong>الاختصار:</strong> had = 'd (I'd / She'd / They'd)
+      </div>
+      <div class="examples">
+        <div><div class="ex-en">By the time we got to the airport, our flight <strong>had already left</strong>.</div><div class="ex-ar">من الكتاب ص١٣٩ — بحلول وصولنا كانت الرحلة قد غادرت</div></div>
+        <div><div class="ex-en">They <strong>had already started</strong> boarding when I arrived at the gate.</div><div class="ex-ar">من تمرين A ص١٣٩</div></div>
+        <div><div class="ex-en">Sabah didn't know how to use chopsticks because she <strong>had never eaten</strong> in a Chinese restaurant before.</div><div class="ex-ar">من تمرين A ص١٣٩</div></div>
+        <div><div class="ex-en">By the time the police arrived, the thief <strong>had escaped</strong>.</div><div class="ex-ar">نمط متكرر في الاختبارات</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📝 المفردات — Vocabulary</div>
+    <div class="vocab-grid">
+      <div class="vocab-item"><div class="vocab-en">🌏 customs</div><div class="vocab-ar">عادات / تقاليد</div></div>
+      <div class="vocab-item"><div class="vocab-en">🤝 gesture</div><div class="vocab-ar">إيماءة</div></div>
+      <div class="vocab-item"><div class="vocab-en">💵 tip / tipping</div><div class="vocab-ar">بقشيش</div></div>
+      <div class="vocab-item"><div class="vocab-en">🏨 porter</div><div class="vocab-ar">حامل الأمتعة</div></div>
+      <div class="vocab-item"><div class="vocab-en">😊 polite</div><div class="vocab-ar">مؤدب</div></div>
+      <div class="vocab-item"><div class="vocab-en">😤 rude / impolite</div><div class="vocab-ar">وقح / فظ</div></div>
+      <div class="vocab-item"><div class="vocab-en">🌡️ frigid</div><div class="vocab-ar">بارد جداً / متجمد</div></div>
+      <div class="vocab-item"><div class="vocab-en">😰 culture shock</div><div class="vocab-ar">صدمة ثقافية</div></div>
+      <div class="vocab-item"><div class="vocab-en">✅ manage</div><div class="vocab-ar">يتمكن من / يستطيع</div></div>
+      <div class="vocab-item"><div class="vocab-en">❌ refuse</div><div class="vocab-ar">يرفض</div></div>
+      <div class="vocab-item"><div class="vocab-en">🐟 chopsticks</div><div class="vocab-ar">عيدان الطعام</div></div>
+      <div class="vocab-item"><div class="vocab-en">🔄 reverse culture shock</div><div class="vocab-ar">صدمة ثقافية عكسية</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✅ اختيار من متعدد — من تمارين الكتاب ص١٣٢-١٣٣</div>
+    <div class="quiz-section">
+      <h3>📖 التمرين (D) ص١٣٣ — Infinitive or Gerund?</h3>
+      <div id="u12-mcq"></div>
+      <div class="quiz-score" id="u12-mcq-score" style="display:none;">
+        <div><div class="score-num" id="u12-mcq-num">-</div><div class="score-label">نتيجتك</div></div>
+        <button class="quiz-reset-btn" onclick="resetMCQ('u12')">🔄 أعد المحاولة</button>
+      </div>
+    </div>
+
+    <div class="section-title">✓✗ صح وخطأ — من الكتاب ص١٣٤</div>
+    <div class="quiz-section">
+      <h3>📖 التمرين (Listening) ص١٣٤ — Advice about traveling to the US:</h3>
+      <div id="u12-tf"></div>
+      <div class="quiz-score" id="u12-tf-score" style="display:none;">
+        <div><div class="score-num" id="u12-tf-num">-</div><div class="score-label">نتيجتك</div></div>
+        <button class="quiz-reset-btn" onclick="resetTF('u12')">🔄 أعد المحاولة</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✍️ التعبير الكتابي — Composition</div>
+    <div class="writing-card">
+      <h4>📖 التمرين (C) ص١٣٣ — Write an email about cultural differences you experienced:</h4>
+      <ul class="tip-list">
+        <li>موضوع متكرر في الاختبار: Cultural Differences باستخدام: respect, language, religion, lifestyle, customs</li>
+      </ul>
+      <div class="writing-model">Dear Omar,<br><br>I'm writing to tell you about the cultural differences I have experienced here. Before I traveled, I had never thought about how different customs could be. For example, tipping is very common here, but I had forgotten to tip the porter when I arrived at the hotel. People here expect you to shake hands when you meet someone new, which is polite. It is also common to arrive on time at all events. At first, I found it difficult to manage these new customs. However, after I had adjusted to the culture, I began to feel comfortable. Traveling is a wonderful way to learn about other people and their way of life. I hope to see you soon.<br><br>Your friend, Ahmed</div>
+    </div>
+    <div class="writing-card" style="margin-top:14px;">
+      <h4>📖 موضوع متوقع آخر: Write about Bad Behaviors (سلوكيات سيئة):</h4>
+      <ul class="tip-list">
+        <li>الأسئلة المرشدة: What is the worst behavior? How does it affect others? Should we change it?</li>
+        <li>كلمات: impolite, rude, annoy, affect, change, habit, manners, respect</li>
+      </ul>
+      <div class="writing-model">In my opinion, one of the worst behaviors in public places is talking loudly on the phone. This impolite behavior affects everyone around the person. It is very annoying when someone talks on their phone in a restaurant or on public transport. People who do this don't care about others' feelings. I think it is rude to disturb others who are trying to relax. We should all try to avoid this bad habit. If everyone follows good manners, our society will be a much better and more peaceful place for all of us.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EXAMS PAGE ===== -->
+<div id="page-exams" class="page">
+<style>
+.ex-tab{padding:10px 16px;border:2px solid var(--border);border-radius:10px;cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:700;font-size:.85rem;background:#fff;color:var(--primary);transition:all .2s;}
+.ex-tab.active,.ex-tab:hover{background:var(--primary);color:#fff;border-color:var(--primary);}
+.ex-tabs-wrap{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.ex-info-bar{background:linear-gradient(135deg,#2c3e50,#1a252f);color:#fff;border-radius:12px;padding:12px 18px;margin-bottom:18px;display:flex;flex-wrap:wrap;gap:12px;font-size:.82rem;}
+.ex-section{background:#fff;border-radius:14px;padding:20px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.05);border-right:4px solid #e67e22;}
+.ex-sec-title{font-size:1rem;font-weight:800;color:#e67e22;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+.ex-marks{background:#e67e22;color:#fff;padding:2px 10px;border-radius:10px;font-size:.75rem;}
+.ex-q{font-size:.93rem;font-weight:700;margin-bottom:8px;line-height:1.6;direction:ltr;text-align:left;}
+.ex-guide{font-size:.82rem;color:#666;background:#f8f9fa;padding:8px 12px;border-radius:8px;margin-bottom:12px;direction:ltr;text-align:left;border-right:3px solid #e67e22;}
+.ex-passage-title{font-weight:800;text-align:center;margin-bottom:8px;font-size:1rem;color:var(--primary);}
+.ex-passage{background:#f8f9fc;border-radius:10px;padding:14px 16px;font-size:.84rem;line-height:1.95;direction:ltr;text-align:left;margin-bottom:14px;border-right:3px solid var(--primary-light);}
+.ex-sub{font-weight:800;font-size:.88rem;color:var(--primary);margin:14px 0 8px;padding-bottom:4px;border-bottom:1px dashed var(--border);}
+.ex-mcq-list{display:flex;flex-direction:column;gap:10px;}
+.ex-mcq-item{background:#f7f9fc;border-radius:10px;padding:12px 14px;}
+.ex-mcq-q{font-size:.87rem;font-weight:600;margin-bottom:8px;direction:ltr;text-align:left;line-height:1.55;}
+.ex-opts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
+.ex-opt{padding:5px 12px;border-radius:8px;font-size:.82rem;border:2px solid var(--border);background:#fff;}
+.correct-opt{border-color:var(--success)!important;background:#e9f7ef!important;color:#1a6035!important;font-weight:700!important;}
+.wrong-opt{color:#aaa;}
+.ans-why{font-size:.79rem;color:#555;background:#fff9e6;border-right:3px solid var(--accent);padding:6px 10px;border-radius:6px;line-height:1.6;margin-top:4px;}
+.ex-tf-list{display:flex;flex-direction:column;gap:8px;}
+.ex-tf-item{display:flex;align-items:flex-start;gap:10px;background:#f7f9fc;border-radius:10px;padding:10px 12px;flex-wrap:wrap;}
+.tf-ans{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.85rem;flex-shrink:0;}
+.tf-t{background:#e9f7ef;color:#1a6035;border:2px solid var(--success);}
+.tf-f{background:#fdf0f0;color:#8b1a1a;border:2px solid var(--danger);}
+.ex-tf-q{font-size:.85rem;flex:1;line-height:1.55;direction:ltr;text-align:left;min-width:180px;}
+.ex-written-list{display:flex;flex-direction:column;gap:10px;}
+.ex-written-item{background:#f7f9fc;border-radius:10px;padding:12px 14px;}
+.ex-wr-q{font-size:.86rem;font-weight:600;margin-bottom:6px;direction:ltr;text-align:left;}
+.ex-wr-ans{font-size:.86rem;color:#1a6035;background:#e9f7ef;padding:6px 10px;border-radius:6px;direction:ltr;text-align:left;line-height:1.65;}
+.ex-match-list{display:flex;flex-direction:column;gap:7px;}
+.ex-match-item{display:flex;align-items:center;gap:10px;background:#f7f9fc;border-radius:8px;padding:8px 12px;flex-wrap:wrap;}
+.match-num{font-size:.83rem;flex:1;direction:ltr;text-align:left;}
+.match-ans{font-size:.83rem;font-weight:700;color:#1a6035;}
+.ex-spell-list{display:flex;flex-direction:column;gap:7px;}
+.ex-spell-item{display:flex;align-items:flex-start;gap:10px;background:#f7f9fc;border-radius:8px;padding:8px 12px;flex-wrap:wrap;}
+.sp-q{font-size:.83rem;flex:1;direction:ltr;text-align:left;}
+.sp-ans{font-size:.83rem;font-weight:700;color:#1a6035;}
+.ans-toggle{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border:none;padding:10px 18px;border-radius:10px;cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:700;font-size:.86rem;margin-top:12px;}
+.ans-box{margin-top:10px;background:#f0faf4;border:2px solid var(--success);border-radius:10px;padding:14px;}
+.ans-label{font-weight:800;color:#1a6035;margin-bottom:8px;font-size:.88rem;}
+.ans-text{font-size:.86rem;line-height:2;direction:ltr;text-align:left;color:#1a3a1a;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+@media(max-width:600px){.grid2{grid-template-columns:1fr;}}
+</style>
+
+  <div class="unit-header" style="background:linear-gradient(135deg,#e67e22,#a04000);" data-emoji="📋">
+    <h2>نماذج الاختبارات المركزية الحقيقية مع الحلول</h2>
+    <p>٦ اختبارات من مناطق تعليمية مختلفة — الفصل الثالث ١٤٤٥ هـ — مع الإجابات الكاملة والشرح</p>
+  </div>
+
+  <div class="ex-tabs-wrap">
+    <button class="ex-tab active" onclick="showExam(1)" id="etab-1">📄 اختبار ١<br><small style="font-weight:400;font-size:.7rem;">Visit Italy</small></button>
+    <button class="ex-tab" onclick="showExam(2)" id="etab-2">📄 اختبار ٢<br><small style="font-weight:400;font-size:.7rem;">Culture Shock</small></button>
+    <button class="ex-tab" onclick="showExam(3)" id="etab-3">📄 اختبار ٣<br><small style="font-weight:400;font-size:.7rem;">Khaled Camping</small></button>
+    <button class="ex-tab" onclick="showExam(4)" id="etab-4">📄 اختبار ٤<br><small style="font-weight:400;font-size:.7rem;">Saudi Culture</small></button>
+    <button class="ex-tab" onclick="showExam(5)" id="etab-5">📄 اختبار ٥<br><small style="font-weight:400;font-size:.7rem;">A Cold Day</small></button>
+    <button class="ex-tab" onclick="showExam(6)" id="etab-6">📄 اختبار ٦<br><small style="font-weight:400;font-size:.7rem;">Expo 2030</small></button>
+  </div>
+
+<!-- ======= EXAM 1: Images 1,2,3,4 ======= -->
+<div class="exam-body" id="exam-1">
+  <div class="ex-info-bar"><span>📍 اختبار ١ — راشد السلمي — ١٤٤٥ هـ</span><span>⏱️ ١.٥ ساعة</span><span>📊 Q1:6 | Q2:6 | Q3:7 | Q4:7 | Q5:4 = 30</span></div>
+
+  <!-- Q1 Composition -->
+  <div class="ex-section">
+    <div class="ex-sec-title">Q1 — Composition <span class="ex-marks">6 درجات</span></div>
+    <div class="ex-q">Write about the kinds of people you like to be friends with. What characteristics do they have?</div>
+    <div class="ex-guide">Guide words: ( interests – supportive – spending time – responsible – grow up – personality – friendship – respect )</div>
+    <button class="ans-toggle" onclick="toggleAns(this)">👁️ عرض نموذج الإجابة</button>
+    <div class="ans-box" style="display:none"><div class="ans-label">✅ نموذج إجابة مقترح:</div>
+    <div class="ans-text">I like to have friends who share the same interests as me and have a good personality. A true friend is someone who is supportive and responsible. I enjoy spending time with people who respect others and help them grow up. Friendship is very important in life because good friends encourage us and stand by us in difficult times. I believe that the best friend is a person who respects your feelings and is always there for you. In my opinion, having loyal and respectful friends makes life more beautiful.</div></div>
+  </div>
+
+  <!-- Q2 Comprehension: Visit Italy -->
+  <div class="ex-section">
+    <div class="ex-sec-title">Q2 — Comprehension <span class="ex-marks">6 درجات</span></div>
+    <div class="ex-passage-title">Visit Italy</div>
+    <div class="ex-passage">Italy is the fifth most visited country in the world. Why? Because there is so much to see and do there! People visit Italy to see its fantastic architecture, to explore ancient ruins and learn about their history, and–of course–to eat wonderful Italian food!<br><br><b>Visit Rome:</b> See the Coliseum. This huge arena was built about 72 C.E., and it's still standing! Many people think it is the greatest work of Roman architecture ever built.<br><br><b>Visit Florence:</b> This is a wonderful city for exploring museums and looking at beautiful architecture.<br><br><b>Visit Venice:</b> Venice is one of the most beautiful cities in the world. A popular thing to do in this city is to eat a delicious Italian dinner and then take a gondola boat through the canals.<br><br><b>Visit Pompeii:</b> Explore the ancient city of Pompeii. Discover what life was like for Romans in 79 C.E. when the city was buried by the eruption of the volcano Mount Vesuvius.</div>
+    <div class="ex-sub">A. Choose the correct answer:</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1. ________ is one of the most beautiful cities in the world.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. Rome</span><span class="ex-opt wrong-opt">b. Florence</span><span class="ex-opt correct-opt">c. Venice ✅</span><span class="ex-opt wrong-opt">d. Pompeii</span></div><div class="ans-why">💡 من النص: "Venice is one of the most beautiful cities in the world"</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2. In Pompeii, you can learn about life in ________.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. 79 C.E. ✅</span><span class="ex-opt wrong-opt">b. 72 C.E.</span><span class="ex-opt wrong-opt">c. 790 C.E.</span><span class="ex-opt wrong-opt">d. the 1700s</span></div><div class="ans-why">💡 من النص: "life was like for Romans in 79 C.E." — أما 72 C.E. فهو تاريخ بناء الكولوسيوم في روما</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3. A gondola is a ________.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. car</span><span class="ex-opt correct-opt">b. boat ✅</span><span class="ex-opt wrong-opt">c. bicycle</span><span class="ex-opt wrong-opt">d. helicopter</span></div><div class="ans-why">💡 من النص: "take a gondola boat through the canals" — gondola = نوع من القوارب</div></div>
+    </div>
+    <div class="ex-sub">B. Write (T) True or (F) False:</div>
+    <div class="ex-tf-list">
+      <div class="ex-tf-item"><span class="tf-ans tf-f">F</span><span class="ex-tf-q">4. Italy is the third most popular country to visit in the world.</span><div style="width:100%"><div class="ans-why">💡 من النص: "Italy is the <b>fifth</b> most visited" — الخامسة وليس الثالثة</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-t">T</span><span class="ex-tf-q">5. Florence is home to many museums.</span><div style="width:100%"><div class="ans-why">💡 من النص: "wonderful city for exploring <b>museums</b>" ✓</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-f">F</span><span class="ex-tf-q">6. A popular thing to do in Florence is to ride in a gondola.</span><div style="width:100%"><div class="ans-why">💡 الغندول في <b>Venice</b> وليس Florence — من النص: "A popular thing to do in this city [Venice] is...take a gondola"</div></div></div>
+    </div>
+  </div>
+
+  <!-- Q3 Grammar -->
+  <div class="ex-section">
+    <div class="ex-sec-title">Q3 — Grammar <span class="ex-marks">7 درجات</span></div>
+    <div class="ex-sub">A. Choose the correct answer: (14 أسئلة)</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1. We were sitting in the café when a thief ________ my bag!</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. steal</span><span class="ex-opt correct-opt">b. stole ✅</span><span class="ex-opt wrong-opt">c. was stealing</span><span class="ex-opt wrong-opt">d. stolen</span></div><div class="ans-why">💡 Past Progressive + when + <b>Past Simple</b> (الحدث القصير المقاطع). stole = تصريف ثاني steal</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2. Jack was talking on the phone ________ he was driving.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. that</span><span class="ex-opt correct-opt">b. while ✅</span><span class="ex-opt wrong-opt">c. where</span><span class="ex-opt wrong-opt">d. which</span></div><div class="ans-why">💡 while = بينما (حدثان متزامنان: was talking + was driving = كلاهما Past Progressive)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3. She was cooking dinner ________ I arrived.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. when ✅</span><span class="ex-opt wrong-opt">b. while</span><span class="ex-opt wrong-opt">c. where</span><span class="ex-opt wrong-opt">d. which</span></div><div class="ans-why">💡 when = عندما (حدث قصير يقاطع حدثاً مستمراً). arrived = Past Simple (حدث قصير)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">4. I ________ at the monument when someone called my name.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. look</span><span class="ex-opt wrong-opt">b. looked</span><span class="ex-opt wrong-opt">c. am looking</span><span class="ex-opt correct-opt">d. was looking ✅</span></div><div class="ans-why">💡 الحدث المستمر الطويل = Past Progressive. "when someone called" = الحدث القصير المقاطع</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">5. Have you ________ washed the clothes?</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. already</span><span class="ex-opt correct-opt">b. yet ✅</span><span class="ex-opt wrong-opt">c. just</span><span class="ex-opt wrong-opt">d. already not</span></div><div class="ans-why">💡 yet في الأسئلة والمنفي (نهاية الجملة). already/just في الجمل المثبتة فقط</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">6. The salesperson was ________ pushy that I left without buying anything.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. so ✅</span><span class="ex-opt wrong-opt">b. such</span><span class="ex-opt wrong-opt">c. much</span><span class="ex-opt wrong-opt">d. so much</span></div><div class="ans-why">💡 <b>so + صفة (pushy) + that</b> — pushy صفة → so (وليس such التي تأتي مع اسم)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">7. He enjoys ________ in the high-tech computer field.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. work</span><span class="ex-opt wrong-opt">b. worked</span><span class="ex-opt correct-opt">c. working ✅</span><span class="ex-opt wrong-opt">d. to work</span></div><div class="ans-why">💡 enjoy يتبعه Gerund (-ing) دائماً: enjoy + working ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">8. He has ________ books that he can hardly carry them.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. so much</span><span class="ex-opt wrong-opt">b. much</span><span class="ex-opt correct-opt">c. so many ✅</span><span class="ex-opt wrong-opt">d. that many</span></div><div class="ans-why">💡 so many + اسم معدود جمع (books) | so much + اسم غير معدود (homework)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">9. Bart: Do you prefer to walk or take the bus? Bob: ________.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. I rather walk</span><span class="ex-opt wrong-opt">b. I had rather walk</span><span class="ex-opt wrong-opt">c. I did rather walk</span><span class="ex-opt correct-opt">d. I would rather walk ✅</span></div><div class="ans-why">💡 الصيغة الصحيحة: I <b>would</b> rather / I'd rather + فعل أساسي (بدون to)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">10. I wish I ________ so much homework.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. had</span><span class="ex-opt correct-opt">b. didn't have ✅</span><span class="ex-opt wrong-opt">c. don't have</span><span class="ex-opt wrong-opt">d. not have</span></div><div class="ans-why">💡 wish + ماضٍ بسيط للتعبير عن أمنية حاضرة: "I wish I didn't have" = أتمنى لو لم يكن لدي</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">11. If fewer people ________ their cars, there wouldn't be so much traffic.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. drove</span><span class="ex-opt wrong-opt">b. will drive</span><span class="ex-opt correct-opt">c. would drive ✅</span><span class="ex-opt wrong-opt">d. drive</span></div><div class="ans-why">💡 Second Conditional (خيالي): wouldn't be في الجملة يؤكد ذلك. If + ماضٍ → would. لكن انتبه: بعض نماذج الإجابة الرسمية تقبل "drove" أيضاً</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">12. I wish I ________ what to do. Can you give me some advice?</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. will know</span><span class="ex-opt wrong-opt">b. would know</span><span class="ex-opt wrong-opt">c. know</span><span class="ex-opt correct-opt">d. knew ✅</span></div><div class="ans-why">💡 wish + ماضٍ بسيط (knew) = أتمنى لو كنت أعرف</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">13. I miss ________ time with my friends.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. to spend</span><span class="ex-opt wrong-opt">b. spends</span><span class="ex-opt correct-opt">c. spending ✅</span><span class="ex-opt wrong-opt">d. spent</span></div><div class="ans-why">💡 miss يتبعه Gerund (-ing): miss + spending ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">14. I'm sorry. I didn't expect ________ out so late.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. is be</span><span class="ex-opt wrong-opt">b. being</span><span class="ex-opt correct-opt">c. to be ✅</span><span class="ex-opt wrong-opt">d. be</span></div><div class="ans-why">💡 expect يتبعه Infinitive (to + فعل): expect + to be ✓</div></div>
+    </div>
+    <div class="ex-sub">B. Orthography — Choose the correct letters:</div>
+    <div class="ex-spell-list">
+      <div class="ex-spell-item"><span class="sp-q">1. The people who live in the city are always in a hur__y (r–s–t–m)</span><span class="sp-ans">→ hurr<b>y</b> (r) ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">2. The watches that the man was s__lling were fakes (e–h–n)</span><span class="sp-ans">→ s<b>e</b>lling ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">3. I hate this program. I'm going to turn it of__ (c–f–k)</span><span class="sp-ans">→ of<b>f</b> ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">4. Have you taken the garbage o__t yet? (u–v–y–a)</span><span class="sp-ans">→ o<b>u</b>t ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">5. If I don't wear cool clothes, I won't fi__ in (t–f–k)</span><span class="sp-ans">→ fi<b>t</b> ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">6. If I study for this test, I'll pas__ (e–h–s)</span><span class="sp-ans">→ pas<b>s</b> ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">7. Remember to stand in li__e! (t–n–k)</span><span class="sp-ans">→ li<b>n</b>e ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">8. Try not to spread dust and mud in the ho__se (u–h–s)</span><span class="sp-ans">→ ho<b>u</b>se ✅</span></div>
+    </div>
+  </div>
+
+  <!-- Q4 Vocabulary -->
+  <div class="ex-section">
+    <div class="ex-sec-title">Q4 — Vocabulary <span class="ex-marks">7 درجات</span></div>
+    <div class="ex-sub">Choose the correct answer:</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1. He saw a man who tried to ________ a bag.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. steal ✅</span><span class="ex-opt wrong-opt">b. fake</span><span class="ex-opt wrong-opt">c. pretend</span><span class="ex-opt wrong-opt">d. in a hurry</span></div><div class="ans-why">💡 steal = يسرق</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2. That diamond is not real. It is ________.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. thief</span><span class="ex-opt wrong-opt">b. give direction</span><span class="ex-opt correct-opt">c. fake ✅</span><span class="ex-opt wrong-opt">d. steal</span></div><div class="ans-why">💡 fake = مزيف</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3. Don't ________ you can't hear me!</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. give directions</span><span class="ex-opt wrong-opt">b. fake</span><span class="ex-opt wrong-opt">c. thief</span><span class="ex-opt correct-opt">d. pretend ✅</span></div><div class="ans-why">💡 pretend = يتظاهر / يتصنع</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">4. Some people are always ________. They don't have time to talk.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. pretend</span><span class="ex-opt correct-opt">b. in a hurry ✅</span><span class="ex-opt wrong-opt">c. steal</span><span class="ex-opt wrong-opt">d. give direction</span></div><div class="ans-why">💡 in a hurry = في عجلة / مسرعون</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">5. You use a toothbrush and ________ to brush your teeth.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. toothpaste ✅</span><span class="ex-opt wrong-opt">b. hair dryer</span><span class="ex-opt wrong-opt">c. shampoo</span><span class="ex-opt wrong-opt">d. scissors</span></div><div class="ans-why">💡 toothpaste = معجون الأسنان</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">6. You use ________ to cut paper.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. scissors ✅</span><span class="ex-opt wrong-opt">b. hair dryer</span><span class="ex-opt wrong-opt">c. mirror</span><span class="ex-opt wrong-opt">d. dishwashing liquid</span></div><div class="ans-why">💡 scissors = مقص</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">7. You use a ________ to dry your hair when it is wet.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. shampoo</span><span class="ex-opt wrong-opt">b. toothpaste</span><span class="ex-opt wrong-opt">c. hairbrush</span><span class="ex-opt correct-opt">d. hair dryer ✅</span></div><div class="ans-why">💡 hair dryer = مجفف الشعر</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">8. You use ________ to wash your hair.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. toothpaste</span><span class="ex-opt correct-opt">b. shampoo ✅</span><span class="ex-opt wrong-opt">c. scissors</span><span class="ex-opt wrong-opt">d. hairbrush</span></div><div class="ans-why">💡 shampoo = شامبو</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">9. It will be to your ________ to arrive early.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. farmer</span><span class="ex-opt wrong-opt">b. choice</span><span class="ex-opt wrong-opt">c. airshow</span><span class="ex-opt correct-opt">d. benefit ✅</span></div><div class="ans-why">💡 benefit = فائدة / منفعة</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">10. They went to a ________ in the mountains last summer.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. route</span><span class="ex-opt correct-opt">b. resort ✅</span><span class="ex-opt wrong-opt">c. subject</span><span class="ex-opt wrong-opt">d. choice</span></div><div class="ans-why">💡 resort = منتجع سياحي</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">11. He won the ________ to Harvard University.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. airshow</span><span class="ex-opt correct-opt">b. scholarship ✅</span><span class="ex-opt wrong-opt">c. subject</span><span class="ex-opt wrong-opt">d. pollution</span></div><div class="ans-why">💡 scholarship = منحة دراسية</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">12. History is my favorite ________ at school.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. subject ✅</span><span class="ex-opt wrong-opt">b. benefit</span><span class="ex-opt wrong-opt">c. environment</span><span class="ex-opt wrong-opt">d. farmer</span></div><div class="ans-why">💡 subject = مادة دراسية</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">13. Give yourself a ________ and get some rest.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. host</span><span class="ex-opt correct-opt">b. break ✅</span><span class="ex-opt wrong-opt">c. chopstick</span><span class="ex-opt wrong-opt">d. porter</span></div><div class="ans-why">💡 break = استراحة</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">14. I'll be fine after we ________ for a little bit.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. allow</span><span class="ex-opt correct-opt">b. rest ✅</span><span class="ex-opt wrong-opt">c. expect</span><span class="ex-opt wrong-opt">d. rush</span></div><div class="ans-why">💡 rest = يستريح</div></div>
+    </div>
+    <div class="ex-sub">Q5 — Orthography — Choose the correct letters: <span class="ex-marks">4 درجات</span></div>
+    <div class="ex-spell-list">
+      <div class="ex-spell-item"><span class="sp-q">1. always in a hur__y (r–s–t–m)</span><span class="sp-ans">→ hurr<b>y</b> ✅ (r)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">2. s__lling were fakes (o–a–e–u)</span><span class="sp-ans">→ s<b>e</b>lling ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">3. turn it of__ (v–s–f–h)</span><span class="sp-ans">→ of<b>f</b> ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">4. garbage o__t yet (u–v–y–a)</span><span class="sp-ans">→ o<b>u</b>t ✅</span></div>
+    </div>
+  </div>
+</div>
+<!-- ======= EXAM 2: Images 5,6,7 ======= -->
+<div class="exam-body" id="exam-2" style="display:none;">
+  <div class="ex-info-bar"><span>📍 اختبار ٢ — Future Educational Schools — ١٤٤٥ هـ</span><span>⏱️ ساعتان</span><span>📊 Comp:6 | Comp:6 | Gram:7 | Vocab:7 | Spell:4 = 30</span></div>
+
+  <!-- Q1 Composition -->
+  <div class="ex-section">
+    <div class="ex-sec-title">1 — Composition <span class="ex-marks">6 درجات</span></div>
+    <div class="ex-q">Write a paragraph about "Your Favorite Place"</div>
+    <div class="ex-guide">You may use: Abha – last summer – family – shopping – friends – ...</div>
+    <button class="ans-toggle" onclick="toggleAns(this)">👁️ عرض نموذج الإجابة</button>
+    <div class="ans-box" style="display:none"><div class="ans-label">✅ نموذج إجابة:</div>
+    <div class="ans-text">My favorite place is Abha, a beautiful city in the mountains of Saudi Arabia. Last summer, I visited Abha with my family and had a wonderful time. We went shopping in the local market and bought many traditional things. I also met some friends there and we enjoyed exploring the beautiful scenery together. The weather in Abha is amazing because it is cool and refreshing even in summer. I love Abha because it is a clean city with friendly people and breathtaking views. I hope to visit it again next summer with my family.</div></div>
+  </div>
+
+  <!-- Q2 Comprehension: Culture Shock (image 5) -->
+  <div class="ex-section">
+    <div class="ex-sec-title">2 — Comprehension: Culture Shock <span class="ex-marks">6 درجات</span></div>
+    <div class="ex-passage">Standing in a line at checkout counters at the supermarket. Listening to people talking on phones in restaurants. It's annoying. When people talk on their cell phones and drive. Rushing to phone and out it's a telemarketer who's calling. People who lost weight now and try to control what others eat. People who are always late, and don't apologize. When salespeople try to talk you into buying something you don't want or need. People who don't say "Please" or "Thank you". When people enter a door or an elevator and don't hold it open for the others who are right behind them. I can't stand people who chew with their mouths. People who borrow stuff without giving it back. People who don't give up their subway or bus seats to seniors or to those with disabilities.</div>
+    <div class="ex-sub">A. Put (✓) or (✗):</div>
+    <div class="ex-tf-list">
+      <div class="ex-tf-item"><span class="tf-ans tf-t">✓</span><span class="ex-tf-q">1. Listening to people talking on cellphones in restaurants is annoying.</span><div style="width:100%"><div class="ans-why">💡 من النص: "Listening to people talking on phones in restaurants. It's annoying." ✓</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-f">✗</span><span class="ex-tf-q">2. People who are always late, and don't apologize is good.</span><div style="width:100%"><div class="ans-why">💡 النص يذكره كسلوك سيئ مزعج — ✗</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-f">✗</span><span class="ex-tf-q">3. People who don't say "Please" or "Thank you" is good.</span><div style="width:100%"><div class="ans-why">💡 سلوك مزعج مذكور في النص كشيء سلبي — ✗</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-t">✓</span><span class="ex-tf-q">4. It's bad when people talk on their phone while driving.</span><div style="width:100%"><div class="ans-why">💡 من النص: "When people talk on their cell phones and drive" — يُذكر كسلوك سيئ ✓</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-t">✓</span><span class="ex-tf-q">5. We should give up our seats to people with disabilities.</span><div style="width:100%"><div class="ans-why">💡 النص يذكر عدم التنازل عن المقعد كسلوك سيئ → يجب التنازل ✓</div></div></div>
+    </div>
+    <div class="ex-sub">B. Choose the correct answer:</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1. Standing in a (lion – line – lone) at the supermarket is good.</div><div class="ex-opts"><span class="ex-opt wrong-opt">lion</span><span class="ex-opt correct-opt">line ✅</span><span class="ex-opt wrong-opt">lone</span></div><div class="ans-why">💡 line = طابور (من النص: "Standing in a line")</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2. People who don't hold the (elevator – escalator – book) door.</div><div class="ex-opts"><span class="ex-opt correct-opt">elevator ✅</span><span class="ex-opt wrong-opt">escalator</span><span class="ex-opt wrong-opt">book</span></div><div class="ans-why">💡 elevator = مصعد (من النص: "enter a door or an elevator and don't hold it open")</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3. "Call up" means (phone – learn – let someone have).</div><div class="ex-opts"><span class="ex-opt correct-opt">phone ✅</span><span class="ex-opt wrong-opt">learn</span><span class="ex-opt wrong-opt">let someone have</span></div><div class="ans-why">💡 call up = يتصل هاتفياً</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">4. "Give back" means (phone – learn – return).</div><div class="ex-opts"><span class="ex-opt wrong-opt">phone</span><span class="ex-opt wrong-opt">learn</span><span class="ex-opt correct-opt">return ✅</span></div><div class="ans-why">💡 give back = يُعيد / يرجع (من النص: "borrow stuff without give it back")</div></div>
+    </div>
+    <div class="ex-sub">C. Answer the following questions:</div>
+    <div class="ex-written-list">
+      <div class="ex-written-item"><div class="ex-wr-q">1. What we should do at the supermarket?</div><div class="ex-wr-ans">→ We should <b>stand in a line (queue) at the checkout counter.</b> ✅</div></div>
+      <div class="ex-written-item"><div class="ex-wr-q">2. Is it OK you chew with your mouth open?</div><div class="ex-wr-ans">→ <b>No, it is not OK</b>. It is impolite and annoying to others. ✅</div></div>
+      <div class="ex-written-item"><div class="ex-wr-q">3. What should you do when you borrow a stuff?</div><div class="ex-wr-ans">→ You should <b>give it back / return it</b> to its owner. ✅</div></div>
+    </div>
+  </div>
+
+  <!-- Q3 Grammar (image 6) -->
+  <div class="ex-section">
+    <div class="ex-sec-title">3 — Grammar <span class="ex-marks">7 درجات</span></div>
+    <div class="ex-sub">A. Choose the correct answer:</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1. A rude person is someone (who – which – where) isn't polite.</div><div class="ex-opts"><span class="ex-opt correct-opt">who ✅</span><span class="ex-opt wrong-opt">which</span><span class="ex-opt wrong-opt">where</span></div><div class="ans-why">💡 who = للأشخاص (person = شخص)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2. While I (watched – watching – was watching) TV, my mom was cooking lunch.</div><div class="ex-opts"><span class="ex-opt wrong-opt">watched</span><span class="ex-opt wrong-opt">watching</span><span class="ex-opt correct-opt">was watching ✅</span></div><div class="ans-why">💡 while + حدثان متزامنان في الماضي = كلاهما Past Progressive (was watching...was cooking)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3. She hasn't cleaned her room (just – already – yet).</div><div class="ex-opts"><span class="ex-opt wrong-opt">just</span><span class="ex-opt wrong-opt">already</span><span class="ex-opt correct-opt">yet ✅</span></div><div class="ans-why">💡 yet في الجمل المنفية (hasn't) في نهاية الجملة</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">4. We enjoy (watched – watching – watches) movies with our friends.</div><div class="ex-opts"><span class="ex-opt wrong-opt">watched</span><span class="ex-opt correct-opt">watching ✅</span><span class="ex-opt wrong-opt">watches</span></div><div class="ans-why">💡 enjoy يتبعه Gerund (-ing): enjoy + watching ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">5. Your shoes are dirty. Please, take (it – us – them) off.</div><div class="ex-opts"><span class="ex-opt wrong-opt">it</span><span class="ex-opt wrong-opt">us</span><span class="ex-opt correct-opt">them ✅</span></div><div class="ans-why">💡 shoes = جمع → them (وليس it للمفرد)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">6. If you help me, I (thanked – thanks – will thank) you.</div><div class="ex-opts"><span class="ex-opt wrong-opt">thanked</span><span class="ex-opt wrong-opt">thanks</span><span class="ex-opt correct-opt">will thank ✅</span></div><div class="ans-why">💡 First Conditional: If + مضارع بسيط → will + فعل</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">7. I choose to (eats – eating – eat) burger for lunch.</div><div class="ex-opts"><span class="ex-opt wrong-opt">eats</span><span class="ex-opt wrong-opt">eating</span><span class="ex-opt correct-opt">eat ✅</span></div><div class="ans-why">💡 choose يتبعه Infinitive (to + فعل أساسي): choose to eat ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">8. (Swim – Swims – Swimming) is my favorite sport.</div><div class="ex-opts"><span class="ex-opt wrong-opt">Swim</span><span class="ex-opt wrong-opt">Swims</span><span class="ex-opt correct-opt">Swimming ✅</span></div><div class="ans-why">💡 Gerund كمبتدأ للجملة: Swimming = السباحة</div></div>
+    </div>
+    <div class="ex-sub">B. Change into Negative:</div>
+    <div class="ex-written-list">
+      <div class="ex-written-item"><div class="ex-wr-q">1. It is a good idea to work at night. (Negative)</div><div class="ex-wr-ans">→ It is <b>not</b> a good idea to work at night. ✅</div></div>
+      <div class="ex-written-item"><div class="ex-wr-q">2. He was making the bed. (Negative)</div><div class="ex-wr-ans">→ He <b>wasn't</b> making the bed. ✅</div></div>
+      <div class="ex-written-item"><div class="ex-wr-q">3. I have helped my little brother. (Negative)</div><div class="ex-wr-ans">→ I <b>haven't</b> helped my little brother. ✅</div></div>
+    </div>
+    <div class="ex-sub">C. Make Yes/No question:</div>
+    <div class="ex-written-list">
+      <div class="ex-written-item"><div class="ex-wr-q">4. They will set the table.</div><div class="ex-wr-ans">→ <b>Will</b> they set the table? ✅</div></div>
+      <div class="ex-written-item"><div class="ex-wr-q">5. He was helping the lady.</div><div class="ex-wr-ans">→ <b>Was</b> he helping the lady? ✅</div></div>
+      <div class="ex-written-item"><div class="ex-wr-q">6. She has studied English.</div><div class="ex-wr-ans">→ <b>Has</b> she studied English? ✅</div></div>
+    </div>
+  </div>
+
+  <!-- Q4 Vocabulary + Orthography (image 7) -->
+  <div class="ex-section">
+    <div class="ex-sec-title">4 — Vocabulary <span class="ex-marks">7 درجات</span></div>
+    <div class="ex-sub">A. Match the words with the pictures: (chopsticks – airshow – nail polish – garbage – police officer – gold fish)</div>
+    <div class="ex-match-list">
+      <div class="ex-match-item"><span class="match-num">صورة ١ (عيدان أكل)</span><span class="match-ans">→ chopsticks ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">صورة ٢ (وعاء أرز/طعام)</span><span class="match-ans">→ (rice bowl from the image context) ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">صورة ٣ (عرض جوي طائرات)</span><span class="match-ans">→ airshow ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">صورة ٤ (سمكة زينة)</span><span class="match-ans">→ gold fish ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">صورة ٥ (ضابط شرطة)</span><span class="match-ans">→ police officer ✅</span></div>
+    </div>
+    <div class="ex-sub">B. Match the answers:</div>
+    <div class="ex-match-list">
+      <div class="ex-match-item"><span class="match-num">1. A talkative person is someone who -------</span><span class="match-ans">→ c. speaks a lot ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">2. He tried to steal the boy's backpack; he is a ---------</span><span class="match-ans">→ a. thief ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">3. He was driving so fast, so he took a -----------</span><span class="match-ans">→ b. ticket ✅ (مخالفة مرورية)</span></div>
+      <div class="ex-match-item"><span class="match-num">4. When you are undecided, you are ----------</span><span class="match-ans">→ e. up in the air ✅ (غير حاسم)</span></div>
+      <div class="ex-match-item"><span class="match-num">5. When you are surprised and can't believe, you say ------</span><span class="match-ans">→ d. No kidding ✅ (لا يُصدَّق!)</span></div>
+    </div>
+    <div class="ex-sub">C. Circle the correct spelling:</div>
+    <div class="ex-spell-list">
+      <div class="ex-spell-item"><span class="sp-q">1. scissors – sicossrs – sicorsses</span><span class="sp-ans">→ <b>scissors</b> ✅ (مقص)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">2. chioces – choices – shoices</span><span class="sp-ans">→ <b>choices</b> ✅ (خيارات)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">3. geust – guset – guest</span><span class="sp-ans">→ <b>guest</b> ✅ (ضيف)</span></div>
+    </div>
+    <div class="ex-sub">5 — Orthography: Fill in missing letters (o–m–t–c–f): <span class="ex-marks">4 درجات</span></div>
+    <div class="ex-spell-list">
+      <div class="ex-spell-item"><span class="sp-q">1- wat__h</span><span class="sp-ans">→ wat<b>c</b>h ✅ (ساعة)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">2- mirr__r</span><span class="sp-ans">→ mirr<b>o</b>r ✅ (مرآة)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">3- environ__ent</span><span class="sp-ans">→ environ<b>m</b>ent ✅ (بيئة)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">4- cus__oms</span><span class="sp-ans">→ cus<b>t</b>oms ✅ (عادات)</span></div>
+    </div>
+    <div class="ex-sub">B. Choose the odd one out:</div>
+    <div class="ex-spell-list">
+      <div class="ex-spell-item"><span class="sp-q">1. athletic – clever – friendly – <b>book</b></span><span class="sp-ans">→ <b>book</b> ✅ (الباقي صفات شخصية، book شيء)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">2. thief – police officer – <b>work</b> – guide</span><span class="sp-ans">→ <b>work</b> ✅ (الباقي أشخاص/مهن)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">3. done – <b>go</b> – eaten – gotten</span><span class="sp-ans">→ <b>go</b> ✅ (الباقي past participles، go فعل مضارع)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">4. pedal cab – taxi – bus – <b>doctor</b></span><span class="sp-ans">→ <b>doctor</b> ✅ (الباقي وسائل مواصلات)</span></div>
+    </div>
+  </div>
+</div>
+<!-- ======= EXAM 3: Images 8,9,10 ======= -->
+<div class="exam-body" id="exam-3" style="display:none;">
+  <div class="ex-info-bar"><span>📍 اختبار ٣ — Future Educational Schools — ١٤٤٥ هـ</span><span>⏱️ ساعتان</span><span>📊 Comp:6 | Comp:6 | Gram:7 | Vocab:7 | Spell:4 = 30</span></div>
+
+  <div class="ex-section">
+    <div class="ex-sec-title">1 — Composition <span class="ex-marks">6 درجات</span></div>
+    <div class="ex-q">Write a paragraph about "Bad Behaviors"</div>
+    <div class="ex-guide">Give your opinion: 1. What is the worst behavior? 2. How does it affect others? 3. Should we change it? Why?</div>
+    <button class="ans-toggle" onclick="toggleAns(this)">👁️ عرض نموذج الإجابة</button>
+    <div class="ans-box" style="display:none"><div class="ans-label">✅ نموذج إجابة:</div>
+    <div class="ans-text">In my opinion, the worst impolite behavior is talking loudly on mobile phones in public places. This bad behavior affects everyone around because it is very annoying and disturbing. People who do this don't care about others' feelings at all. Moreover, it is very rude to make others listen to private conversations. I think we should definitely change this bad habit because it shows a lack of respect for others. If everyone follows good manners in public, our society will become a better and more peaceful place for all of us.</div></div>
+  </div>
+
+  <div class="ex-section">
+    <div class="ex-sec-title">2 — Comprehension: Khaled's Camping Trip <span class="ex-marks">6 درجات</span></div>
+    <div class="ex-passage">Khaled is seventeen years old. He lives in Jeddah. His best friend is Omar. He is sixteen years old. He lives in Abha. Last month Khaled went to Abha to see his friend Omar. Khaled and Omar went to their favorite campsite in the mountains. It is near the top of Mount Souda in the Alakas village. The view was amazing in the evening. The sky turned bright orange and pink as the sun set behind the hills. They could see the valleys and rivers from the Ashran Dam at the top of the mountain. Khaled and Omar did very exciting things. First of all, there was a small pond near the campsite, so Khaled swam a lot when he got hot. Also, Omar like hiking, so <u>he</u> went on hiking every morning because there were good hiking trails. They had lots of fresh air during their stay on the mountain. There was a small village near our campsite. In the afternoons Khaled and Omar walked there so they had fresh food every day. They had delicious Kabsah. In the evenings they set a campfire and told stories to each other around the fire.</div>
+
+    <div class="ex-sub">A. Multiple Choice (1-4):</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1- The main idea of the passage is …</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. Types of food</span><span class="ex-opt correct-opt">b. The camping trip ✅</span><span class="ex-opt wrong-opt">c. The moon is great</span><span class="ex-opt wrong-opt">d. The family</span></div><div class="ans-why">💡 الفقرة كلها عن رحلة التخييم في جبال عبها</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2- In line 4 (bad) is the opposite of …</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. dark</span><span class="ex-opt wrong-opt">b. hot</span><span class="ex-opt wrong-opt">c. dry</span><span class="ex-opt correct-opt">d. amazing ✅</span></div><div class="ans-why">💡 "The view was <b>amazing</b>" — amazing (رائع) هو عكس bad (سيئ)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3- In line 7 (he) refers to …</div><div class="ex-opts"><span class="ex-opt correct-opt">a. Omar ✅</span><span class="ex-opt wrong-opt">b. Khaled</span><span class="ex-opt wrong-opt">c. Yahya</span><span class="ex-opt wrong-opt">d. Faisal</span></div><div class="ans-why">💡 "Omar like hiking, so <b>he</b> went on hiking every morning" — he = Omar</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">4- Khaled is ………… years old.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. 18</span><span class="ex-opt wrong-opt">b. 15</span><span class="ex-opt correct-opt">c. 17 ✅</span><span class="ex-opt wrong-opt">d. 16</span></div><div class="ans-why">💡 من النص: "Khaled is <b>seventeen</b> years old" — Omar هو ١٦</div></div>
+    </div>
+    <div class="ex-sub">B. True or False (1-2):</div>
+    <div class="ex-tf-list">
+      <div class="ex-tf-item"><span class="tf-ans tf-f">F</span><span class="ex-tf-q">1- Khaled swam a lot when he got cold.</span><div style="width:100%"><div class="ans-why">💡 من النص: "Khaled swam a lot when he got <b>hot</b>" — عندما شعر بالحرارة لا البرودة</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-t">T</span><span class="ex-tf-q">2- They had fresh food every day.</span><div style="width:100%"><div class="ans-why">💡 من النص: "they had fresh food every day" ✓</div></div></div>
+    </div>
+  </div>
+
+  <div class="ex-section">
+    <div class="ex-sec-title">3 — Grammar: Multiple Choice (5 to 11) <span class="ex-marks">7 درجات</span></div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">5- You were reading when I ………………… in.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. walked ✅</span><span class="ex-opt wrong-opt">b. walks</span><span class="ex-opt wrong-opt">c. to walk</span><span class="ex-opt wrong-opt">d. walking</span></div><div class="ans-why">💡 Past Progressive (were reading) + when + <b>Past Simple</b> (walked) — الحدث القصير المقاطع</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">6- I'd rather …………… to the cinema on Tuesday.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. going</span><span class="ex-opt wrong-opt">b. went</span><span class="ex-opt wrong-opt">c. goes</span><span class="ex-opt correct-opt">d. go ✅</span></div><div class="ans-why">💡 I'd rather + فعل أساسي (base form) بدون to</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">7- I myself love to have ………………… nice job.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. so much</span><span class="ex-opt correct-opt">b. such a ✅</span><span class="ex-opt wrong-opt">c. so many</span><span class="ex-opt wrong-opt">d. such an</span></div><div class="ans-why">💡 such a + صفة (nice) + اسم مفرد معدود (job) — job مفرد معدود → such a (وليس such an)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">8- My house, ………………… was quite small, was in Riyadh.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. which ✅</span><span class="ex-opt wrong-opt">b. where</span><span class="ex-opt wrong-opt">c. who</span><span class="ex-opt wrong-opt">d. when</span></div><div class="ans-why">💡 which للأشياء — house = شيء، والجملة تصف صفته → which</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">9- If people ………………… too much, they get fat.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. ate</span><span class="ex-opt wrong-opt">b. eats</span><span class="ex-opt correct-opt">c. eat ✅</span><span class="ex-opt wrong-opt">d. eating</span></div><div class="ans-why">💡 Present Fact: If + مضارع → مضارع. eat مع people (جمع، لا نضيف s)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">10- I have finished …………………</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. worked</span><span class="ex-opt correct-opt">b. working ✅</span><span class="ex-opt wrong-opt">c. works</span><span class="ex-opt wrong-opt">d. work</span></div><div class="ans-why">💡 finish يتبعه Gerund (-ing): have finished working ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">11- I haven't ………………… a decision yet.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. to make</span><span class="ex-opt wrong-opt">b. making</span><span class="ex-opt wrong-opt">c. makes</span><span class="ex-opt correct-opt">d. made ✅</span></div><div class="ans-why">💡 Present Perfect: haven't + past participle. make → made ✓</div></div>
+    </div>
+  </div>
+
+  <div class="ex-section">
+    <div class="ex-sec-title">4 — Vocabulary <span class="ex-marks">7 درجات</span></div>
+    <div class="ex-sub">Pairing Questions (1 to 6):</div>
+    <div class="ex-match-list">
+      <div class="ex-match-item"><span class="match-num">1. I gave a fake name.</span><span class="match-ans">→ B. not real ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">2. This shampoo smells fruity.</span><span class="match-ans">→ A. a substance to wash your hair ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">3. He's very punctual.</span><span class="match-ans">→ E. the synonym of on time ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">4. She took care of the children.</span><span class="match-ans">→ C. to look after ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">5. He is a very lazy boy.</span><span class="match-ans">→ D. the antonym of hardworking ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">6. May I borrow your pen?</span><span class="match-ans">→ G. to take or use with the promise to return ✅</span></div>
+    </div>
+    <div class="ex-sub">Multiple Choice (12 to 19):</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">12- Our information comes from a …………… source.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. talkative</span><span class="ex-opt correct-opt">b. reliable ✅</span><span class="ex-opt wrong-opt">c. typical</span><span class="ex-opt wrong-opt">d. silly</span></div><div class="ans-why">💡 reliable = موثوق (مصدر معلومات موثوق)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">13- The …………… is wanted by the police.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. thief ✅</span><span class="ex-opt wrong-opt">b. guard</span><span class="ex-opt wrong-opt">c. firefighter</span><span class="ex-opt wrong-opt">d. officer</span></div><div class="ans-why">💡 thief = لص (مطلوب من الشرطة)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">14- Water was …………… from a hole in the roof.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. feeding</span><span class="ex-opt wrong-opt">b. suggesting</span><span class="ex-opt wrong-opt">c. minding</span><span class="ex-opt correct-opt">d. splashing ✅</span></div><div class="ans-why">💡 splashing = يتساقط / يتناثر</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">15- When ice melts, it becomes ………………</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. solid</span><span class="ex-opt correct-opt">b. liquid ✅</span><span class="ex-opt wrong-opt">c. plasma</span><span class="ex-opt wrong-opt">d. gas</span></div><div class="ans-why">💡 الجليد يذوب ويصبح سائلاً (liquid)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">16- …………… is damaging our earth.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. Conservationist</span><span class="ex-opt wrong-opt">b. Environment</span><span class="ex-opt correct-opt">c. Pollution ✅</span><span class="ex-opt wrong-opt">d. Ecosystem</span></div><div class="ans-why">💡 Pollution = التلوث (يُلحق الضرر بالأرض)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">17- I am going to …………… math and science next year.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. study ✅</span><span class="ex-opt wrong-opt">b. listen</span><span class="ex-opt wrong-opt">c. work</span><span class="ex-opt wrong-opt">d. relax</span></div><div class="ans-why">💡 study = يدرس (مواد دراسية)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">18- Say "sorry" if you …………… into someone.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. spear</span><span class="ex-opt wrong-opt">b. allow</span><span class="ex-opt correct-opt">c. bump ✅</span><span class="ex-opt wrong-opt">d. comment</span></div><div class="ans-why">💡 bump into = يصطدم بـ (اعتذر إذا اصطدمت بشخص)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">19- The horses make …………… as they run.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. leaf</span><span class="ex-opt wrong-opt">b. rock</span><span class="ex-opt wrong-opt">c. wind</span><span class="ex-opt correct-opt">d. dust ✅</span></div><div class="ans-why">💡 dust = غبار (الخيول تثير الغبار أثناء الجري)</div></div>
+    </div>
+    <div class="ex-sub">5 — Orthography (20 to 35): Fill in missing letter <span class="ex-marks">4 درجات</span></div>
+    <div class="ex-spell-list grid2">
+      <div class="ex-spell-item"><span class="sp-q">20. A ki__d word is never lost.</span><span class="sp-ans">ki<b>n</b>d ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">21. New Abha is famous as a summer reso__t.</span><span class="sp-ans">reso<b>r</b>t ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">22. Each country has its own custo__s.</span><span class="sp-ans">custo<b>m</b>s ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">23. The edit__r cut my article.</span><span class="sp-ans">edit<b>o</b>r ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">24. It will be to your b__nefit to arrive early.</span><span class="sp-ans">b<b>e</b>nefit ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">25. We can fin__sh it later.</span><span class="sp-ans">fin<b>i</b>sh ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">26. I can't s__and his attitude.</span><span class="sp-ans">s<b>t</b>and ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">27. Jack is a c__ever student.</span><span class="sp-ans">c<b>l</b>ever ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">28. There is no cause for com__laint.</span><span class="sp-ans">com<b>p</b>laint ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">29. It is pol__te that she accepts.</span><span class="sp-ans">pol<b>i</b>te ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">30. I had the po__ter carry my suitcase.</span><span class="sp-ans">po<b>r</b>ter ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">31. Do not adj__st your set.</span><span class="sp-ans">adj<b>u</b>st ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">32. He applied for the schola__rship.</span><span class="sp-ans">schola<b>r</b>ship ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">33. I r__cognize you now.</span><span class="sp-ans">r<b>e</b>cognize ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">34. He looked in a mirr__r.</span><span class="sp-ans">mirr<b>o</b>r ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">35. Tom always tries to a__oid trouble.</span><span class="sp-ans">a<b>v</b>oid ✅</span></div>
+    </div>
+  </div>
+</div>
+<!-- ======= EXAM 4: Images 11,12,13 ======= -->
+<div class="exam-body" id="exam-4" style="display:none;">
+  <div class="ex-info-bar"><span>📍 اختبار ٤ — Future Educational Schools — ١٤٤٥ هـ</span><span>⏱️ ساعتان</span><span>📊 30 درجة</span></div>
+  <div class="ex-section">
+    <div class="ex-sec-title">1 — Composition <span class="ex-marks">6 درجات</span></div>
+    <div class="ex-q">Write a paragraph about "Customs and Culture Shock"</div>
+    <div class="ex-guide">You may use: in Mediterranean Countries – in England – in Japan – in Asian Country – in Mexico – in India – in United States and China – in Germany</div>
+    <button class="ans-toggle" onclick="toggleAns(this)">👁️ عرض نموذج الإجابة</button>
+    <div class="ans-box" style="display:none"><div class="ans-label">✅ نموذج إجابة:</div>
+    <div class="ans-text">Every country in the world has its own customs and traditions. When people travel to a new country, they sometimes experience culture shock because things are very different. For example, in Japan, people bow to greet each other, while in Mediterranean countries, people kiss on the cheek. In England, people always stand in line quietly, but in some Asian countries this is not always common. In Germany, people are very punctual. In Mexico and India, family traditions are very important. Understanding these cultural differences helps us respect and accept each other. I believe that traveling is a wonderful way to learn about different cultures and people around the world.</div></div>
+  </div>
+  <div class="ex-section">
+    <div class="ex-sec-title">2 — Comprehension: Saudi Arabia Culture <span class="ex-marks">6 درجات</span></div>
+    <div class="ex-passage">The Kingdom of Saudi Arabia has a rich culture shaped by the diversity of its people, which has formed the basis of the cultural identity of the Kingdom. With over 34 million inhabitants, the Kingdom has 13 regions all united by the Arabic language, but each with a unique: dialect, traditions, heritage, and culinary identity. The Kingdom has <b>three</b> official yearly celebrations; two Islamic celebrations, Eid al-Fitr and Eid al-Adha, and Saudi National Day, which is celebrated on September 23rd. Many poor Saudi families rely on handouts from private citizens. Muslims are expected to give a portion of their annual income to charity. The people of Saudi Arabia embrace many social values influenced by <u>their</u> Islamic values which preserve the Kingdom's ancient customs and traditions. These values include generosity, courage, hospitality, and maintaining strong family relationships.</div>
+    <div class="ex-sub">A. Put (T) or (F):</div>
+    <div class="ex-tf-list">
+      <div class="ex-tf-item"><span class="tf-ans tf-f">F</span><span class="ex-tf-q">1. The Kingdom has five official yearly celebrations.</span><div style="width:100%"><div class="ans-why">💡 من النص: "The Kingdom has <b>three</b> official yearly celebrations" — ثلاثة وليس خمسة</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-t">T</span><span class="ex-tf-q">2. Muslims are expected to give Zakat for charity.</span><div style="width:100%"><div class="ans-why">💡 من النص: "Muslims are expected to give a portion of their annual income to charity" ✓</div></div></div>
+    </div>
+    <div class="ex-sub">B. Choose the correct answer:</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1. The main idea of the passage is -------</div><div class="ex-opts"><span class="ex-opt correct-opt">a. Culture of Saudi Arabia ✅</span><span class="ex-opt wrong-opt">b. Culture of Egypt</span><span class="ex-opt wrong-opt">c. Culture of India</span></div><div class="ans-why">💡 الفقرة كلها تتحدث عن ثقافة المملكة العربية السعودية</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2. In line 1 (rich) is the opposite of -------</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. funny</span><span class="ex-opt wrong-opt">b. cold</span><span class="ex-opt wrong-opt">c. brave</span><span class="ex-opt correct-opt">d. poor ✅</span></div><div class="ans-why">💡 rich (غني) ← عكسه poor (فقير)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3. In line 9 (their) refers to -------</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. kingdoms</span><span class="ex-opt wrong-opt">b. relationships</span><span class="ex-opt wrong-opt">c. traditions</span><span class="ex-opt correct-opt">d. people ✅</span></div><div class="ans-why">💡 "The people of Saudi Arabia embrace… <b>their</b> Islamic values" — their = الناس</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">4. Saudi people are united by the _______ language.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. Spanish</span><span class="ex-opt wrong-opt">b. English</span><span class="ex-opt correct-opt">c. Arabic ✅</span><span class="ex-opt wrong-opt">d. Chinese</span></div><div class="ans-why">💡 من النص: "all united by the <b>Arabic</b> language"</div></div>
+    </div>
+  </div>
+  <div class="ex-section">
+    <div class="ex-sec-title">3 — Grammar <span class="ex-marks">7 درجات</span></div>
+    <div class="ex-sub">A. Choose the correct answer:</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1. He tries to avoid ……… him on the street.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. sees</span><span class="ex-opt correct-opt">b. seeing ✅</span><span class="ex-opt wrong-opt">c. to see</span><span class="ex-opt wrong-opt">d. see</span></div><div class="ans-why">💡 avoid يتبعه Gerund (-ing): avoid + seeing ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2. By the time the police arrived, the thief ………</div><div class="ex-opts"><span class="ex-opt correct-opt">a. had escaped ✅</span><span class="ex-opt wrong-opt">b. escape</span><span class="ex-opt wrong-opt">c. escaping</span><span class="ex-opt wrong-opt">d. escapes</span></div><div class="ans-why">💡 by the time → Past Perfect للحدث الأسبق (had escaped). حدث قبل وصول الشرطة</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3. Have you already ……… to John?</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. writing</span><span class="ex-opt wrong-opt">b. wrote</span><span class="ex-opt correct-opt">c. written ✅</span><span class="ex-opt wrong-opt">d. to write</span></div><div class="ans-why">💡 Present Perfect: have + past participle. write → wrote → <b>written</b> ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">4. If my husband ………, he burns the food.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. cooked</span><span class="ex-opt correct-opt">b. cooks ✅</span><span class="ex-opt wrong-opt">c. cook</span><span class="ex-opt wrong-opt">d. cooking</span></div><div class="ans-why">💡 Present Fact: If + مضارع → مضارع. cooks مع he (مفرد) ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">5. Julie is ……… good writer.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. such a ✅</span><span class="ex-opt wrong-opt">b. such</span><span class="ex-opt wrong-opt">c. so</span><span class="ex-opt wrong-opt">d. such an</span></div><div class="ans-why">💡 such a + صفة تبدأ بحرف ساكن + اسم مفرد. good يبدأ بـ g (ساكن) → such <b>a</b></div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">6. I live in a house, ……… is very big.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. when</span><span class="ex-opt wrong-opt">b. who</span><span class="ex-opt correct-opt">c. which ✅</span><span class="ex-opt wrong-opt">d. why</span></div><div class="ans-why">💡 which للأشياء — house شيء → which ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">7. She decided ……… at home.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. stays</span><span class="ex-opt wrong-opt">b. stayed</span><span class="ex-opt correct-opt">c. to stay ✅</span><span class="ex-opt wrong-opt">d. staying</span></div><div class="ans-why">💡 decide يتبعه Infinitive (to + فعل): decided to stay ✓</div></div>
+    </div>
+  </div>
+  <div class="ex-section">
+    <div class="ex-sec-title">4 — Vocabulary <span class="ex-marks">7 درجات</span></div>
+    <div class="ex-sub">Pairing Questions:</div>
+    <div class="ex-match-list">
+      <div class="ex-match-item"><span class="match-num">1. Bill failed his exam.</span><span class="match-ans">→ d. the opposite of pass ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">2. The workers began to protest.</span><span class="match-ans">→ b. to show great disagreement ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">3. He bumped his head against the shelf.</span><span class="match-ans">→ a. to hit or knock against it ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">4. The children rushed down the stairs.</span><span class="match-ans">→ f. to move very quickly ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">5. The mother was patient with her son.</span><span class="match-ans">→ e. to stay calm ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">6. I suggest that you call the store.</span><span class="match-ans">→ c. to put a plan or an idea ✅</span></div>
+    </div>
+    <div class="ex-sub">Choose the correct answer:</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1. The ……… helped her with her luggage.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. painter</span><span class="ex-opt correct-opt">b. porter ✅</span><span class="ex-opt wrong-opt">c. writer</span><span class="ex-opt wrong-opt">d. lawyer</span></div><div class="ans-why">💡 porter = حامل الأمتعة بالفندق أو المطار</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2. Did you remember to ……… the taxi driver?</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. read</span><span class="ex-opt wrong-opt">b. buy</span><span class="ex-opt correct-opt">c. tip ✅</span><span class="ex-opt wrong-opt">d. make</span></div><div class="ans-why">💡 tip = يعطي بقشيشاً</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3. The ……… grows potatoes in this field.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. farmer ✅</span><span class="ex-opt wrong-opt">b. policeman</span><span class="ex-opt wrong-opt">c. student</span><span class="ex-opt wrong-opt">d. doctor</span></div><div class="ans-why">💡 farmer = مزارع</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">4. Air ………is a serious global problem.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. graduation</span><span class="ex-opt wrong-opt">b. conservationist</span><span class="ex-opt wrong-opt">c. energy</span><span class="ex-opt correct-opt">d. pollution ✅</span></div><div class="ans-why">💡 Air pollution = تلوث الهواء</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">5. Don't ……… water at your brother.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. feed</span><span class="ex-opt correct-opt">b. splash ✅</span><span class="ex-opt wrong-opt">c. start</span><span class="ex-opt wrong-opt">d. wear</span></div><div class="ans-why">💡 splash = يرشّ الماء</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">6. The twins often ……… each other's clothes.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. sell</span><span class="ex-opt wrong-opt">b. drive</span><span class="ex-opt correct-opt">c. borrow ✅</span><span class="ex-opt wrong-opt">d. cut</span></div><div class="ans-why">💡 borrow = يستعير</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">7. It is a good ……… to fly with.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. airline ✅</span><span class="ex-opt wrong-opt">b. flyer</span><span class="ex-opt wrong-opt">c. gate</span><span class="ex-opt wrong-opt">d. mask</span></div><div class="ans-why">💡 airline = شركة طيران</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">8. She was the most helpful and ……… person to work with.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. selfish</span><span class="ex-opt wrong-opt">b. unkind</span><span class="ex-opt wrong-opt">c. stupid</span><span class="ex-opt correct-opt">d. generous ✅</span></div><div class="ans-why">💡 generous = كريم / سخي (تتناسب مع helpful)</div></div>
+    </div>
+    <div class="ex-sub">5 — Orthography: Choose the correct letters <span class="ex-marks">4 درجات</span></div>
+    <div class="ex-spell-list grid2">
+      <div class="ex-spell-item"><span class="sp-q">1. o__timistic (o–a–p–u)</span><span class="sp-ans">o<b>p</b>timistic ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">2. g__ab coffee (c–r–t–m)</span><span class="sp-ans">g<b>r</b>ab ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">3. edit__r daily paper (o–f–i–k)</span><span class="sp-ans">edit<b>o</b>r ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">4. h__rdworking (f–a–n–u)</span><span class="sp-ans">h<b>a</b>rdworking ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">5. hairbr__sh (i–d–k–u)</span><span class="sp-ans">hairbr<b>u</b>sh ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">6. dir__y socks (v–f–t–k)</span><span class="sp-ans">dir<b>t</b>y ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">7. sponge absorbs liqui__s (f–d–o–u)</span><span class="sp-ans">liqui<b>d</b>s ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">8. pol__te to everyone (s–t–e–i)</span><span class="sp-ans">pol<b>i</b>te ✅</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= EXAM 5: Images 14,15,16 ======= -->
+<div class="exam-body" id="exam-5" style="display:none;">
+  <div class="ex-info-bar"><span>📍 اختبار ٥ — Future Educational Schools — ١٤٤٥ هـ</span><span>⏱️ ساعتان</span><span>📊 30 درجة</span></div>
+  <div class="ex-section">
+    <div class="ex-sec-title">1 — Composition <span class="ex-marks">6 درجات</span></div>
+    <div class="ex-q">Write a paragraph about "Your Life Story"</div>
+    <div class="ex-guide">Say where you were born, raised, and educated. Use: ( I – born – years – live – have got – oldest – study – like – favorite – future )</div>
+    <button class="ans-toggle" onclick="toggleAns(this)">👁️ عرض نموذج الإجابة</button>
+    <div class="ans-box" style="display:none"><div class="ans-label">✅ نموذج إجابة:</div>
+    <div class="ans-text">I was born in Jeddah, Saudi Arabia. I am fifteen years old and I live with my family in a nice apartment. I have got two brothers and one sister. I am the oldest boy in my family. I study at an intermediate school and my favorite subject is English. I like reading books and playing football in my free time. In the future, I hope to study medicine at a good university and become a successful doctor. I believe that if I work hard and study well, I will have a happy and successful future. My family always encourages me and supports all my dreams.</div></div>
+  </div>
+  <div class="ex-section">
+    <div class="ex-sec-title">2 — Comprehension: A Cold Day <span class="ex-marks">6 درجات</span></div>
+    <div class="ex-passage">It is a frigid January day in York, Pennsylvania. The temperature is below freezing. Snow is starting to fall. Dr. James turns on the television to check the weather. He must leave for his work at the hospital soon. "Today is going to be very cold," says the TV weatherman. "Be sure to wear very warm clothes when you go outside. Also, be careful driving on the roads. Snowfall will make them slippery. In fact, if you can stay home today, do it!" Dr. James cannot stay home. Very sick people are waiting to see him at the hospital. He goes to his closet. He takes out the warmest clothes he has. He puts on a sweater, jacket, gloves, socks, boots, and a hat. He opens his front door to go to work. A gust of cold air blows inside. "Wow, it is very cold outside," Dr. James says. He is from Miami and is not used to the cold. "The weatherman was right!" Before he can drive to work, Dr. James must clear the snow off his car. He does this very fast. He hops in the car. He shivers. His neck feels especially cold. Dr. James drives slowly to work. Everyone else is driving slowly, too. There is a lot of traffic on the road. Suddenly, the cars in front of Dr. James come to a stop. There has been an accident! Dr. James hurries from his car to check on the driver. "Is everyone okay?" Dr. James asks. "Yes, yes, we are fine. We slipped on a patch of ice," the driver says. "This would have been a good day to stay home in bed."</div>
+    <div class="ex-sub">A. Put (T) or (F):</div>
+    <div class="ex-tf-list">
+      <div class="ex-tf-item"><span class="tf-ans tf-t">T</span><span class="ex-tf-q">1. Dr. James works as a doctor at the hospital.</span><div style="width:100%"><div class="ans-why">💡 من النص: "He must leave for his work at <b>the hospital</b>" و"Very sick people are waiting to see him" ✓</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-f">F</span><span class="ex-tf-q">2. The weather is so hot.</span><div style="width:100%"><div class="ans-why">💡 من النص: "It is a <b>frigid</b> January day" و"The temperature is below <b>freezing</b>" — الجو بارد جداً وليس حاراً</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-t">T</span><span class="ex-tf-q">3. Dr. James decided to go to work.</span><div style="width:100%"><div class="ans-why">💡 من النص: "Dr. James cannot stay home. Very sick people are waiting" — ذهب للعمل ✓</div></div></div>
+    </div>
+    <div class="ex-sub">B. Choose the correct answer:</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1. If the weather is frigid, it is very ……………</div><div class="ex-opts"><span class="ex-opt correct-opt">a. cold ✅</span><span class="ex-opt wrong-opt">b. rainy</span><span class="ex-opt wrong-opt">c. windy</span><span class="ex-opt wrong-opt">d. slippery</span></div><div class="ans-why">💡 frigid = بارد جداً / متجمد</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2. In what city does this story take place?</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. Florida</span><span class="ex-opt wrong-opt">b. Miami</span><span class="ex-opt wrong-opt">c. Pennsylvania</span><span class="ex-opt correct-opt">d. York ✅</span></div><div class="ans-why">💡 من النص: "It is a frigid January day in <b>York</b>, Pennsylvania"</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3. What could Dr. James have put on his neck to keep it warm?</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. gloves</span><span class="ex-opt correct-opt">b. a scarf ✅</span><span class="ex-opt wrong-opt">c. another hat</span><span class="ex-opt wrong-opt">d. a jacket</span></div><div class="ans-why">💡 "His neck feels especially cold" — المنطق يقول وشاح (scarf) لتدفئة الرقبة</div></div>
+    </div>
+  </div>
+  <div class="ex-section">
+    <div class="ex-sec-title">3 — Grammar <span class="ex-marks">7 درجات</span></div>
+    <div class="ex-sub">Choose the correct answer:</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1. We were sitting in the café when a thief ________ my bag!</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. steal</span><span class="ex-opt correct-opt">b. stole ✅</span><span class="ex-opt wrong-opt">c. was stealing</span><span class="ex-opt wrong-opt">d. stolen</span></div><div class="ans-why">💡 Past Progressive + when + Past Simple (stole = الحدث القصير المقاطع)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2. Jack was talking on the phone ________ he was driving.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. while ✅</span><span class="ex-opt wrong-opt">b. that</span><span class="ex-opt wrong-opt">c. where</span><span class="ex-opt wrong-opt">d. which</span></div><div class="ans-why">💡 while = بينما (حدثان متزامنان: was talking + was driving)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3. I ________ at the monument when someone called my name.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. look</span><span class="ex-opt wrong-opt">b. looked</span><span class="ex-opt wrong-opt">c. am looking</span><span class="ex-opt correct-opt">d. was looking ✅</span></div><div class="ans-why">💡 الحدث المستمر الطويل = Past Progressive (was looking)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">4. May I speak to the manager? (Agreeing)</div><div class="ex-opts"><span class="ex-opt correct-opt">a. Certainly ✅</span><span class="ex-opt wrong-opt">b. I'm sorry</span><span class="ex-opt wrong-opt">c. I'm afraid..</span><span class="ex-opt wrong-opt">d. that's not possible</span></div><div class="ans-why">💡 Agreeing = موافقة → Certainly = بالتأكيد / بالطبع</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">5. Have you ________ finished your homework?</div><div class="ex-opts"><span class="ex-opt correct-opt">a. already ✅</span><span class="ex-opt wrong-opt">b. yet</span><span class="ex-opt wrong-opt">c. just</span><span class="ex-opt wrong-opt">d. already not</span></div><div class="ans-why">💡 ⚠️ هنا السؤال يوحي بالتوقع أن الطالب أنهى → already في السؤال أحياناً مقبول. أو يمكن yet إذا كان سؤالاً محايداً</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">6. He enjoys ________ in the high-tech computer field.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. work</span><span class="ex-opt wrong-opt">b. worked</span><span class="ex-opt correct-opt">c. working ✅</span><span class="ex-opt wrong-opt">d. to work</span></div><div class="ans-why">💡 enjoy يتبعه Gerund (-ing): enjoy + working ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">7. I have ________ homework that I can't go out tonight.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. so much ✅</span><span class="ex-opt wrong-opt">b. much</span><span class="ex-opt wrong-opt">c. so many</span><span class="ex-opt wrong-opt">d. that many</span></div><div class="ans-why">💡 so much + اسم غير معدود (homework)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">8. He has ________ books that he can hardly carry them.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. much</span><span class="ex-opt wrong-opt">b. so much</span><span class="ex-opt wrong-opt">c. that many</span><span class="ex-opt correct-opt">d. so many ✅</span></div><div class="ans-why">💡 so many + اسم معدود جمع (books)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">9. If it rains, you ________ wet.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. gets</span><span class="ex-opt wrong-opt">b. got</span><span class="ex-opt correct-opt">c. will get ✅</span><span class="ex-opt wrong-opt">d. getting</span></div><div class="ans-why">💡 First Conditional: If + مضارع → will + فعل</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">10. If Sally is late again I will ________ mad.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. be ✅</span><span class="ex-opt wrong-opt">b. being</span><span class="ex-opt wrong-opt">c. been</span><span class="ex-opt wrong-opt">d. to be</span></div><div class="ans-why">💡 will + فعل أساسي (base form): will be ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">11. If I ________ time, I will finish that letter.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. to have</span><span class="ex-opt correct-opt">b. have ✅</span><span class="ex-opt wrong-opt">c. having</span><span class="ex-opt wrong-opt">d. had</span></div><div class="ans-why">💡 First Conditional: If + مضارع بسيط (have) → will + فعل</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">12. If I ________ rich, I would travel around the world.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. are</span><span class="ex-opt correct-opt">b. were ✅</span><span class="ex-opt wrong-opt">c. am</span><span class="ex-opt wrong-opt">d. is</span></div><div class="ans-why">💡 Second Conditional (خيالي): If + ماضٍ → would. were مع جميع الضمائر في were ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">13. Sam suggested ________ at the station.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. meets</span><span class="ex-opt wrong-opt">b. met</span><span class="ex-opt correct-opt">c. meeting ✅</span><span class="ex-opt wrong-opt">d. to meet</span></div><div class="ans-why">💡 suggest يتبعه Gerund (-ing): suggest + meeting ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">14. I'm hoping ________ Lisa.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. see</span><span class="ex-opt correct-opt">b. to see ✅</span><span class="ex-opt wrong-opt">c. seeing</span><span class="ex-opt wrong-opt">d. saw</span></div><div class="ans-why">💡 hope يتبعه Infinitive: hope + to see ✓</div></div>
+    </div>
+  </div>
+  <div class="ex-section">
+    <div class="ex-sec-title">4 — Vocabulary <span class="ex-marks">7 درجات</span></div>
+    <div class="ex-sub">A. Choose the correct answer:</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1. Max: Why are the police talking to Jerry? Jason: He saw a man who tried to ________ a bag.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. steal ✅</span><span class="ex-opt wrong-opt">b. fake</span><span class="ex-opt wrong-opt">c. pretend</span><span class="ex-opt wrong-opt">d. in a hurry</span></div><div class="ans-why">💡 steal = يسرق</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2. That diamond is not real. It is ________.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. thief</span><span class="ex-opt wrong-opt">b. give direction</span><span class="ex-opt correct-opt">c. fake ✅</span><span class="ex-opt wrong-opt">d. steal</span></div><div class="ans-why">💡 fake = مزيف</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3. Some people are always ________. They don't have time to talk and relax.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. pretend</span><span class="ex-opt correct-opt">b. in a hurry ✅</span><span class="ex-opt wrong-opt">c. steal</span><span class="ex-opt wrong-opt">d. give direction</span></div><div class="ans-why">💡 in a hurry = في عجلة</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">4. You use a toothbrush and ________ to brush your teeth.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. toothpaste ✅</span><span class="ex-opt wrong-opt">b. hair dryer</span><span class="ex-opt wrong-opt">c. shampoo</span><span class="ex-opt wrong-opt">d. scissors</span></div><div class="ans-why">💡 toothpaste = معجون الأسنان</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">5. You use ________ to cut paper.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. dishwashing liquid</span><span class="ex-opt correct-opt">b. scissors ✅</span><span class="ex-opt wrong-opt">c. hair dryer</span><span class="ex-opt wrong-opt">d. mirror</span></div><div class="ans-why">💡 scissors = مقص</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">6. You use a ________ to dry your hair when it is wet.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. shampoo</span><span class="ex-opt wrong-opt">b. toothpaste</span><span class="ex-opt wrong-opt">c. hairbrush</span><span class="ex-opt correct-opt">d. hair dryer ✅</span></div><div class="ans-why">💡 hair dryer = مجفف الشعر</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">7. If you drive too fast, you'll get a ________.</div><div class="ex-opts"><span class="ex-opt correct-opt">a. ticket ✅</span><span class="ex-opt wrong-opt">b. conservationist</span><span class="ex-opt wrong-opt">c. benefit</span><span class="ex-opt wrong-opt">d. scenic</span></div><div class="ans-why">💡 ticket = مخالفة مرورية (إذا قدت بسرعة)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">8. Donna tries too hard to ________. She always does what others are doing.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. cheat</span><span class="ex-opt wrong-opt">b. scenic</span><span class="ex-opt wrong-opt">c. pollution</span><span class="ex-opt correct-opt">d. fit in ✅</span></div><div class="ans-why">💡 fit in = ينسجم مع المجموعة</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">9. One ________ to being a professional sports player is that they make a lot of money.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. generate</span><span class="ex-opt wrong-opt">b. pollution</span><span class="ex-opt correct-opt">c. benefit ✅</span><span class="ex-opt wrong-opt">d. conservationist</span></div><div class="ans-why">💡 benefit = فائدة / ميزة</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">10. Americans usually introduce themselves with their ________ name.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. Second</span><span class="ex-opt wrong-opt">b. last</span><span class="ex-opt wrong-opt">c. middle</span><span class="ex-opt correct-opt">d. first ✅</span></div><div class="ans-why">💡 الأمريكيون يُعرّفون عن أنفسهم بالاسم الأول (first name)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">11. Ali thanks his friend the ________ for his hospitality.</div><div class="ex-opts"><span class="ex-opt wrong-opt">a. late</span><span class="ex-opt correct-opt">b. host ✅</span><span class="ex-opt wrong-opt">c. Rush</span><span class="ex-opt wrong-opt">d. Break</span></div><div class="ans-why">💡 host = مضيف (شخص يستضيف الآخرين)</div></div>
+    </div>
+    <div class="ex-sub">Write the correct word under the picture: (Tennis player – Taxi – Dishes)</div>
+    <div class="ex-match-list">
+      <div class="ex-match-item"><span class="match-num">صورة ١٢ (سيارة أجرة)</span><span class="match-ans">→ Taxi ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">صورة ١٣ (صحون / أطباق)</span><span class="match-ans">→ Dishes ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">صورة ١٤ (لاعب تنس)</span><span class="match-ans">→ Tennis player ✅</span></div>
+    </div>
+    <div class="ex-sub">5 — Orthography: Choose the correct letters <span class="ex-marks">4 درجات</span></div>
+    <div class="ex-spell-list">
+      <div class="ex-spell-item"><span class="sp-q">1. The people in the city are always in a hur__y (r–s–t–m)</span><span class="sp-ans">→ hurr<b>y</b> ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">2. The watches that the man was s__lling were fakes (o–a–e–u)</span><span class="sp-ans">→ s<b>e</b>lling ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">3. I hate this program. I'm going to turn it of__ (v–s–f–h)</span><span class="sp-ans">→ of<b>f</b> ✅</span></div>
+      <div class="ex-spell-item"><span class="sp-q">4. Have you taken the garbage o__t yet? (u–v–y–a)</span><span class="sp-ans">→ o<b>u</b>t ✅</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= EXAM 6: Images 17,18,19 ======= -->
+<div class="exam-body" id="exam-6" style="display:none;">
+  <div class="ex-info-bar"><span>📍 اختبار ٦ — Future Educational Schools — ١٤٤٥ هـ</span><span>⏱️ ساعتان</span><span>📊 30 درجة</span></div>
+  <div class="ex-section">
+    <div class="ex-sec-title">1 — Composition <span class="ex-marks">6 درجات</span></div>
+    <div class="ex-q">Write a paragraph about "Customs and Culture Shock"</div>
+    <div class="ex-guide">You may use: in Mediterranean Countries – in England – in Japan – in Asian Country – in Mexico – in India – in United States and China – in Germany</div>
+    <button class="ans-toggle" onclick="toggleAns(this)">👁️ عرض نموذج الإجابة</button>
+    <div class="ans-box" style="display:none"><div class="ans-label">✅ نموذج إجابة:</div>
+    <div class="ans-text">Every country in the world has its own customs and traditions. When people travel to a new country, they sometimes experience culture shock. For example, in Japan, people bow when they meet each other. In England, people stand in line quietly. In the United States, people introduce themselves with their first name. In China, it is polite to use chopsticks. In Germany, people are very punctual. In Mediterranean countries, people kiss on the cheek to say hello. Understanding cultural differences helps us to respect others and live in peace. I believe that learning about different cultures makes us better people and helps us understand the world around us.</div></div>
+  </div>
+  <div class="ex-section">
+    <div class="ex-sec-title">2 — Comprehension: Omar Ibn Alkattab <span class="ex-marks">6 درجات</span></div>
+    <div class="ex-passage">Amir EL-Momeneen Omar Ibn Alkattab, may Allah bless him, was <b>the second Caliph</b>. He was a kind man and a good Muslim. He often gave food to the poor. Omar sometimes walks through the streets at night he walked alone, he had no soldiers with him. He had <b>ordinary clothes</b> on, and nobody knew that he was the Caliph. He listened to people to know their problems. One night, Omar was having a walk in a poor part of the city. He could smell food cooking. Many people were having dinner.</div>
+    <div class="ex-sub">A. Put (T) or (F):</div>
+    <div class="ex-tf-list">
+      <div class="ex-tf-item"><span class="tf-ans tf-f">F</span><span class="ex-tf-q">1. Omar Ibn Alkattab was the third caliph.</span><div style="width:100%"><div class="ans-why">💡 من النص: "he was the <b>second</b> Caliph" — الثاني وليس الثالث</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-t">T</span><span class="ex-tf-q">2. Omar Ibn Alkattab was a good Muslim.</span><div style="width:100%"><div class="ans-why">💡 من النص: "He was a kind man and a <b>good Muslim</b>" ✓</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-f">F</span><span class="ex-tf-q">3. Omar Ibn Alkattab never walked through the streets at night.</span><div style="width:100%"><div class="ans-why">💡 من النص: "Omar <b>sometimes</b> walks through the streets at night" — كان يمشي أحياناً</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-f">F</span><span class="ex-tf-q">4. Omar Ibn Alkattab had very high and expensive clothes.</span><div style="width:100%"><div class="ans-why">💡 من النص: "He had <b>ordinary clothes</b> on" — ملابس عادية وليست فاخرة</div></div></div>
+      <div class="ex-tf-item"><span class="tf-ans tf-f">F</span><span class="ex-tf-q">5. Omar made sure that many people were having dinner.</span><div style="width:100%"><div class="ans-why">💡 هو لاحظ الناس يأكلون ولم يُرتب ذلك. النص: "He could smell food cooking. Many people were having dinner."</div></div></div>
+    </div>
+    <div class="ex-sub">B. Choose the correct answer:</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1. Omar Ibn Alkattab gave food to the (rich – wealthy – poor) people.</div><div class="ex-opts"><span class="ex-opt wrong-opt">rich</span><span class="ex-opt wrong-opt">wealthy</span><span class="ex-opt correct-opt">poor ✅</span></div><div class="ans-why">💡 من النص: "He often gave food to the <b>poor</b>"</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2. At night, he had no (visitors – soldiers – guides) with him.</div><div class="ex-opts"><span class="ex-opt wrong-opt">visitors</span><span class="ex-opt correct-opt">soldiers ✅</span><span class="ex-opt wrong-opt">guides</span></div><div class="ans-why">💡 من النص: "he had no <b>soldiers</b> with him"</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3. He could smell (food – books – cars) cooking.</div><div class="ex-opts"><span class="ex-opt correct-opt">food ✅</span><span class="ex-opt wrong-opt">books</span><span class="ex-opt wrong-opt">cars</span></div><div class="ans-why">💡 من النص: "He could smell <b>food</b> cooking"</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">4. At night, nobody knew that he was the (caliph – captain – poor).</div><div class="ex-opts"><span class="ex-opt correct-opt">caliph ✅</span><span class="ex-opt wrong-opt">captain</span><span class="ex-opt wrong-opt">poor</span></div><div class="ans-why">💡 من النص: "nobody knew that he was the <b>Caliph</b>"</div></div>
+    </div>
+    <div class="ex-sub">C. Answer the following questions:</div>
+    <div class="ex-written-list">
+      <div class="ex-written-item"><div class="ex-wr-q">1. Who was the second caliph?</div><div class="ex-wr-ans">→ <b>Omar Ibn Alkattab</b> was the second caliph. ✅</div></div>
+      <div class="ex-written-item"><div class="ex-wr-q">2. Was Omar Ibn Alkattab a kind man?</div><div class="ex-wr-ans">→ Yes, he was. He was a kind man and a good Muslim. He often gave food to the poor. ✅</div></div>
+      <div class="ex-written-item"><div class="ex-wr-q">3. Why did he listen to the people?</div><div class="ex-wr-ans">→ He listened to people <b>to know their problems.</b> ✅</div></div>
+    </div>
+  </div>
+  <div class="ex-section">
+    <div class="ex-sec-title">3 — Grammar <span class="ex-marks">7 درجات</span></div>
+    <div class="ex-sub">A. Choose the correct answer:</div>
+    <div class="ex-mcq-list">
+      <div class="ex-mcq-item"><div class="ex-mcq-q">1. People (who – which – when) live in glass houses shouldn't throw stones.</div><div class="ex-opts"><span class="ex-opt correct-opt">who ✅</span><span class="ex-opt wrong-opt">which</span><span class="ex-opt wrong-opt">when</span></div><div class="ans-why">💡 who = للأشخاص (people)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">2. They stop (playing – play – to play) tennis in winter. They no longer play.</div><div class="ex-opts"><span class="ex-opt correct-opt">playing ✅</span><span class="ex-opt wrong-opt">play</span><span class="ex-opt wrong-opt">to play</span></div><div class="ans-why">💡 stop يتبعه Gerund (-ing): stop + playing ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">3. If you (sleep – sleeping – sleeps) in the class, the teacher won't be happy.</div><div class="ex-opts"><span class="ex-opt correct-opt">sleep ✅</span><span class="ex-opt wrong-opt">sleeping</span><span class="ex-opt wrong-opt">sleeps</span></div><div class="ans-why">💡 First Conditional: If + مضارع بسيط. you → sleep (بدون s)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">4. He has (yet – already – no) come home.</div><div class="ex-opts"><span class="ex-opt wrong-opt">yet</span><span class="ex-opt correct-opt">already ✅</span><span class="ex-opt wrong-opt">no</span></div><div class="ans-why">💡 already في الجمل المثبتة (has come) قبل التصريف الثالث</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">5. I expect him (arrive – arriving – to arrive) home early.</div><div class="ex-opts"><span class="ex-opt wrong-opt">arrive</span><span class="ex-opt wrong-opt">arriving</span><span class="ex-opt correct-opt">to arrive ✅</span></div><div class="ans-why">💡 expect + object + to + verb: expect him to arrive ✓</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">6. He was cancelling his flight (when – while – what) we were calling him.</div><div class="ex-opts"><span class="ex-opt wrong-opt">when</span><span class="ex-opt correct-opt">while ✅</span><span class="ex-opt wrong-opt">what</span></div><div class="ans-why">💡 while + حدثان متزامنان (was cancelling + were calling = كلاهما Past Progressive)</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">7. The floor is very messy. Can you clean (it – them – him) up?</div><div class="ex-opts"><span class="ex-opt correct-opt">it ✅</span><span class="ex-opt wrong-opt">them</span><span class="ex-opt wrong-opt">him</span></div><div class="ans-why">💡 floor = مفرد غير عاقل → it</div></div>
+      <div class="ex-mcq-item"><div class="ex-mcq-q">8. (Helping – helped – Helps) my friends is a great fun.</div><div class="ex-opts"><span class="ex-opt correct-opt">Helping ✅</span><span class="ex-opt wrong-opt">helped</span><span class="ex-opt wrong-opt">Helps</span></div><div class="ans-why">💡 Gerund كمبتدأ: Helping = مساعدة (فعل اسمي في بداية الجملة)</div></div>
+    </div>
+    <div class="ex-sub">B. Do as shown between brackets:</div>
+    <div class="ex-written-list">
+      <div class="ex-written-item"><div class="ex-wr-q">1. I can't stand watch scary films. (Correct)</div><div class="ex-wr-ans">→ I can't stand <b>watching</b> scary films. ✅ (Gerund بعد can't stand)</div></div>
+      <div class="ex-written-item"><div class="ex-wr-q">2. I have done my homework. (Change into Negative)</div><div class="ex-wr-ans">→ I <b>haven't</b> done my homework. ✅</div></div>
+      <div class="ex-written-item"><div class="ex-wr-q">3. used – football – He – to – play (Rearrange)</div><div class="ex-wr-ans">→ He <b>used to play football</b>. ✅</div></div>
+      <div class="ex-written-item"><div class="ex-wr-q">4. She was (clean) the room when her brother entered the room. (Correct)</div><div class="ex-wr-ans">→ She was <b>cleaning</b> the room when her brother entered. ✅</div></div>
+      <div class="ex-written-item"><div class="ex-wr-q">5. Turn the TV down. (Change into two-word verb)</div><div class="ex-wr-ans">→ Turn <b>it</b> down. ✅</div></div>
+      <div class="ex-written-item"><div class="ex-wr-q">6. Have they gone to school yet? (Answer)</div><div class="ex-wr-ans">→ Yes, they have <b>already</b> gone. / No, they haven't gone <b>yet</b>. ✅</div></div>
+    </div>
+  </div>
+  <div class="ex-section">
+    <div class="ex-sec-title">4 — Vocabulary <span class="ex-marks">7 درجات</span></div>
+    <div class="ex-sub">A. Match the words with the pictures: (toothpaste – shopping – watch – pedal cab – iron – remove shoes)</div>
+    <div class="ex-match-list">
+      <div class="ex-match-item"><span class="match-num">صورة ١ (ساعة)</span><span class="match-ans">→ watch ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">صورة ٢ (تاكسي دراجة)</span><span class="match-ans">→ pedal cab ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">صورة ٣ (تسوق)</span><span class="match-ans">→ shopping ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">صورة ٤ (مكواة)</span><span class="match-ans">→ iron ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">صورة ٥ (معجون أسنان)</span><span class="match-ans">→ toothpaste ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">صورة ٦ (خلع أحذية)</span><span class="match-ans">→ remove shoes ✅</span></div>
+    </div>
+    <div class="ex-sub">B. Match the answers:</div>
+    <div class="ex-match-list">
+      <div class="ex-match-item"><span class="match-num">1. A fashionable person is someone who -------</span><span class="match-ans">→ c. dresses well ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">2. He shows the tourists the important places, he is a ------</span><span class="match-ans">→ a. guide ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">3. He "called me up", means he -------</span><span class="match-ans">→ b. phoned me ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">4. When you say "At long last." You mean --------</span><span class="match-ans">→ e. Finally ✅</span></div>
+      <div class="ex-match-item"><span class="match-num">5. If you want to say "Yes" in a strong way, you say -------</span><span class="match-ans">→ d. Of course ✅</span></div>
+    </div>
+    <div class="ex-sub">C. Circle the correct spelling:</div>
+    <div class="ex-spell-list">
+      <div class="ex-spell-item"><span class="sp-q">1. scissors – sicossrs – sicorsses</span><span class="sp-ans">→ <b>scissors</b> ✅ (مقص)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">2. chioces – choices – shoices</span><span class="sp-ans">→ <b>choices</b> ✅ (خيارات)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">3. geust – guset – guest</span><span class="sp-ans">→ <b>guest</b> ✅ (ضيف)</span></div>
+    </div>
+    <div class="ex-sub">5 — Orthography: Fill in the missing letters <span class="ex-marks">4 درجات</span></div>
+    <div class="ex-spell-list">
+      <div class="ex-spell-item"><span class="sp-q">1- cult__re</span><span class="sp-ans">→ cult<b>u</b>re ✅ (ثقافة)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">2- polluti__n</span><span class="sp-ans">→ polluti<b>o</b>n ✅ (تلوث)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">3- compl__in</span><span class="sp-ans">→ compl<b>a</b>in ✅ (يشتكي)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">4- talkati__e</span><span class="sp-ans">→ talkati<b>v</b>e ✅ (ثرثار)</span></div>
+    </div>
+    <div class="ex-sub">B. Choose the odd one out:</div>
+    <div class="ex-spell-list">
+      <div class="ex-spell-item"><span class="sp-q">1. eating – reading – working – <b>sing</b></span><span class="sp-ans">→ <b>sing</b> ✅ (الباقي gerunds بصيغة -ing)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">2. Germany – India – China – <b>Hassan</b></span><span class="sp-ans">→ <b>Hassan</b> ✅ (اسم شخص، الباقي دول)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">3. done – <b>sleep</b> – eaten – gotten</span><span class="sp-ans">→ <b>sleep</b> ✅ (الباقي past participles)</span></div>
+      <div class="ex-spell-item"><span class="sp-q">4. funny – clever – <b>bus</b> – athletic</span><span class="sp-ans">→ <b>bus</b> ✅ (وسيلة مواصلات، الباقي صفات شخصية)</span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end page-exams -->
+
+<script>
+function showExam(n){
+  document.querySelectorAll('.exam-body').forEach(e=>e.style.display='none');
+  document.querySelectorAll('.ex-tab').forEach(t=>t.classList.remove('active'));
+  var el=document.getElementById('exam-'+n);
+  if(el)el.style.display='block';
+  var tab=document.getElementById('etab-'+n);
+  if(tab)tab.classList.add('active');
+  var pg=document.getElementById('page-exams');
+  if(pg)window.scrollTo({top:pg.offsetTop-80,behavior:'smooth'});
+}
+function toggleAns(btn){
+  var box=btn.nextElementSibling;
+  if(!box)return;
+  if(box.style.display==='none'||box.style.display===''){
+    box.style.display='block';
+    btn.textContent='🙈 إخفاء النموذج';
+  } else {
+    box.style.display='none';
+    btn.textContent='👁️ عرض نموذج الإجابة';
+  }
+}
+</script>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-main">أُنشئت هذه الصفحة بواسطة المعلم: أحمد حلواني — تعليم مكة المكرمة</div>
+  <div class="footer-sub">
+    الفصل الدراسي الثاني — لعام ١٤٤٧ هـ
+    <br>
+    <span class="footer-ai">🤖 إخراج المحتوى بالكامل بواسطة الذكاء الاصطناعي Claude — Anthropic</span>
+  </div>
+</footer>
+
+<script>
+// ======================== QUIZ DATA (من الكتاب مباشرة) ========================
+const data = {
+  u7:{
+    mcq:[
+      {
+        q:"These toys are in good condition, ________ ________? (Book p.76 Ex.A Q1)",
+        src:"📖 تمرين A ص٧٦ — أسئلة الذيل",
+        opts:["aren't they","isn't it","don't they","are they"],ans:0,
+        exp:"✅ الجملة مثبتة + فعل مساعد 'are' → الذيل المنفي: <strong>aren't they</strong><br>القاعدة: جملة مثبتة → ذيل منفي، ونستخدم نفس الفعل المساعد (are) مع الضمير المناسب (they)"
+      },
+      {
+        q:"You've had garage sales before, ________ ________? (Book p.76 Ex.A Q2)",
+        src:"📖 تمرين A ص٧٦",
+        opts:["haven't you","have you","didn't you","don't you"],ans:0,
+        exp:"✅ الجملة مثبتة + فعل have → الذيل: <strong>haven't you</strong><br>have/has في المضارع التام → haven't/hasn't في الذيل المنفي"
+      },
+      {
+        q:"He didn't buy that fan, ________ ________? (Book p.76 Ex.A Q3)",
+        src:"📖 تمرين A ص٧٦",
+        opts:["did he","didn't he","does he","doesn't he"],ans:0,
+        exp:"✅ الجملة <strong>منفية</strong> + didn't → الذيل <strong>مثبت</strong>: <strong>did he</strong><br>القاعدة: جملة منفية → ذيل مثبت (بدون not)"
+      },
+      {
+        q:"They weren't able to sell the tools, ________ ________? (Book p.76 Ex.A Q4)",
+        src:"📖 تمرين A ص٧٦",
+        opts:["were they","weren't they","did they","are they"],ans:0,
+        exp:"✅ الجملة <strong>منفية</strong> (weren't) → الذيل <strong>مثبت</strong>: <strong>were they</strong><br>weren't = were + not → الذيل يحذف not ويبقى were"
+      },
+      {
+        q:"That vacuum cleaner works OK, ________ ________? (Book p.76 Ex.A Q6)",
+        src:"📖 تمرين A ص٧٦",
+        opts:["doesn't it","does it","isn't it","is it"],ans:0,
+        exp:"✅ الجملة مثبتة + فعل works (مضارع المفرد) → الذيل: <strong>doesn't it</strong><br>الفعل works يشير إلى المفرد (it) → نستخدم does في الذيل المنفي"
+      }
+    ],
+    tf:[
+      {
+        s:"Andrew doesn't have a brother. (Book p.75 Ex.B Q1)",
+        src:"📖 تمرين B ص٧٥ — Comprehension about the garage sale",
+        ans:false,
+        exp:"❌ خطأ — Andrew <strong>does</strong> have a brother. His twin brother is Steve Baron. في النص: 'No, I'm Steve Baron. Andrew is my twin brother.'"
+      },
+      {
+        s:"John is organizing a garage sale. (Book p.75 Ex.B Q2)",
+        src:"📖 تمرين B ص٧٥",
+        ans:true,
+        exp:"✅ صحيح — John هو المالك وهو من ينظم معرض البيع. قال: 'Hello, I'm John, the owner. Great day for a garage sale, isn't it?'"
+      },
+      {
+        s:"The lawn mower runs on electricity. (Book p.75 Ex.B Q3)",
+        src:"📖 تمرين B ص٧٥",
+        ans:true,
+        exp:"✅ صحيح — الجزازة تعمل بالكهرباء وتحتوي على تحكم عن بعد (remote control). في النص: 'No, it's electric and it has a remote control.'"
+      },
+      {
+        s:"The elderly couple need a new lamp. (Book p.75 Ex.B Q4)",
+        src:"📖 تمرين B ص٧٥",
+        ans:true,
+        exp:"✅ صحيح — في أول الحوار: 'We need a new lamp, don't we? Yes, we do. And this one is really pretty.'"
+      },
+      {
+        s:"There aren't any plants for sale at the garage sale. (Book p.75 Ex.B Q5)",
+        src:"📖 تمرين B ص٧٥",
+        ans:false,
+        exp:"❌ خطأ — الجملة الأصلية في الكتاب هي سؤال استفهام يُضمن أن هناك نباتات للبيع. تحقق من النص الكامل في الكتاب."
+      }
+    ]
+  },
+  u8:{
+    mcq:[
+      {
+        q:"Badr is an aggressive driver. → Badr drives ________. (Book p.86 Ex.A Q1)",
+        src:"📖 تمرين A ص٨٦ — Adverbs of Manner",
+        opts:["aggressively","aggressive","aggressivly","aggressifly"],ans:0,
+        exp:"✅ aggressive → <strong>aggressively</strong><br>القاعدة: نضيف -ly للصفة لتكوين الظرف. الصفة تنتهي بـ -ive → +ly"
+      },
+      {
+        q:"Sabah is a quiet talker. → Sabah talks ________. (Book p.86 Ex.A Q5)",
+        src:"📖 تمرين A ص٨٦",
+        opts:["quietly","quiet","quietily","quietful"],ans:0,
+        exp:"✅ quiet → <strong>quietly</strong><br>القاعدة: نضيف -ly للصفة. quiet + ly = quietly"
+      },
+      {
+        q:"The sign says 80 km/h and I'm doing 90. → You ________ slow down! (Book p.87 Ex.C Q2)",
+        src:"📖 تمرين C ص٨٧",
+        opts:["must","should","mustn't","shouldn't"],ans:0,
+        exp:"✅ <strong>must</strong> هو الأصح هنا لأن هذا قانون (law) — تجاوز حد السرعة مخالفة قانونية تستوجب must وليس should<br>must = إلزامي / قانوني | should = نصيحة فقط"
+      },
+      {
+        q:"In England, people drive on the ________ side. (Book p.90 Reading)",
+        src:"📖 قراءة ص٩٠ — Is Right, Right?",
+        opts:["left","right","middle","either"],ans:0,
+        exp:"✅ <strong>left</strong> — من النص: 'In England people drive on the left'<br>ملاحظة: معظم دول العالم تسير على اليمين، لكن إنجلترا ومستعمراتها السابقة تسير على اليسار"
+      },
+      {
+        q:"I need to make a phone call. → You ________ use your phone while driving! (Book p.87 Ex.C Q4)",
+        src:"📖 تمرين C ص٨٧",
+        opts:["must not","shouldn't","should not","would not"],ans:0,
+        exp:"✅ <strong>must not</strong> (mustn't) = محظور تماماً<br>استخدام الهاتف أثناء القيادة ممنوع قانوناً → must not وليس shouldn't (shouldn't = نصيحة فقط)"
+      }
+    ],
+    tf:[
+      {
+        s:"In England, people drive on the left. (Book p.90)",
+        src:"📖 قراءة ص٩٠ — After Reading Q1",
+        ans:true,
+        exp:"✅ صحيح — من النص: 'In England people drive on the left'"
+      },
+      {
+        s:"In Japan, people drive on the right and walk on the left on escalators. (Book p.90)",
+        src:"📖 قراءة ص٩٠ — After Reading Q2",
+        ans:false,
+        exp:"❌ خطأ — في اليابان يقودون على <strong>اليسار</strong>، ويقفون على <strong>اليسار</strong> في السلالم المتحركة. من النص: 'In Japan, they drive on the left, too, but people usually stand on the LEFT on escalators.'"
+      },
+      {
+        s:"Most people are right-handed, which may explain why people drive on the right. (Book p.90)",
+        src:"📖 قراءة ص٩٠",
+        ans:true,
+        exp:"✅ صحيح — من النص: 'Some people believe that it is a natural tendency to walk or drive on the right. This is because most people are right-handed.'"
+      },
+      {
+        s:"Sweden changed its traffic laws to drive on the left in 1967. (Book p.90)",
+        src:"📖 قراءة ص٩٠ — After Reading",
+        ans:false,
+        exp:"❌ خطأ — السويد غيّرت قوانينها لتسير على <strong>اليمين</strong> (not left). من النص: 'As recently as 1967, Sweden changed its laws. Now people in Sweden must drive on the RIGHT.'"
+      },
+      {
+        s:"Napoleon ordered people to drive on the right side in the early 1800s. (Book p.90)",
+        src:"📖 قراءة ص٩٠",
+        ans:true,
+        exp:"✅ صحيح — من النص: 'Napoleon, a ruler of France, ordered people to drive on the right side in the early 1800s.'"
+      }
+    ]
+  },
+  u9:{
+    mcq:[
+      {
+        q:"A rude person is someone ________ isn't polite. (Book p.96 Ex.A Q4)",
+        src:"📖 تمرين A ص٩٦ — Relative Pronouns",
+        opts:["who","which","where","what"],ans:0,
+        exp:"✅ <strong>who</strong> للأشخاص<br>القاعدة: who/that = للأشخاص | which/that = للأشياء والحيوانات<br>'rude person' = شخص → نستخدم who"
+      },
+      {
+        q:"A clever person is someone ________ is intelligent. (Book p.96 Ex.A Q5)",
+        src:"📖 تمرين A ص٩٦",
+        opts:["who","which","where","whose"],ans:0,
+        exp:"✅ <strong>who</strong> للأشخاص<br>person = شخص → who (وليس which التي للأشياء)"
+      },
+      {
+        q:"The neighbor ________ lives downstairs is very quiet. (Book p.97 Ex.D Q1)",
+        src:"📖 تمرين D ص٩٧",
+        opts:["who","which","where","whom"],ans:0,
+        exp:"✅ <strong>who</strong> — neighbor = شخص → نستخدم who<br>يمكن أيضاً استخدام 'that' بدلاً من who مع الأشخاص"
+      },
+      {
+        q:"I was ________ in the store window when the thief grabbed my bag. (Book p.96)",
+        src:"📖 نص الكتاب ص٩٦ — Past Progressive",
+        opts:["looking","look","looked","to look"],ans:0,
+        exp:"✅ <strong>looking</strong> = Past Progressive (was + verb-ing)<br>القاعدة: الحدث الطويل المستمر (كنت أنظر) + عندما وقع حدث قصير (أمسك اللص) → Past Progressive + when + Past Simple"
+      },
+      {
+        q:"She ________ cooking dinner when I arrived. (Book p.96 Grammar)",
+        src:"📖 نمط من الكتاب ص٩٦",
+        opts:["was","is","were","had"],ans:0,
+        exp:"✅ <strong>was</strong> — فاعل مفرد (she) + was + cooking = Past Progressive<br>القاعدة: was مع المفرد (I/he/she/it) | were مع الجمع (we/they) وضمير المخاطب (you)"
+      }
+    ],
+    tf:[
+      {
+        s:"Colin Parker is the man who has his own airline company. (Book p.99)",
+        src:"📖 تمرين True/False ص٩٩",
+        ans:true,
+        exp:"✅ صحيح — Colin Parker هو من يملك شركة طيران خاصة."
+      },
+      {
+        s:"Tony was the director of a British TV station. (Book p.99)",
+        src:"📖 تمرين True/False ص٩٩",
+        ans:false,
+        exp:"❌ خطأ — Tony لم يكن مديراً لمحطة تلفزيونية بريطانية. تحقق من النص في الكتاب للإجابة الصحيحة."
+      },
+      {
+        s:"Ken worked with Tony while he was in London. (Book p.99)",
+        src:"📖 تمرين True/False ص٩٩",
+        ans:true,
+        exp:"✅ صحيح — Ken عمل مع Tony خلال فترة وجوده في لندن."
+      },
+      {
+        s:"B.W. is the man who is wearing a turtleneck sweater. (Book p.99)",
+        src:"📖 تمرين True/False ص٩٩",
+        ans:true,
+        exp:"✅ صحيح — من النص: 'The one with the turtleneck sweater. Ken: That's B.W.'"
+      },
+      {
+        s:"Tony is talking to a reporter at the gallery opening. (Book p.99)",
+        src:"📖 تمرين True/False ص٩٩",
+        ans:false,
+        exp:"❌ خطأ — Ken (وليس Tony) هو من يتحدث مع المراسل. من النص: 'The man who is talking to a reporter' يشير إلى شخص آخر."
+      }
+    ]
+  },
+  u10:{
+    mcq:[
+      {
+        q:"Have you done the dishes ________? (Book p.112 Grammar Example)",
+        src:"📖 مثال الكتاب ص١١٢ — Present Perfect",
+        opts:["yet","already","just","ever"],ans:0,
+        exp:"✅ <strong>yet</strong> في الأسئلة والجمل المنفية<br>القاعدة: yet → في السؤال والمنفي، في نهاية الجملة<br>already/just → في الجمل المثبتة"
+      },
+      {
+        q:"Yes, I've ________ done the dishes. (Book p.112 - done earlier than expected)",
+        src:"📖 مثال الكتاب ص١١٢",
+        opts:["already","yet","just","never"],ans:0,
+        exp:"✅ <strong>already</strong> = بالفعل (في وقت مبكر)<br>القاعدة: already في الجمل المثبتة، قبل التصريف الثالث<br>بخلاف just الذي يعني 'منذ لحظات قليلة'"
+      },
+      {
+        q:"She can't stand ________ the house. (Book p.113 Ex.D Q1)",
+        src:"📖 تمرين D ص١١٣ — Verb + Gerund",
+        opts:["cleaning","to clean","clean","cleaned"],ans:0,
+        exp:"✅ <strong>cleaning</strong> = Gerund (فعل + ing)<br>القاعدة: can't stand يتبعه دائماً Gerund (-ing)<br>الأفعال التي تتبعها Gerund: can't stand, enjoy, avoid, miss, suggest, finish, stop, hate, keep"
+      },
+      {
+        q:"He has ________ books that he can hardly carry them. (Book p.119)",
+        src:"📖 نص الكتاب ص١١٩ — So/Such",
+        opts:["so many","so much","such a","such"],ans:0,
+        exp:"✅ <strong>so many</strong> + اسم معدود جمع (books)<br>القاعدة: so many + اسم معدود (books/friends) | so much + اسم غير معدود (homework/water)"
+      },
+      {
+        q:"I have ________ homework that I can't go out tonight. (Book p.119)",
+        src:"📖 نص الكتاب ص١١٩",
+        opts:["so much","so many","such a","such an"],ans:0,
+        exp:"✅ <strong>so much</strong> + اسم غير معدود (homework)<br>القاعدة: so much + uncountable (homework/money/water/time)<br>بخلاف so many + countable (books/friends/problems)"
+      }
+    ],
+    tf:[
+      {
+        s:"People generally disapprove of people talking on cell phones in public places. (Book p.117 Ex.C Q1)",
+        src:"📖 تمرين C ص١١٧ — Forum Complaints",
+        ans:true,
+        exp:"✅ صحيح — الناس بشكل عام يعترضون على استخدام الهاتف في الأماكن العامة. من نص الكتاب ص١١٧."
+      },
+      {
+        s:"People disapprove of those who are on a diet. (Book p.117 Ex.C Q2)",
+        src:"📖 تمرين C ص١١٧",
+        ans:false,
+        exp:"❌ خطأ — الناس لا يعترضون على من يتبع نظاماً غذائياً. ما يزعجهم هو من يحاول إجبار الآخرين على التحكم في أكلهم."
+      },
+      {
+        s:"People disapprove of those who don't wait their turn. (Book p.117 Ex.C Q3)",
+        src:"📖 تمرين C ص١١٧",
+        ans:true,
+        exp:"✅ صحيح — الاندساس في الطابور (cutting in line) من الأمور التي يكرهها الناس عموماً."
+      },
+      {
+        s:"People disapprove of doing the dishes right after a meal. (Book p.117 Ex.C Q4)",
+        src:"📖 تمرين C ص١١٧",
+        ans:false,
+        exp:"❌ خطأ — غسيل الصحون مباشرة بعد الأكل ليس سلوكاً مرفوضاً. الجواب في الكتاب هو False."
+      },
+      {
+        s:"People disapprove of those who use escalators instead of stairs. (Book p.117 Ex.C Q5)",
+        src:"📖 تمرين C ص١١٧",
+        ans:false,
+        exp:"❌ خطأ — استخدام السلم المتحرك عادة ليس تصرفاً مثيراً للاعتراض."
+      }
+    ]
+  },
+  u11:{
+    mcq:[
+      {
+        q:"If you ________ water to 100°C, it boils. (Book p.122 Ex.A Q — Present Fact)",
+        src:"📖 تمرين A ص١٢٢ — Conditional",
+        opts:["heat","heated","will heat","would heat"],ans:0,
+        exp:"✅ <strong>heat</strong> = مضارع بسيط<br>القاعدة: حقائق حاضرة (Present Facts): If + مضارع → مضارع<br>'If + Simple Present → Simple Present' (نتيجة حتمية دائمة)"
+      },
+      {
+        q:"If he doesn't obey the speed limit, he ________ a ticket. (Book p.122 Ex.A Q6)",
+        src:"📖 تمرين A ص١٢٢",
+        opts:["'ll get","would get","gets","got"],ans:0,
+        exp:"✅ <strong>'ll get</strong> (will get) = مستقبل<br>القاعدة: Future Facts: If + Simple Present → will/won't + فعل<br>جملة الشرط تأخذ مضارع بسيط، وجملة النتيجة تأخذ will"
+      },
+      {
+        q:"If she leaves the food on the ground, the ants ________ it. (Book p.123 Ex.C Q1)",
+        src:"📖 تمرين C ص١٢٣",
+        opts:["will take","would take","take","took"],ans:0,
+        exp:"✅ <strong>will take</strong><br>القاعدة: If + مضارع بسيط → will + فعل (Future Conditional)<br>الفعل في جملة الشرط = present tense، والفعل في جملة النتيجة = will"
+      },
+      {
+        q:"Do you prefer to drive or take the bus? → I'd rather ________. (Book p.122)",
+        src:"📖 مثال الكتاب ص١٢٢ — Would Rather",
+        opts:["drive","to drive","driving","drove"],ans:0,
+        exp:"✅ <strong>drive</strong> = فعل أساسي (base form) بدون to<br>القاعدة: I'd rather + فعل أساسي (بدون to)<br>مثال: I'd rather walk (✓) | I'd rather to walk (✗)"
+      },
+      {
+        q:"I'd rather live in the country ________ live in the city. (Book p.123 Ex.E)",
+        src:"📖 تمرين E ص١٢٣",
+        opts:["than","or","but","and"],ans:0,
+        exp:"✅ <strong>than</strong> = للمقارنة بين خيارين<br>القاعدة: I'd rather A <strong>than</strong> B (أفضّل A على B)<br>مثال: I'd rather drink juice than drink water"
+      }
+    ],
+    tf:[
+      {
+        s:"Faisal's plans for the weekend are decided and clear. (Book p.125 Conversation)",
+        src:"📖 محادثة ص١٢٥ — About the Conversation Q1",
+        ans:false,
+        exp:"❌ خطأ — خطط Faisal 'still up in the air' = غير محسومة بعد. قال: 'My plans are still up in the air'"
+      },
+      {
+        s:"Faisal has three choices for the weekend. (Book p.125)",
+        src:"📖 محادثة ص١٢٥ — About the Conversation Q2",
+        ans:true,
+        exp:"✅ صحيح — الخيارات الثلاثة هي: ١. حضور حفل تخرج Fahd ٢. قضاء نهاية الأسبوع في بيت Khalid على الشاطئ ٣. حضور العرض الجوي مع Tariq"
+      },
+      {
+        s:"If Faisal doesn't go to Fahd's graduation, Fahd will be very happy. (Book p.125)",
+        src:"📖 محادثة ص١٢٥ — About the Conversation Q3",
+        ans:false,
+        exp:"❌ خطأ — إذا لم يحضر Faisal، سيكون Fahd <strong>hurt</strong> (منزعجاً وجريحاً). من النص: 'If I don't go to Fahd's graduation, he's going to be very hurt.'"
+      },
+      {
+        s:"Faisal would rather go to the airshow than to Fahd's graduation. (Book p.125)",
+        src:"📖 محادثة ص١٢٥",
+        ans:true,
+        exp:"✅ صحيح — من النص: 'I'd much rather go to the Saudi Hawks airshow'"
+      },
+      {
+        s:"Adel tells Faisal he must go to Fahd's graduation. (Book p.125)",
+        src:"📖 محادثة ص١٢٥ — About the Conversation Q5",
+        ans:false,
+        exp:"❌ خطأ — Adel لم يُلزمه بشيء، بل قال: 'It seems to me, you should do what you feel like doing.' أعطاه الحرية في الاختيار."
+      }
+    ]
+  },
+  u12:{
+    mcq:[
+      {
+        q:"We enjoyed ________ along the scenic route. (Book p.133 Ex.D Q1)",
+        src:"📖 تمرين D ص١٣٣ — Infinitive or Gerund?",
+        opts:["driving","to drive","drive","drove"],ans:0,
+        exp:"✅ <strong>driving</strong> = Gerund<br>القاعدة: enjoy يتبعه Gerund (-ing): enjoy + فعل + ing<br>enjoy = من الأفعال التي تتبعها Gerund (وليس Infinitive)"
+      },
+      {
+        q:"Mahmoud managed ________ the tire in the dark. (Book p.133 Ex.D Q2)",
+        src:"📖 تمرين D ص١٣٣",
+        opts:["to change","changing","change","changed"],ans:0,
+        exp:"✅ <strong>to change</strong> = Infinitive<br>القاعدة: manage يتبعه Infinitive (to + فعل)<br>manage = من الأفعال التي تتبعها Infinitive"
+      },
+      {
+        q:"I refuse ________ different kinds of food. (Book p.133 Ex.D Q3)",
+        src:"📖 تمرين D ص١٣٣",
+        opts:["to try","trying","try","tried"],ans:0,
+        exp:"✅ <strong>to try</strong> = Infinitive<br>القاعدة: refuse يتبعه Infinitive: refuse + to + فعل<br>من الكتاب ص١٣٢: 'The airline refused TO PAY for our hotel'"
+      },
+      {
+        q:"By the time we got to the airport, our flight ________ already left. (Book p.139)",
+        src:"📖 نص الكتاب ص١٣٩ — Past Perfect",
+        opts:["had","has","have","was"],ans:0,
+        exp:"✅ <strong>had</strong> = الماضي التام (Past Perfect = had + تصريف ثالث)<br>القاعدة: Past Perfect للحدث الذي وقع <strong>قبل</strong> حدث آخر في الماضي<br>'by the time' = بحلول الوقت الذي... → يدل على Past Perfect"
+      },
+      {
+        q:"________ is a good way to learn about other cultures. (Book p.132)",
+        src:"📖 نص الكتاب ص١٣٢ — Gerund as Subject",
+        opts:["Traveling","To travel","Travel","Traveled"],ans:0,
+        exp:"✅ <strong>Traveling</strong> = Gerund كمبتدأ للجملة<br>القاعدة: يمكن استخدام Gerund (فعل + ing) في بداية الجملة كمبتدأ<br>من الكتاب: 'Traveling is a good way to learn about other cultures'"
+      }
+    ],
+    tf:[
+      {
+        s:"Gestures are very similar all over the world. (Book p.134 Listening Q1)",
+        src:"📖 تمرين Listening ص١٣٤",
+        ans:false,
+        exp:"❌ خطأ — الإيماءات تختلف من ثقافة لأخرى اختلافاً كبيراً. من الكتاب: الجواب False"
+      },
+      {
+        s:"Americans usually introduce themselves with their last names. (Book p.134 Q2)",
+        src:"📖 تمرين Listening ص١٣٤",
+        ans:false,
+        exp:"❌ خطأ — الأمريكيون يُعرّفون عن أنفسهم باسمهم <strong>الأول</strong> (first name)، وليس الأخير. من الكتاب: الجواب False"
+      },
+      {
+        s:"Americans like to stand really close when talking to others. (Book p.134 Q3)",
+        src:"📖 تمرين Listening ص١٣٤",
+        ans:false,
+        exp:"❌ خطأ — الأمريكيون يفضّلون <strong>مسافة</strong> بينهم وبين من يتحدثون معهم (لا يقفون قريباً). من الكتاب: الجواب False"
+      },
+      {
+        s:"People are expected to arrive on time at all events in the United States. (Book p.134 Q4)",
+        src:"📖 تمرين Listening ص١٣٤",
+        ans:false,
+        exp:"❌ خطأ — ليس كل الأحداث تستوجب الدقة في الوقت. من الكتاب: الجواب False (يعتمد على نوع الحدث)"
+      },
+      {
+        s:"It's polite for house guests to give a small gift in the United States. (Book p.134 Q5)",
+        src:"📖 تمرين Listening ص١٣٤",
+        ans:true,
+        exp:"✅ صحيح — من أعراف الضيافة في أمريكا تقديم هدية صغيرة عند الزيارة. من الكتاب: الجواب True"
+      }
+    ]
+  }
+};
+
+// ======================== RENDER ========================
+function renderMCQ(uid){
+  const c=document.getElementById(`${uid}-mcq`);
+  c.innerHTML='';
+  data[uid].mcq.forEach((q,qi)=>{
+    const d=document.createElement('div');
+    d.className='question';d.id=`${uid}-mq-${qi}`;
+    d.innerHTML=`<div class="q-num">سؤال ${qi+1} من ${data[uid].mcq.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-source">${q.src}</div>
+      <div class="options">${q.opts.map((o,oi)=>`<button class="option" onclick="doMCQ('${uid}',${qi},${oi})" id="${uid}-mo-${qi}-${oi}"><span class="opt-label">${['A','B','C','D'][oi]}</span>${o}</button>`).join('')}</div>
+      <div class="q-feedback" id="${uid}-mf-${qi}"></div>`;
+    c.appendChild(d);
+  });
+}
+
+function doMCQ(uid,qi,sel){
+  const q=data[uid].mcq[qi];
+  const qd=document.getElementById(`${uid}-mq-${qi}`);
+  if(qd.classList.contains('correct')||qd.classList.contains('wrong'))return;
+  const ok=sel===q.ans;
+  qd.classList.add(ok?'correct':'wrong');
+  q.opts.forEach((_,oi)=>{
+    const b=document.getElementById(`${uid}-mo-${qi}-${oi}`);
+    b.classList.add('disabled');
+    if(oi===q.ans)b.classList.add('correct');
+    if(oi===sel&&!ok)b.classList.add('wrong');
+  });
+  const fb=document.getElementById(`${uid}-mf-${qi}`);
+  fb.className=`q-feedback show ${ok?'fb-correct':'fb-wrong'}`;
+  fb.innerHTML=ok?`✅ <strong>إجابة صحيحة!</strong><br>${q.exp}`:
+    `❌ <strong>إجابة خاطئة.</strong><br>الإجابة الصحيحة: <strong>${q.opts[q.ans]}</strong><br><br>${q.exp}`;
+  updMCQ(uid);
+}
+
+function updMCQ(uid){
+  const qs=data[uid].mcq;
+  let ok=0,ans=0;
+  qs.forEach((_,qi)=>{
+    const d=document.getElementById(`${uid}-mq-${qi}`);
+    if(d.classList.contains('correct')){ok++;ans++;}
+    else if(d.classList.contains('wrong'))ans++;
+  });
+  if(ans===qs.length){
+    document.getElementById(`${uid}-mcq-score`).style.display='flex';
+    document.getElementById(`${uid}-mcq-num`).textContent=`${ok}/${qs.length}`;
+  }
+}
+
+function resetMCQ(uid){
+  document.getElementById(`${uid}-mcq-score`).style.display='none';
+  renderMCQ(uid);
+}
+
+function renderTF(uid){
+  const c=document.getElementById(`${uid}-tf`);
+  c.innerHTML='';
+  data[uid].tf.forEach((item,i)=>{
+    const d=document.createElement('div');
+    d.className='tf-item';d.id=`${uid}-ti-${i}`;
+    d.innerHTML=`<div class="tf-text">${i+1}. ${item.s}</div>
+      <div class="tf-source">${item.src}</div>
+      <div class="tf-btns">
+        <button class="tf-btn true-btn" onclick="doTF('${uid}',${i},true)" id="${uid}-tt-${i}-T">✅ True — صحيح</button>
+        <button class="tf-btn false-btn" onclick="doTF('${uid}',${i},false)" id="${uid}-tt-${i}-F">❌ False — خطأ</button>
+      </div>
+      <div class="tf-feedback" id="${uid}-tfb-${i}"></div>`;
+    c.appendChild(d);
+  });
+}
+
+function doTF(uid,i,sel){
+  const item=data[uid].tf[i];
+  const d=document.getElementById(`${uid}-ti-${i}`);
+  if(d.classList.contains('tf-ok')||d.classList.contains('tf-err'))return;
+  const ok=sel===item.ans;
+  d.classList.add(ok?'tf-ok':'tf-err');
+  document.getElementById(`${uid}-tt-${i}-T`).classList.add('disabled',sel===true?'sel-t':'');
+  document.getElementById(`${uid}-tt-${i}-F`).classList.add('disabled',sel===false?'sel-f':'');
+  const fb=document.getElementById(`${uid}-tfb-${i}`);
+  fb.className=`tf-feedback show ${ok?'ok':'err'}`;
+  fb.innerHTML=ok?`✅ <strong>ممتاز! إجابة صحيحة!</strong><br>${item.exp}`:
+    `❌ <strong>إجابة خاطئة.</strong> الجواب الصحيح: <strong>${item.ans?'True ✅':'False ❌'}</strong><br><br>${item.exp}`;
+  updTF(uid);
+}
+
+function updTF(uid){
+  const ts=data[uid].tf;
+  let ok=0,ans=0;
+  ts.forEach((_,i)=>{
+    const d=document.getElementById(`${uid}-ti-${i}`);
+    if(d.classList.contains('tf-ok')){ok++;ans++;}
+    else if(d.classList.contains('tf-err'))ans++;
+  });
+  if(ans===ts.length){
+    document.getElementById(`${uid}-tf-score`).style.display='flex';
+    document.getElementById(`${uid}-tf-num`).textContent=`${ok}/${ts.length}`;
+  }
+}
+
+function resetTF(uid){
+  document.getElementById(`${uid}-tf-score`).style.display='none';
+  renderTF(uid);
+}
+
+// ======================== NAV ========================
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(`page-${id}`).classList.add('active');
+  const order=['home','exams','unit7','unit8','unit9','unit10','unit11','unit12'];
+  document.querySelectorAll('.nav-tab')[order.indexOf(id)]?.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ======================== INIT ========================
+['u7','u8','u9','u10','u11','u12'].forEach(id=>{renderMCQ(id);renderTF(id);});
+</script>
+</body>
+</html>
